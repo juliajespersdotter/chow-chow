@@ -1,0 +1,13 @@
+1. Fundera på Pages/Components struktur. Vi vill ha kartan över hela Viewport height/width
+och enklare navigation på vänstra sidan. Vilka API vi behöver.
+
+Maps JavaScript API
+
+Docs: https://developers.google.com/maps/documentation/javascript/tutorials
+https://developers.google.com/maps/documentation/javascript/react-map
+
+2. Sätta upp Jira work board/SCRUM. 
+
+3. Dela upp arbetet, vem gör vad. Ordna Databas struktur med storage. 
+
+4. Fundera på utseende och struktur.

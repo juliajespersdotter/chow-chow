@@ -1,11 +1,23 @@
-import Container from 'react-bootstrap/Container'
+import Container from "react-bootstrap/Container";
+import Map from "../components/Map";
+import { Wrapper, Status } from "@googlemaps/react-wrapper";
 
 const HomePage = () => {
-	return (
-		<Container className="py-3">
-			<h1>Welcome!</h1>
-		</Container>
-	)
-}
+	const location = {
+		address: "1600 Amphitheatre Parkway, Mountain View, california.",
+		lat: 37.42216,
+		lng: -122.08427,
+	};
 
-export default HomePage
+	return (
+		<Container fluid className="m-0 p-0">
+			{/* <Wrapper apiKey={import.meta.env.VITE_FIREBASE_GOOGLE_MAPS_API_KEY}> */}
+			<div id="map" className="m-0 p-0 w-100">
+				<Map />
+			</div>
+			{/* </Wrapper> */}
+		</Container>
+	);
+};
+
+export default HomePage;

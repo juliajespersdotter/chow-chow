@@ -1,30 +1,32 @@
 import { useRef, useState, useEffect } from "react";
-import { GoogleMap, LoadScript, useJsApiLoader } from "@react-google-maps/api";
 
-const containerStyle = {
-	width: "100%",
-	height: "100vh",
-};
+const Map = ({ center, style, zoom }) => {
+	const ref = useRef(null);
+	const [map, setMap] = useState();
 
-const center = {
-	lat: -3.745,
-	lng: -38.523,
-};
+	useEffect(() => {
+		if (ref.current && !map) {
+			setMap(
+				new window.google.maps.Map(ref.current, {
+					center: center,
+					style: style,
+					zoom: zoom,
+				})
+			);
+		}
+	}, [ref, map]);
 
-const Map = () => {
 	return (
-		<LoadScript
-			googleMapsApiKey={import.meta.env.VITE_FIREBASE_GOOGLE_MAPS_API_KEY}
-		>
-			<GoogleMap
-				mapContainerStyle={containerStyle}
-				center={center}
-				zoom={10}
-			>
-				{/* Child components, such as markers, info windows, etc. */}
-				<></>
-			</GoogleMap>
-		</LoadScript>
+		<>
+			<div ref={ref} style={style} center={center} zoom={zoom}>
+				{/* {Children.map(children, child => {
+					if (isValidElement(child)) {
+						// set the map prop on the child component
+						return cloneElement(child, { map });
+					}
+				})} */}
+			</div>
+		</>
 	);
 };
 

@@ -30,13 +30,13 @@ const HomePage = () => {
 			console.log('lat', geocode.lat)
 			console.log('lng', geocode.lng)
 
-			setCenter(center => ({
-				...center,
-				lat: geocode.lat,
-				lng: geocode.lng,
-			}))
-			console.log('new center', center)
-			return center
+			// setCenter(center => ({
+			// 	...center,
+			// 	lat: geocode.lat,
+			// 	lng: geocode.lng,
+			// }))
+			// console.log('new center', center)
+			// return center
 			// console.log('latlng', latlng)
 
 			// return geocode.position

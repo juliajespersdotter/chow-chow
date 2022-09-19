@@ -1,8 +1,8 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from 'react'
 
 const Map = ({ center, style, zoom }) => {
-	const ref = useRef(null);
-	const [map, setMap] = useState();
+	const ref = useRef(null)
+	const [map, setMap] = useState()
 
 	useEffect(() => {
 		if (ref.current && !map) {
@@ -12,9 +12,9 @@ const Map = ({ center, style, zoom }) => {
 					style: style,
 					zoom: zoom,
 				})
-			);
+			)
 		}
-	}, [ref, map]);
+	}, [ref, map])
 
 	return (
 		<>
@@ -27,7 +27,7 @@ const Map = ({ center, style, zoom }) => {
 				})} */}
 			</div>
 		</>
-	);
-};
+	)
+}
 
-export default Map;
+export default Map

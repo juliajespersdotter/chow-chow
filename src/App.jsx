@@ -6,12 +6,12 @@ import './assets/scss/App.scss'
 
 function App() {
 	return (
-		<div id="App">
+		<div id='App'>
 			<Navigation />
 
 			<Routes>
-				<Route path="/" element={<HomePage />} />
-				<Route path="*" element={<NotFound />} />
+				<Route path='/' element={<HomePage />} />
+				<Route path='*' element={<NotFound />} />
 			</Routes>
 		</div>
 	)

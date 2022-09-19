@@ -22,7 +22,7 @@ const HomePage = () => {
 
 	return (
 		<Container fluid className="m-0 p-0">
-			<Wrapper apiKey="AIzaSyDazappFxrPhOxUp0IFE7vF1SVkDWSSTxs">
+			<Wrapper apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
 				<Map
 					center={center}
 					// onClick={onClick}

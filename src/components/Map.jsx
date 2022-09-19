@@ -40,7 +40,7 @@ const Map = ({ style, center, zoom }) => {
 
 	return (
 		<>
-			<div ref={ref} style={style} center={center} zoom={zoom}>
+			<div className="v-map" ref={ref} style={style} center={center} zoom={zoom}>
 				{/* {Children.map(children, child => {
 					if (isValidElement(child)) {
 						// set the map prop on the child component

@@ -1,70 +1,71 @@
 import Container from 'react-bootstrap/Container'
+import Alert from 'react-bootstrap/Alert'
 import Map from '../components/Map'
 import { Wrapper, Status } from '@googlemaps/react-wrapper'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import useGeoCoding from '../hooks/useGeoCoding'
 
 const HomePage = () => {
-	const [clicks, setClicks] = useState([])
 	const [zoom, setZoom] = useState(17) // initial zoom
+	const [address, setAddress] = useState('rasmusgatan 2a')
+	const { position, getLatLng, error, isError } = useGeoCoding(address)
 	const [center, setCenter] = useState({
 		lat: 55.58354,
 		lng: 13.01373,
 	})
-	const [adress, setAdress] = useState('lundavägen 1')
-	const geocode = useGeoCoding()
+	const [errorMsg, setErrorMsg] = useState(null)
+	const addressRef = useRef()
 
-	const location = {
-		// address: "Rasmusgatan 2A, Malmö",
-		lat: 55.58354,
-		lng: 13.01373,
+	const handleSubmit = async e => {
+		e.preventDefault()
+
+		if (addressRef.current.value) {
+			setAddress(addressRef.current.value)
+		}
+		try {
+			await getLatLng(address)
+		} catch (err) {
+			setErrorMsg(err.message)
+			console.log(errorMsg)
+		}
 	}
 
 	useEffect(() => {
-		const getCenter = async () => {
-			await geocode.getLatLng('mälstakroken 5')
-			console.log('position in homepage.', geocode.position)
-			// center.lat = geocode.position.lat
-			// center.lng = geocode.position.lng
-			console.log('center', center)
-			console.log('lat', geocode.lat)
-			console.log('lng', geocode.lng)
-
-			// setCenter(center => ({
-			// 	...center,
-			// 	lat: geocode.lat,
-			// 	lng: geocode.lng,
-			// }))
-			// console.log('new center', center)
-			// return center
-			// console.log('latlng', latlng)
-
-			// return geocode.position
+		const awaitSetCenter = async () => {
+			if (position.lat && position.lng) {
+				setCenter({ lat: position.lat, lng: position.lng })
+			}
 		}
 
-		getCenter()
-
-		// console.log('center in use effect', newCenter)
-		// center.lat = newCenter.lat
-		// center.lng = newCenter.lng
-	}, [])
+		awaitSetCenter()
+	}, [position])
 
 	return (
 		<Container fluid className='m-0 p-0'>
+			{isError && (
+				<Alert variant='danger'>An error has occurred: {error}</Alert>
+			)}
 			<Wrapper apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
 				<Map
 					center={center}
-					// onClick={onClick}
-					// onIdle={onIdle}
 					zoom={zoom}
 					style={{
 						flexGrow: '1',
-						height: '100vh',
+						height: '90vh',
 						width: '100vw',
 						position: 'relative',
 					}}
 				/>
 			</Wrapper>
+			<form onSubmit={handleSubmit}>
+				<input
+					type='string'
+					id='address'
+					name='address'
+					ref={addressRef}
+				/>
+				<button type='submit'>submit</button>
+			</form>
 			{/* {form} */}
 		</Container>
 	)

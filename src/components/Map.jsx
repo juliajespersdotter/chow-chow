@@ -12,9 +12,14 @@ import Marker from './Marker'
 const Map = ({ style, center, zoom, children }) => {
 	const ref = useRef(null)
 	const [map, setMap] = useState()
-	// const [center, setCenter] = useState({})
 
 	let infoWindow = new google.maps.InfoWindow()
+
+	useEffect(() => {
+		if (map) {
+			map.setCenter(center)
+		}
+	}, [center])
 
 	useEffect(() => {
 		if (ref.current && !map) {
@@ -48,6 +53,9 @@ const Map = ({ style, center, zoom, children }) => {
 
 	return (
 		<>
+			<Button onClick={getCurrentLocation} className='text-center w-100'>
+				Pan to current Location
+			</Button>
 			<div ref={ref} style={style} center={center} zoom={zoom}>
 				{Children.map(children, (child) => {
 					if (isValidElement(child)) {
@@ -57,9 +65,6 @@ const Map = ({ style, center, zoom, children }) => {
 				})}
 				{map && <Marker map={map} position={center} />}
 			</div>
-			<Button onClick={getCurrentLocation}>
-				Pan to current Location
-			</Button>
 		</>
 	)
 }

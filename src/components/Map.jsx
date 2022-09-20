@@ -48,13 +48,8 @@ const Map = ({ style, center, zoom, children }) => {
 
 	return (
 		<>
-<<<<<<< HEAD
 			<div className="v-map" ref={ref} style={style} center={center} zoom={zoom}>
-				{/* {Children.map(children, child => {
-=======
-			<div ref={ref} style={style} center={center} zoom={zoom}>
 				{Children.map(children, (child) => {
->>>>>>> merge/johan
 					if (isValidElement(child)) {
 						// set the map prop on the child component
 						return cloneElement(child, { map });

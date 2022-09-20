@@ -17,14 +17,13 @@ const useGeoCoding = address => {
 			},
 			(results, status) => {
 				if (status == google.maps.GeocoderStatus.OK) {
-					const lat = results[0].geometry.location.lat()
-					const lng = results[0].geometry.location.lng()
+					const pos = {
+						lat: results[0].geometry.location.lat(),
+						lng: results[0].geometry.location.lng(),
+					}
 
-					if (lat !== null && lng !== null) {
-						setPosition({
-							lat: lat,
-							lng: lng,
-						})
+					if (pos) {
+						setPosition(pos)
 					}
 				} else {
 					// alert(

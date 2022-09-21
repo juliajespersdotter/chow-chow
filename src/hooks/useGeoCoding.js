@@ -17,6 +17,7 @@ const useGeoCoding = address => {
 			},
 			(results, status) => {
 				if (status == google.maps.GeocoderStatus.OK) {
+					console.log(results[0].address_components[2].long_name)
 					const pos = {
 						lat: results[0].geometry.location.lat(),
 						lng: results[0].geometry.location.lng(),

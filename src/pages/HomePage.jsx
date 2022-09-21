@@ -4,6 +4,7 @@ import Map from '../components/Map'
 import { Wrapper, Status } from '@googlemaps/react-wrapper'
 import { useState, useEffect, useRef } from 'react'
 import useGeoCoding from '../hooks/useGeoCoding'
+import Marker from '../components/Marker'
 
 const HomePage = () => {
 	const [zoom, setZoom] = useState(17) // initial zoom
@@ -55,7 +56,9 @@ const HomePage = () => {
 						width: '100vw',
 						position: 'relative',
 					}}
-				/>
+				>
+					<Marker position={center} />
+				</Map>
 			</Wrapper>
 			<form onSubmit={handleSubmit}>
 				<input

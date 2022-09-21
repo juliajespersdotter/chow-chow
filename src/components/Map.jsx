@@ -4,7 +4,7 @@ import {
 	isValidElement,
 	useRef,
 	useState,
-	useEffect
+	useEffect,
 } from 'react'
 import Button from 'react-bootstrap/Button'
 import Marker from './Marker'
@@ -12,12 +12,14 @@ import Marker from './Marker'
 const Map = ({ style, center, zoom, children }) => {
 	const ref = useRef(null)
 	const [map, setMap] = useState()
+	const [markerPos, setMarkerPos] = useState(center)
 
 	let infoWindow = new google.maps.InfoWindow()
 
 	useEffect(() => {
 		if (map) {
 			map.setCenter(center)
+			setMarkerPos(center)
 		}
 	}, [center])
 
@@ -25,6 +27,7 @@ const Map = ({ style, center, zoom, children }) => {
 		if (ref.current && !map) {
 			setMap(
 				new window.google.maps.Map(ref.current, {
+					// mapId: '7cad50f105533ffb',
 					center: center,
 					style: style,
 					zoom: zoom,
@@ -57,13 +60,13 @@ const Map = ({ style, center, zoom, children }) => {
 				Pan to current Location
 			</Button>
 			<div ref={ref} style={style} center={center} zoom={zoom}>
-				{Children.map(children, (child) => {
+				{Children.map(children, child => {
 					if (isValidElement(child)) {
 						// set the map prop on the child component
-						return cloneElement(child, { map });
+						return cloneElement(child, { map })
 					}
 				})}
-				{map && <Marker map={map} position={center} />}
+				{/* {map && <Marker map={map} position={markerPos} />} */}
 			</div>
 		</>
 	)

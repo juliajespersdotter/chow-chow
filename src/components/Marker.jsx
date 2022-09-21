@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const Marker = ({ map, position }) => {
+const Marker = options => {
 	const [marker, setMarker] = useState()
 
 	// console.log(position)
@@ -9,8 +9,8 @@ const Marker = ({ map, position }) => {
 		if (!marker) {
 			setMarker(
 				new google.maps.Marker({
-					position,
-					map,
+					// position,
+					// map,
 					icon: 'https://cdn-icons-png.flaticon.com/32/1404/1404945.png',
 				})
 			)
@@ -22,13 +22,13 @@ const Marker = ({ map, position }) => {
 				marker.setMap(null)
 			}
 		}
-	}, [marker, position])
+	}, [marker])
 
 	useEffect(() => {
 		if (marker) {
-			marker.setOptions(position)
+			marker.setOptions(options)
 		}
-	}, [marker, position])
+	}, [marker, options])
 
 	return null
 }

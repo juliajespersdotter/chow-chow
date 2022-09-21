@@ -24,26 +24,30 @@ const NewRestaurantForm = () => {
 	const onCreateFoodPlace = async data => {
 		// post to the database
 		const cuisine = data.cuisine.split(',')
-		console.log(cuisine)
-		console.log(data.meals)
 
-		const pos = await getLatLng(data.address)
-		console.log(pos)
+		try {
+			await getLatLng(data.address)
+			console.log(position)
+		} catch (err) {
+			console.log(err.message)
+		}
 
-		await addDoc(collection(db, 'foodplaces'), {
-			city: data.city,
-			name: data.name,
-			description: data.description,
-			streetadress: data.address,
-			type: data.type,
-			cuisine: cuisine,
-			meals: data.meals,
-			email: data.email,
-			phone: data.phone,
-			url: data.url,
-			geopoint: pos,
-			facebook: data.facebook,
-		})
+		if (position) {
+			await addDoc(collection(db, 'foodplaces'), {
+				city: data.city,
+				name: data.name,
+				description: data.description,
+				streetadress: data.address,
+				type: data.type,
+				cuisine: cuisine,
+				meals: data.meals,
+				email: data.email,
+				phone: data.phone,
+				url: data.url,
+				geopoint: position,
+				facebook: data.facebook,
+			})
+		}
 
 		console.log(data)
 		reset()

@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { useForm } from 'react-hook-form'
@@ -29,7 +28,7 @@ const NewRestaurantForm = () => {
 			console.log(err.message)
 		}
 
-		if (position) {
+		if (position.lat && position.lng) {
 			await addDoc(collection(db, 'foodplaces'), {
 				city: data.city,
 				name: data.name,

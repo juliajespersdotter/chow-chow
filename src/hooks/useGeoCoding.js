@@ -5,7 +5,7 @@ const useGeoCoding = address => {
 	const [error, setError] = useState('')
 	const [isError, setIsError] = useState(false)
 
-	const getLatLng = async () => {
+	const getLatLng = async address => {
 		setIsError(false)
 		setError('')
 		const geocoder = new google.maps.Geocoder()
@@ -17,7 +17,7 @@ const useGeoCoding = address => {
 			},
 			(results, status) => {
 				if (status == google.maps.GeocoderStatus.OK) {
-					console.log(results[0].address_components[2].long_name)
+					// console.log(results[0].address_components[2].long_name)
 					const pos = {
 						lat: results[0].geometry.location.lat(),
 						lng: results[0].geometry.location.lng(),
@@ -25,6 +25,7 @@ const useGeoCoding = address => {
 
 					if (pos) {
 						setPosition(pos)
+						console.log('position', position)
 					}
 				} else {
 					// alert(
@@ -36,11 +37,12 @@ const useGeoCoding = address => {
 				}
 			}
 		)
+		return position
 	}
 
-	useEffect(() => {
-		getLatLng()
-	}, [address])
+	// useEffect(() => {
+	// 	getLatLng()
+	// }, [address])
 
 	return { position, getLatLng, error, isError }
 }

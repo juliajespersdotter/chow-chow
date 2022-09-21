@@ -3,19 +3,36 @@ import Alert from 'react-bootstrap/Alert'
 import Map from '../components/Map'
 import { Wrapper, Status } from '@googlemaps/react-wrapper'
 import { useState, useEffect, useRef } from 'react'
+import { collection, orderBy, query } from 'firebase/firestore'
+import { useFirestoreQueryData } from '@react-query-firebase/firestore'
+import { db } from '../firebase'
 import useGeoCoding from '../hooks/useGeoCoding'
 import Marker from '../components/Marker'
 
 const HomePage = () => {
 	const [zoom, setZoom] = useState(17) // initial zoom
 	const [address, setAddress] = useState('rasmusgatan 2a')
-	const { position, getLatLng, error, isError } = useGeoCoding(address)
+	const { position, getLatLng, error, isError } = useGeoCoding()
 	const [center, setCenter] = useState({
 		lat: 55.58354,
 		lng: 13.01373,
 	})
 	const [errorMsg, setErrorMsg] = useState(null)
 	const addressRef = useRef()
+
+	const foodplaceRef = collection(db, 'foodplaces')
+
+	const queryRef = query(foodplaceRef, orderBy('name'))
+	const { data: foodplaces, isLoading } = useFirestoreQueryData(
+		['foodplaces'],
+		queryRef,
+		{
+			idField: 'id',
+			subscribe: true,
+		}
+	)
+
+	console.log(foodplaces)
 
 	const handleSubmit = async e => {
 		e.preventDefault()
@@ -57,7 +74,16 @@ const HomePage = () => {
 						position: 'relative',
 					}}
 				>
-					<Marker position={center} />
+					{/* {todos.map(todo => (
+						<TodoListItem todo={todo} key={todo.id} />
+					))} */}
+					{foodplaces &&
+						foodplaces.map(foodplace => (
+							<Marker
+								position={foodplace.geopoint}
+								key={foodplace.id}
+							/>
+						))}
 				</Map>
 			</Wrapper>
 			<form onSubmit={handleSubmit}>

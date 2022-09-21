@@ -3,9 +3,11 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { useForm } from 'react-hook-form'
 import { collection, addDoc } from 'firebase/firestore'
+import useGeoCoding from '../hooks/useGeoCoding'
 import { db } from '../firebase'
 
 const NewRestaurantForm = () => {
+	const { position, getLatLng, error, isError } = useGeoCoding()
 	const {
 		register,
 		handleSubmit,
@@ -25,17 +27,21 @@ const NewRestaurantForm = () => {
 		console.log(cuisine)
 		console.log(data.meals)
 
+		const pos = await getLatLng(data.address)
+		console.log(pos)
+
 		await addDoc(collection(db, 'foodplaces'), {
 			city: data.city,
 			name: data.name,
 			description: data.description,
-			address: data.address,
+			streetadress: data.address,
 			type: data.type,
 			cuisine: cuisine,
 			meals: data.meals,
 			email: data.email,
 			phone: data.phone,
 			url: data.url,
+			geopoint: pos,
 			facebook: data.facebook,
 		})
 
@@ -43,12 +49,6 @@ const NewRestaurantForm = () => {
 		reset()
 	}
 
-	// style={{
-	// 			padding: '1rem',
-	// 			flexBasis: '250px',
-	// 			height: '100%',
-	// 			overflow: 'auto',
-	// 		}}
 	return (
 		<Form className='p-1' onSubmit={handleSubmit(onCreateFoodPlace)}>
 			<Form.Group controlId='name' className='mb-3'>

@@ -11,7 +11,6 @@ import Marker from '../components/Marker'
 
 const HomePage = () => {
 	const [zoom, setZoom] = useState(17) // initial zoom
-	const [address, setAddress] = useState('rasmusgatan 2a')
 	const { position, getLatLng, error, isError } = useGeoCoding()
 	const [center, setCenter] = useState({
 		lat: 55.58354,
@@ -32,30 +31,23 @@ const HomePage = () => {
 		}
 	)
 
-	console.log(foodplaces)
-
 	const handleSubmit = async e => {
 		e.preventDefault()
 
 		if (addressRef.current.value) {
-			setAddress(addressRef.current.value)
-		}
-		try {
-			await getLatLng(address)
-		} catch (err) {
-			setErrorMsg(err.message)
-			console.log(errorMsg)
+			try {
+				await getLatLng(addressRef.current.value)
+			} catch (err) {
+				setErrorMsg(err.message)
+				console.log(errorMsg)
+			}
 		}
 	}
 
 	useEffect(() => {
-		const awaitSetCenter = async () => {
-			if (position.lat && position.lng) {
-				setCenter({ lat: position.lat, lng: position.lng })
-			}
+		if (position.lat && position.lng) {
+			setCenter({ lat: position.lat, lng: position.lng })
 		}
-
-		awaitSetCenter()
 	}, [position])
 
 	return (
@@ -74,9 +66,6 @@ const HomePage = () => {
 						position: 'relative',
 					}}
 				>
-					{/* {todos.map(todo => (
-						<TodoListItem todo={todo} key={todo.id} />
-					))} */}
 					{foodplaces &&
 						foodplaces.map(foodplace => (
 							<Marker

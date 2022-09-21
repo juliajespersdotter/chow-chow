@@ -19,15 +19,12 @@ const NewRestaurantForm = () => {
 		},
 	})
 
-	// const meals = ['Breakfast', 'Lunch', 'Dinner', 'After-Work']
-
 	const onCreateFoodPlace = async data => {
 		// post to the database
 		const cuisine = data.cuisine.split(',')
 
 		try {
 			await getLatLng(data.address)
-			console.log(position)
 		} catch (err) {
 			console.log(err.message)
 		}

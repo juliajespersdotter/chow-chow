@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const useGeoCoding = address => {
+const useGeoCoding = () => {
 	const [position, setPosition] = useState({ lat: null, lng: null })
 	const [error, setError] = useState('')
 	const [isError, setIsError] = useState(false)
@@ -28,10 +28,6 @@ const useGeoCoding = address => {
 						console.log('position', position)
 					}
 				} else {
-					// alert(
-					// 	'Geocode was not successful for the following reason: ' +
-					// 		status
-					// )
 					setError(status)
 					setIsError(true)
 				}
@@ -39,10 +35,6 @@ const useGeoCoding = address => {
 		)
 		return position
 	}
-
-	// useEffect(() => {
-	// 	getLatLng()
-	// }, [address])
 
 	return { position, getLatLng, error, isError }
 }

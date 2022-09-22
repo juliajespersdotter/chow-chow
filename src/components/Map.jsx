@@ -12,7 +12,6 @@ import ThemeContext from '../contexts/ThemeContext'
 
 const Map = ({ style, center, zoom, children }) => {
 	const { theme } = useContext(ThemeContext)
-	console.log(theme)
 	const ref = useRef(null)
 	const [map, setMap] = useState()
 	let infoWindow = new google.maps.InfoWindow()
@@ -30,7 +29,6 @@ const Map = ({ style, center, zoom, children }) => {
 				})
 			)
 		}
-		console.log(mapId)
 	}, [theme])
 
 	useEffect(() => {
@@ -75,7 +73,7 @@ const Map = ({ style, center, zoom, children }) => {
 			<Button onClick={getCurrentLocation} className='text-center w-100'>
 				Pan to current Location
 			</Button>
-			<div ref={ref} style={style} center={center} zoom={zoom}>
+			<div id='map' ref={ref} center={center} zoom={zoom}>
 				{Children.map(children, child => {
 					if (isValidElement(child)) {
 						// set the map prop on the child component

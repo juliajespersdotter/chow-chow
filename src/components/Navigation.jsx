@@ -23,8 +23,8 @@ const Navigation = () => {
 				<Navbar.Toggle aria-controls='basic-navbar-nav' />
 				<Navbar.Collapse id='basic-navbar-nav'>
 					<Nav className='ms-auto'>
-						<Nav.Link as={NavLink} end to='/'>
-							Home
+						<Nav.Link as={NavLink} end to='/map'>
+							Map
 						</Nav.Link>
 						<Nav.Link as={NavLink} end to='/foodplaces'>
 							Foodplaces

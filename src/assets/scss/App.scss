@@ -25,6 +25,14 @@ body,
 	cursor: pointer;
 }
 
+#map {
+	// flexGrow: '1';
+	flex-grow: 1;
+	height: 85vh;
+	width: 100vw;
+	position: relative;
+}
+
 .foodplace-item {
 	border: 1px solid #888;
 }

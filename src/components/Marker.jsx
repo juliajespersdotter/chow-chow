@@ -28,6 +28,7 @@ const Marker = options => {
 			let infoWindow = new google.maps.InfoWindow()
 			infoWindow.setPosition(options.position)
 			marker.addListener('click', () => {
+				options.clickFunction(options.foodplace)
 				infoWindow.close()
 				infoWindow.setContent(options.foodplace.name)
 				infoWindow.open(options.map)

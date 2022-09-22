@@ -9,12 +9,13 @@ import {
 } from 'react'
 import Button from 'react-bootstrap/Button'
 import ThemeContext from '../contexts/ThemeContext'
+import UserMarker from './UserMarker'
 
 const Map = ({ style, center, zoom, children }) => {
 	const { theme } = useContext(ThemeContext)
 	const ref = useRef(null)
 	const [map, setMap] = useState()
-	let infoWindow = new google.maps.InfoWindow()
+	const [userMarker, setUserMarker] = useState()
 	let mapId = theme == 'dark' ? 'a364ebbb8399f681' : ''
 
 	useEffect(() => {
@@ -57,10 +58,8 @@ const Map = ({ style, center, zoom, children }) => {
 					lat: position.coords.latitude,
 					lng: position.coords.longitude,
 				}
-				infoWindow.setPosition(pos)
-				infoWindow.setContent('Location found.')
-				infoWindow.open(map)
 				map.setCenter(pos)
+				setUserMarker(pos)
 			})
 		} else {
 			// Browser doesn't support Geolocation
@@ -80,7 +79,7 @@ const Map = ({ style, center, zoom, children }) => {
 						return cloneElement(child, { map })
 					}
 				})}
-				{/* {map && <Marker map={map} position={markerPos} />} */}
+				{map && userMarker && <UserMarker map={map} position={userMarker} />}
 			</div>
 		</>
 	)

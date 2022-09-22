@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react'
-import useGeoCoding from '../hooks/useGeoCoding'
-import InfoModal from './InfoModal'
 
 const Marker = options => {
 	const [marker, setMarker] = useState()
@@ -13,7 +11,6 @@ const Marker = options => {
 					optimized: false,
 				})
 			)
-			setMarker(new google.maps.Marker({}))
 		}
 
 		// remove marker from map on unmount
@@ -30,7 +27,7 @@ const Marker = options => {
 			let infoWindow = new google.maps.InfoWindow()
 			infoWindow.setPosition(options.position)
 
-			marker.addListener("click", () => {
+			marker.addListener('click', () => {
 				options.clickFunction(options.foodplace)
 			})
 		}

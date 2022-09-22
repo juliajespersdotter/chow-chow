@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { useForm } from 'react-hook-form'
 
-const RestaurantListPage = () => {
+const FoodplaceListPage = () => {
 	const { foodplaces, isLoading } = useFoodplaces()
 	const {
 		register,
@@ -54,4 +54,4 @@ const RestaurantListPage = () => {
 	)
 }
 
-export default RestaurantListPage
+export default FoodplaceListPage

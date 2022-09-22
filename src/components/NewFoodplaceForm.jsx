@@ -5,7 +5,7 @@ import { collection, addDoc } from 'firebase/firestore'
 import useGeoCoding from '../hooks/useGeoCoding'
 import { db } from '../firebase'
 
-const NewRestaurantForm = () => {
+const NewFoodplaceForm = () => {
 	const { position, getLatLng, error, isError } = useGeoCoding()
 	const {
 		register,
@@ -160,4 +160,4 @@ const NewRestaurantForm = () => {
 	)
 }
 
-export default NewRestaurantForm
+export default NewFoodplaceForm

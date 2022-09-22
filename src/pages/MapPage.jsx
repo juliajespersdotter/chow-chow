@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from 'react'
 import useGeoCoding from '../hooks/useGeoCoding'
 import Marker from '../components/Marker'
 import useFoodplaces from '../hooks/useFoodplaces'
+import InfoModal from '../components/InfoModal'
 
 const MapPage = () => {
 	const [zoom, setZoom] = useState(17) // initial zoom

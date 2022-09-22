@@ -20,7 +20,6 @@ const Map = ({ style, center, zoom, children }) => {
 	useEffect(() => {
 		mapId = theme == 'dark' ? 'a364ebbb8399f681' : ''
 		if (map) {
-<<<<<<< HEAD
 			setMap(
 				new window.google.maps.Map(ref.current, {
 					mapId: mapId,
@@ -35,9 +34,6 @@ const Map = ({ style, center, zoom, children }) => {
 	useEffect(() => {
 		if (map) {
 			map.panTo(center)
-=======
-			map.setCenter(center)
->>>>>>> dev/tobbe
 		}
 	}, [center])
 
@@ -45,11 +41,7 @@ const Map = ({ style, center, zoom, children }) => {
 		if (ref.current && !map) {
 			setMap(
 				new window.google.maps.Map(ref.current, {
-<<<<<<< HEAD
 					mapId: mapId,
-=======
-					// mapId: '7cad50f105533ffb',
->>>>>>> dev/tobbe
 					center: center,
 					style: style,
 					zoom: zoom,

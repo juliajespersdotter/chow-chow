@@ -17,7 +17,6 @@ const Map = ({ style, center, zoom, children }) => {
 	useEffect(() => {
 		if (map) {
 			map.setCenter(center)
-			setMarkerPos(center)
 		}
 	}, [center])
 

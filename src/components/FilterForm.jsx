@@ -7,9 +7,10 @@ import Card from 'react-bootstrap/Card'
 
 const FilterForm = () => {
 
-    const [menu, setMenu] = useState(Fooddata);
+    const foodplaceRef = collection(db, 'foodplaces')
 
-	const foodplaceRef = collection(db, 'foodplaces')
+    const [menu, setMenu] = useState(foodplaceRef);
+
     const queryRef = query(foodplaceRef, orderBy('name'))
 	const { data: foodplaces } = useFirestoreQueryData(
 		['foodplaces'],
@@ -21,8 +22,8 @@ const FilterForm = () => {
 	)
 
     const filteritems = (curitems) => {
-        const updateitems = Fooddata.filter((cur) => {
-            return cur.category === curitems;
+        const updateitems = foodplaces.filter((foodplace) => {
+            return foodplace.cuisine === curitems;
         })
         setMenu(updateitems);
     };
@@ -37,7 +38,7 @@ const FilterForm = () => {
                     <button className="btn btn-primary" onClick={() => filteritems("japanese")}>Japanese</button>
                     <button className="btn btn-primary" onClick={() => filteritems("pizza")}>Pizza</button>
                     <button className="btn btn-primary" onClick={() => filteritems("coffee")}>Coffee</button>
-                    <button className="btn btn-primary" onClick={() => setMenu(Fooddata)}>All</button>
+                    <button className="btn btn-primary" onClick={() => setMenu(foodplaces)}>All</button>
                 </div>
 
                 <div className='container mt-3'>
@@ -46,12 +47,9 @@ const FilterForm = () => {
                             return (
                                 <>
                                     <Card key={e.id} style={{ width: '22rem', border: "none" }} className="mx-2 mt-4 card_style" >
-                                        <Card.Img variant="top" src={e.imgdata} style={{ height: "16rem" }} className='mt-3' />
+                                        {/* <Card.Img variant="top" src={e.imgdata} style={{ height: "16rem" }} className='mt-3' /> */}
                                         <Card.Body>
-                                            <Card.Title>{e.name}</Card.Title>
-                                            {/* <Card.Text>
-                                                Price :  {e.price}
-                                            </Card.Text> */}
+                                            <Card.Title>{e.cuisine}</Card.Title>
                                         </Card.Body>
                                     </Card>
                                 </>

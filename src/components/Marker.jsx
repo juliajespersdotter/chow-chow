@@ -1,34 +1,39 @@
 import { useEffect, useState } from 'react'
+import useGeoCoding from '../hooks/useGeoCoding'
 
-const Marker = ({ map, position }) => {
-	const [marker, setMarker] = useState();
+const Marker = options => {
+	const [marker, setMarker] = useState()
+	// const { position } = useGeoCoding(options.position)
 
-	console.log("MAKRER PLZ", position)
+	// console.log(options)
+	// console.log(position)
+	console.log(options.foodplace)
 
 	useEffect(() => {
 		if (!marker) {
-			setMarker(new google.maps.Marker({
-				position,
-				map,
-				icon: "https://cdn-icons-png.flaticon.com/32/1404/1404945.png",
-			}));
+			// console.log('position', position)
+			setMarker(new google.maps.Marker({}))
 		}
 
 		// remove marker from map on unmount
 		return () => {
 			if (marker) {
-				marker.setMap(null);
+				marker.setMap(null)
 			}
-		};
-	}, [marker]);
+		}
+	}, [marker])
 
 	useEffect(() => {
 		if (marker) {
-			marker.setOptions(position);
+			marker.setOptions(options)
+			let infoWindow = new google.maps.InfoWindow()
+			infoWindow.setPosition(options.position)
+			infoWindow.setContent(options.foodplace.name)
+			infoWindow.open(options.map)
 		}
-	}, [marker, position]);
+	}, [marker, options])
 
-	return null;
+	return null
 }
 
 export default Marker

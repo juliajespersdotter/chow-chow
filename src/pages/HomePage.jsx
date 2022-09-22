@@ -8,6 +8,7 @@ import { useFirestoreQueryData } from '@react-query-firebase/firestore'
 import { db } from '../firebase'
 import useGeoCoding from '../hooks/useGeoCoding'
 import Marker from '../components/Marker'
+import InfoModal from '../components/InfoModal'
 
 const HomePage = () => {
 	const [zoom, setZoom] = useState(17) // initial zoom
@@ -17,8 +18,10 @@ const HomePage = () => {
 		lng: 13.01373,
 	})
 	const [errorMsg, setErrorMsg] = useState(null)
-	const addressRef = useRef()
+	const [showModal, setShowModal] = useState(false)
+	const [place, setPlace] = useState(null)
 
+	const addressRef = useRef()
 	const foodplaceRef = collection(db, 'foodplaces')
 
 	const queryRef = query(foodplaceRef, orderBy('name'))
@@ -30,6 +33,11 @@ const HomePage = () => {
 			subscribe: true,
 		}
 	)
+
+	const onClick = (foodplace) => {
+		setPlace(foodplace)
+		setShowModal(!showModal)
+	}
 
 	const handleSubmit = async e => {
 		e.preventDefault()
@@ -72,8 +80,15 @@ const HomePage = () => {
 								position={foodplace.geopoint}
 								foodplace={foodplace}
 								key={foodplace.id}
+								clickFunction={() => {
+									onClick(foodplace)
+								}}
 							/>
-						))}
+						))
+					}
+
+					{showModal && <InfoModal data={place} show={showModal} onClick={onClick} />}
+
 				</Map>
 			</Wrapper>
 			<form onSubmit={handleSubmit}>

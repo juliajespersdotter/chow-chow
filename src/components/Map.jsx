@@ -5,18 +5,37 @@ import {
 	useRef,
 	useState,
 	useEffect,
+	useContext,
 } from 'react'
 import Button from 'react-bootstrap/Button'
+import ThemeContext from '../contexts/ThemeContext'
 
 const Map = ({ style, center, zoom, children }) => {
+	const { theme } = useContext(ThemeContext)
+	console.log(theme)
 	const ref = useRef(null)
 	const [map, setMap] = useState()
 	let infoWindow = new google.maps.InfoWindow()
+	let mapId = theme == 'dark' ? 'a364ebbb8399f681' : ''
+
+	useEffect(() => {
+		mapId = theme == 'dark' ? 'a364ebbb8399f681' : ''
+		if (map) {
+			setMap(
+				new window.google.maps.Map(ref.current, {
+					mapId: mapId,
+					center: center,
+					style: style,
+					zoom: zoom,
+				})
+			)
+		}
+		console.log(mapId)
+	}, [theme])
 
 	useEffect(() => {
 		if (map) {
-			map.setCenter(center)
-			setMarkerPos(center)
+			map.panTo(center)
 		}
 	}, [center])
 
@@ -24,7 +43,7 @@ const Map = ({ style, center, zoom, children }) => {
 		if (ref.current && !map) {
 			setMap(
 				new window.google.maps.Map(ref.current, {
-					// mapId: '7cad50f105533ffb',
+					mapId: mapId,
 					center: center,
 					style: style,
 					zoom: zoom,

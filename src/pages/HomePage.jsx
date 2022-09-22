@@ -8,8 +8,8 @@ const HomePage = () => {
 			className='d-flex justify-content-center align-items-center vh-75 m-0 p-0'
 		>
 			<h2>Homepage</h2>
-		</Container>
-	)
+			</Container>
+)
 }
 
 export default HomePage

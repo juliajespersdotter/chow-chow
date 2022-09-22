@@ -17,6 +17,8 @@ const MapPage = () => {
 	const [errorMsg, setErrorMsg] = useState(null)
 	const addressRef = useRef()
 	const { foodplaces, isLoading } = useFoodplaces()
+	const [showModal, setShowModal] = useState(false)
+	const [place, setPlace] = useState(null)
 
 	const handleSubmit = async e => {
 		e.preventDefault()
@@ -31,9 +33,9 @@ const MapPage = () => {
 		}
 	}
 
-	const onClick = foodplace => {
-		// setModalVisible(true)
-		console.log(foodplace)
+	const onClick = (foodplace) => {
+		setPlace(foodplace)
+		setShowModal(!showModal)
 	}
 
 	useEffect(() => {
@@ -60,6 +62,7 @@ const MapPage = () => {
 									key={foodplace.id}
 								/>
 							))}
+							{showModal && <InfoModal data={place} show={showModal} onClick={onClick} />}
 					</Map>
 				</div>
 			</Wrapper>

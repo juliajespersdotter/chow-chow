@@ -7,15 +7,12 @@ const Marker = options => {
 
 	// console.log(options)
 	// console.log(position)
+	console.log(options.foodplace)
 
 	useEffect(() => {
 		if (!marker) {
 			// console.log('position', position)
-			setMarker(
-				new google.maps.Marker({
-					icon: 'https://cdn-icons-png.flaticon.com/32/1404/1404945.png',
-				})
-			)
+			setMarker(new google.maps.Marker({}))
 		}
 
 		// remove marker from map on unmount
@@ -29,6 +26,10 @@ const Marker = options => {
 	useEffect(() => {
 		if (marker) {
 			marker.setOptions(options)
+			let infoWindow = new google.maps.InfoWindow()
+			infoWindow.setPosition(options.position)
+			infoWindow.setContent(options.foodplace.name)
+			infoWindow.open(options.map)
 		}
 	}, [marker, options])
 

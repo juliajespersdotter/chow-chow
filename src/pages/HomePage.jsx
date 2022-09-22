@@ -70,6 +70,7 @@ const HomePage = () => {
 						foodplaces.map(foodplace => (
 							<Marker
 								position={foodplace.geopoint}
+								foodplace={foodplace}
 								key={foodplace.id}
 							/>
 						))}

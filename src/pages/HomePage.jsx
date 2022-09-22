@@ -3,11 +3,9 @@ import Alert from 'react-bootstrap/Alert'
 import Map from '../components/Map'
 import { Wrapper, Status } from '@googlemaps/react-wrapper'
 import { useState, useEffect, useRef } from 'react'
-import { collection, orderBy, query } from 'firebase/firestore'
-import { useFirestoreQueryData } from '@react-query-firebase/firestore'
-import { db } from '../firebase'
 import useGeoCoding from '../hooks/useGeoCoding'
 import Marker from '../components/Marker'
+import useFoodplaces from '../hooks/useFoodplaces'
 
 const HomePage = () => {
 	const [zoom, setZoom] = useState(17) // initial zoom
@@ -18,18 +16,8 @@ const HomePage = () => {
 	})
 	const [errorMsg, setErrorMsg] = useState(null)
 	const addressRef = useRef()
-
-	const foodplaceRef = collection(db, 'foodplaces')
-
-	const queryRef = query(foodplaceRef, orderBy('name'))
-	const { data: foodplaces, isLoading } = useFirestoreQueryData(
-		['foodplaces'],
-		queryRef,
-		{
-			idField: 'id',
-			subscribe: true,
-		}
-	)
+	const { foodplaces, isLoading } = useFoodplaces()
+	console.log(foodplaces)
 
 	const handleSubmit = async e => {
 		e.preventDefault()

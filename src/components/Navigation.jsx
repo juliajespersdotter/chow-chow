@@ -8,7 +8,7 @@ const Navigation = () => {
 		<Navbar bg='dark' variant='dark' expand='md'>
 			<Container>
 				<Navbar.Brand as={Link} to='/'>
-					React Template
+					Chow Chow
 				</Navbar.Brand>
 
 				<Navbar.Toggle aria-controls='basic-navbar-nav' />
@@ -16,6 +16,9 @@ const Navigation = () => {
 					<Nav className='ms-auto'>
 						<Nav.Link as={NavLink} end to='/'>
 							Home
+						</Nav.Link>
+						<Nav.Link as={NavLink} end to='/foodplaces'>
+							Foodplaces
 						</Nav.Link>
 						<Nav.Link as={NavLink} end to='/add'>
 							Add Foodplace

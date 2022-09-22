@@ -1,4 +1,4 @@
-@import "bootstrap/scss/bootstrap";
+@import 'bootstrap/scss/bootstrap';
 
 #map {
 	height: 100%;
@@ -23,4 +23,8 @@ body,
 	overflow: hidden;
 	height: 40px;
 	cursor: pointer;
+}
+
+.foodplace-item {
+	border: 1px solid #888;
 }

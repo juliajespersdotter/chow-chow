@@ -3,6 +3,7 @@ import Navigation from './components/Navigation'
 import HomePage from './pages/HomePage'
 import NotFound from './pages/NotFound'
 import AddRestaurantPage from './pages/AddRestaurantPage'
+import RestaurantListPage from './pages/RestaurantListPage'
 import './assets/scss/App.scss'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
 				<Route path='/' element={<HomePage />} />
 				<Route path='*' element={<NotFound />} />
 				<Route path='/add' element={<AddRestaurantPage />} />
+				<Route path='/foodplaces' element={<RestaurantListPage />} />
 			</Routes>
 		</div>
 	)

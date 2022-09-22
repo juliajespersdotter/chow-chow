@@ -7,7 +7,6 @@ import {
 	useEffect,
 } from 'react'
 import Button from 'react-bootstrap/Button'
-import Marker from './Marker'
 
 const Map = ({ style, center, zoom, children }) => {
 	const ref = useRef(null)
@@ -25,7 +24,7 @@ const Map = ({ style, center, zoom, children }) => {
 		if (ref.current && !map) {
 			setMap(
 				new window.google.maps.Map(ref.current, {
-					mapId: '7cad50f105533ffb',
+					// mapId: '7cad50f105533ffb',
 					center: center,
 					style: style,
 					zoom: zoom,

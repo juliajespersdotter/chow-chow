@@ -20,6 +20,9 @@ const Navigation = () => {
 						<Nav.Link as={NavLink} end to='/add'>
 							Add Foodplace
 						</Nav.Link>
+						<Nav.Link as={NavLink} end to='/search'>
+							Search
+						</Nav.Link>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>

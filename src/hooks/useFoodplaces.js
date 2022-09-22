@@ -2,7 +2,7 @@ import { useFirestoreQueryData } from '@react-query-firebase/firestore'
 import { collection, query, where, orderBy } from 'firebase/firestore'
 import { db } from '../firebase'
 
-const useFoodplaces = () => {
+const useFoodplaces = (options = {}) => {
 	// const { currentUser } = useAuthContext()
 
 	// create ref to collection 'foodplaces'
@@ -13,7 +13,7 @@ const useFoodplaces = () => {
 	const queryKey = ['foodplaces']
 
 	// create query for collectionRef, order result by name
-	const queryRef = query(collectionRef, orderBy('name'))
+	const queryRef = query(collectionRef)
 
 	// run query
 	const { data: foodplaces, isLoading } = useFirestoreQueryData(

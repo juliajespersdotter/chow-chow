@@ -21,7 +21,7 @@ const FilterForm = () => {
 	)
 
     const filteritems = (curitems) => {
-        const updateitems = foodplaces.filter((cur) => {
+        const updateitems = Fooddata.filter((cur) => {
             return cur.category === curitems;
         })
         setMenu(updateitems);
@@ -29,7 +29,7 @@ const FilterForm = () => {
 
     return (
         <>
-            <section className='mt-2'>
+            <section className='mt-2 container'>
                 <h2 className='text-center mb-2' style={{ fontWeight: 400 }}>Search Your Food</h2>
 
                 <div className="btn-container d-flex justify-content-around mt-2">

@@ -67,7 +67,7 @@ const MapPage = () => {
 					</Map>
 				</div>
 			</Wrapper>
-			<form onSubmit={handleSubmit}>
+			{/* <form onSubmit={handleSubmit}>
 				<input
 					type='string'
 					id='address'
@@ -75,7 +75,7 @@ const MapPage = () => {
 					ref={addressRef}
 				/>
 				<button type='submit'>submit</button>
-			</form>
+			</form> */}
 			{/* {form} */}
 		</Container>
 	)

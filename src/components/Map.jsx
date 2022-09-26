@@ -35,6 +35,7 @@ const Map = ({ style, center, zoom, children }) => {
 	useEffect(() => {
 		if (map) {
 			map.panTo(center)
+			map.setZoom(zoom)
 		}
 	}, [center])
 
@@ -79,7 +80,9 @@ const Map = ({ style, center, zoom, children }) => {
 						return cloneElement(child, { map })
 					}
 				})}
-				{map && userMarker && <UserMarker map={map} position={userMarker} />}
+				{map && userMarker && (
+					<UserMarker map={map} position={userMarker} />
+				)}
 			</div>
 		</>
 	)

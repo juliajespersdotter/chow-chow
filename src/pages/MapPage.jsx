@@ -9,7 +9,7 @@ import useFoodplaces from '../hooks/useFoodplaces'
 import InfoModal from '../components/InfoModal'
 
 const MapPage = () => {
-	const [zoom, setZoom] = useState(17) // initial zoom
+	const [zoom, setZoom] = useState(15) // initial zoom
 	const { position, getLatLng, error, isError } = useGeoCoding()
 	const [center, setCenter] = useState({
 		lat: 55.58354,
@@ -34,7 +34,7 @@ const MapPage = () => {
 		}
 	}
 
-	const onClick = (foodplace) => {
+	const onClick = foodplace => {
 		setPlace(foodplace)
 		setShowModal(!showModal)
 	}
@@ -63,7 +63,13 @@ const MapPage = () => {
 									key={foodplace.id}
 								/>
 							))}
-							{showModal && <InfoModal data={place} show={showModal} onClick={onClick} />}
+						{showModal && (
+							<InfoModal
+								data={place}
+								show={showModal}
+								onClick={onClick}
+							/>
+						)}
 					</Map>
 				</div>
 			</Wrapper>

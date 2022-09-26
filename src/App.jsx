@@ -3,18 +3,20 @@ import { useState } from 'react'
 import Navigation from './components/Navigation'
 import HomePage from './pages/HomePage'
 import NotFound from './pages/NotFound'
-import AddRestaurantPage from './pages/AddRestaurantPage'
-import RestaurantListPage from './pages/RestaurantListPage'
+import AddFoodplacePage from './pages/AddFoodplacePage'
+import FoodplaceListPage from './pages/FoodplaceListPage'
 import ThemeContext from './contexts/ThemeContext'
 import MapPage from './pages/MapPage'
 import './assets/scss/App.scss'
+import AdminPage from './pages/AdminPage'
+import RequireAuth from './components/RequireAuth'
 
 function App() {
 	const [theme, setTheme] = useState('light')
 	const value = { theme, setTheme }
 
 	return (
-		<div id='App'>
+		<div id='App' bg={theme}>
 			<ThemeContext.Provider value={value}>
 				<Navigation />
 
@@ -22,10 +24,15 @@ function App() {
 					<Route path='/' element={<HomePage />} />
 					<Route path='/map' element={<MapPage />} />
 					<Route path='*' element={<NotFound />} />
-					<Route path='/add' element={<AddRestaurantPage />} />
+					<Route path='/add' element={<AddFoodplacePage />} />
+					<Route path='/foodplaces' element={<FoodplaceListPage />} />
 					<Route
-						path='/foodplaces'
-						element={<RestaurantListPage />}
+						path='/admin'
+						element={
+							<RequireAuth>
+								<AdminPage />
+							</RequireAuth>
+						}
 					/>
 				</Routes>
 			</ThemeContext.Provider>

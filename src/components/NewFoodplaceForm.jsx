@@ -5,7 +5,7 @@ import { collection, addDoc } from 'firebase/firestore'
 import useGeoCoding from '../hooks/useGeoCoding'
 import { db } from '../firebase'
 
-const NewRestaurantForm = () => {
+const NewFoodplaceForm = () => {
 	const { position, getLatLng, error, isError } = useGeoCoding()
 	const {
 		register,
@@ -24,25 +24,26 @@ const NewRestaurantForm = () => {
 
 		try {
 			await getLatLng(data.address)
+
+			if (position.lat && position.lng) {
+				await addDoc(collection(db, 'foodplaces'), {
+					city: data.city,
+					name: data.name,
+					description: data.description,
+					streetadress: data.address,
+					type: data.type,
+					cuisine: cuisine,
+					meals: data.meals,
+					email: data.email,
+					phone: data.phone,
+					url: data.url,
+					geopoint: position,
+					facebook: data.facebook,
+					approved: false,
+				})
+			}
 		} catch (err) {
 			console.log(err.message)
-		}
-
-		if (position.lat && position.lng) {
-			await addDoc(collection(db, 'foodplaces'), {
-				city: data.city,
-				name: data.name,
-				description: data.description,
-				streetadress: data.address,
-				type: data.type,
-				cuisine: cuisine,
-				meals: data.meals,
-				email: data.email,
-				phone: data.phone,
-				url: data.url,
-				geopoint: position,
-				facebook: data.facebook,
-			})
 		}
 
 		console.log(data)
@@ -160,4 +161,4 @@ const NewRestaurantForm = () => {
 	)
 }
 
-export default NewRestaurantForm
+export default NewFoodplaceForm

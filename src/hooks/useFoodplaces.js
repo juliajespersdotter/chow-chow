@@ -1,5 +1,5 @@
 import { useFirestoreQueryData } from '@react-query-firebase/firestore'
-import { collection, query, where, orderBy } from 'firebase/firestore'
+import { collection, query, orderBy, where } from 'firebase/firestore'
 import { db } from '../firebase'
 
 const useFoodplaces = (options = {}) => {
@@ -13,7 +13,7 @@ const useFoodplaces = (options = {}) => {
 	const queryKey = ['foodplaces']
 
 	// create query for collectionRef, order result by name
-	const queryRef = query(collectionRef)
+	const queryRef = query(collectionRef, where('approved', '==', true))
 
 	// run query
 	const { data: foodplaces, isLoading } = useFirestoreQueryData(

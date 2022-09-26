@@ -8,7 +8,7 @@ const UserMarker = options => {
 		if (!marker) {
 			setMarker(
 				new google.maps.Marker({
-					icon: "https://cdn-icons-png.flaticon.com/256/10/10522.png",
+					icon: "https://cdn-icons-png.flaticon.com/64/10/10522.png",
 					optimized: false,
 				})
 			)

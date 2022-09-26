@@ -24,25 +24,26 @@ const NewFoodplaceForm = () => {
 
 		try {
 			await getLatLng(data.address)
+
+			if (position.lat && position.lng) {
+				await addDoc(collection(db, 'foodplaces'), {
+					city: data.city,
+					name: data.name,
+					description: data.description,
+					streetadress: data.address,
+					type: data.type,
+					cuisine: cuisine,
+					meals: data.meals,
+					email: data.email,
+					phone: data.phone,
+					url: data.url,
+					geopoint: position,
+					facebook: data.facebook,
+					approved: false,
+				})
+			}
 		} catch (err) {
 			console.log(err.message)
-		}
-
-		if (position.lat && position.lng) {
-			await addDoc(collection(db, 'foodplaces'), {
-				city: data.city,
-				name: data.name,
-				description: data.description,
-				streetadress: data.address,
-				type: data.type,
-				cuisine: cuisine,
-				meals: data.meals,
-				email: data.email,
-				phone: data.phone,
-				url: data.url,
-				geopoint: position,
-				facebook: data.facebook,
-			})
 		}
 
 		console.log(data)

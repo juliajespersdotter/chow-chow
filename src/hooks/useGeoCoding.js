@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 const useGeoCoding = () => {
-	const [position, setPosition] = useState({ lat: null, lng: null })
+	const [position, setPosition] = useState({})
 	const [error, setError] = useState('')
 	const [isError, setIsError] = useState(false)
 
@@ -26,6 +26,7 @@ const useGeoCoding = () => {
 					if (pos) {
 						setPosition(pos)
 						console.log('position', position)
+						return position
 					}
 				} else {
 					setError(status)
@@ -33,6 +34,7 @@ const useGeoCoding = () => {
 				}
 			}
 		)
+		console.log('position', position)
 		return position
 	}
 

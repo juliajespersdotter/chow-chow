@@ -2,13 +2,12 @@ import { useEffect, useState } from 'react'
 
 const UserMarker = options => {
 	const [marker, setMarker] = useState()
-	console.log('ooptions', options)
 
 	useEffect(() => {
 		if (!marker) {
 			setMarker(
 				new google.maps.Marker({
-					icon: "https://cdn-icons-png.flaticon.com/256/10/10522.png",
+					icon: 'https://cdn-icons-png.flaticon.com/256/10/10522.png',
 					optimized: false,
 				})
 			)

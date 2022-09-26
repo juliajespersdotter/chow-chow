@@ -8,6 +8,8 @@ import FoodplaceListPage from './pages/FoodplaceListPage'
 import ThemeContext from './contexts/ThemeContext'
 import MapPage from './pages/MapPage'
 import './assets/scss/App.scss'
+import AdminPage from './pages/AdminPage'
+import RequireAuth from './components/RequireAuth'
 
 function App() {
 	const [theme, setTheme] = useState('light')
@@ -24,6 +26,14 @@ function App() {
 					<Route path='*' element={<NotFound />} />
 					<Route path='/add' element={<AddFoodplacePage />} />
 					<Route path='/foodplaces' element={<FoodplaceListPage />} />
+					<Route
+						path='/admin'
+						element={
+							<RequireAuth>
+								<AdminPage />
+							</RequireAuth>
+						}
+					/>
 				</Routes>
 			</ThemeContext.Provider>
 		</div>

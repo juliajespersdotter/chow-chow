@@ -8,7 +8,6 @@ import Marker from '../components/Marker'
 import useFoodplaces from '../hooks/useFoodplaces'
 import InfoModal from '../components/InfoModal'
 import SearchForm from '../components/SearchForm'
-import mapStyles from '../mapStyles.json'
 
 const MapPage = () => {
 	const [zoom, setZoom] = useState(17) // initial zoom
@@ -21,10 +20,6 @@ const MapPage = () => {
 	const { foodplaces, isLoading } = useFoodplaces()
 	const [showModal, setShowModal] = useState(false)
 	const [place, setPlace] = useState(null)
-
-	const defaultMapOptions = {
-		styles: mapStyles,
-	}
 
 	const handleSubmit = async (city) => {
 		if (city) {
@@ -56,7 +51,19 @@ const MapPage = () => {
 		{isLoading && <p>Loading...</p>}
 		<Wrapper apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
 			<div className='vh-75'>
-				<Map center={center} zoom={zoom} defaultOptions={defaultMapOptions}>
+				<Map 
+					center={center} 
+					zoom={zoom} 
+					options={{
+						styles: [
+							{
+								featureType: 'all',
+								elementType: 'all',
+								stylers: [{ visibility: 'off' }],
+							},
+						],
+					}}
+					>
 					{foodplaces &&
 						foodplaces.map(foodplace => (
 							<Marker

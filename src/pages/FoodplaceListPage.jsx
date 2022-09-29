@@ -33,7 +33,7 @@ const FoodplaceListPage = () => {
 					<Form onSubmit={handleSubmit(sortByFunction)}>
 						<Row className='justify-content-center'>
 							<Col xs={12} md={6} lg={4}>
-								<Form.Group controlId='formBasicEmail'>
+								<Form.Group controlId='formBasic'>
 									<Form.Label>Sort by</Form.Label>
 									<Form.Control
 										as='select'
@@ -46,7 +46,7 @@ const FoodplaceListPage = () => {
 								</Form.Group>
 							</Col>
 							<Col xs={12} md={6} lg={4}>
-								<Form.Group controlId='formBasicEmail'>
+								<Form.Group controlId='formBasic'>
 									<Form.Label>Order</Form.Label>
 									<Form.Control
 										as='select'
@@ -65,7 +65,7 @@ const FoodplaceListPage = () => {
 										{...register('filterBy', { required: true })}
 									>
 										<option value='all'>All</option>
-										<option value='vegan'>Vegan</option>
+										<option value='dinner'>dinner</option>
 										<option value='vegetarian'>Vegetarian</option>
 										<option value='glutenFree'>Gluten free</option>
 									</Form.Control>
@@ -74,7 +74,7 @@ const FoodplaceListPage = () => {
 						</Row>
 						<Row className=''>
 							<Col xs={12} md={6} lg={4}>
-								<Button variant='primary' type='submit'>
+								<Button className="mb-2 mt-2"variant='primary' type='submit'>
 									Submit
 								</Button>
 							</Col>
@@ -93,7 +93,7 @@ const FoodplaceListPage = () => {
 						</Form.Select>
 						<Button type='submit'>🔎</Button>
 					</Form> */}
-					<Row xs={1} sm={1} md={2} lg={8}>
+					<Row xs={2} sm={2} md={2} lg={8}>
 						{foodplaces.map(foodplace => (
 							<Col key={foodplace.id} className='d-flex mb-4'>
 								<FoodPlaceItem foodplace={foodplace} />

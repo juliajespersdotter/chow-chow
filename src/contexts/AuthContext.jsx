@@ -42,6 +42,7 @@ const AuthContextProvider = ({ children }) => {
 		// create user document
 		const docRef = doc(db, 'users', auth.currentUser.uid) // "users/3l97yFNSCcY77HmsjFO3aKPmkzC2"
 		await setDoc(docRef, {
+			admin: true,
 			name,
 			email,
 			photoURL: auth.currentUser.photoURL,

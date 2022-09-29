@@ -1,24 +1,22 @@
-import React from 'react'
+import { useState } from 'react'
 import FoodPlaceItem from '../components/FoodPlaceItem'
 import useFoodplaces from '../hooks/useFoodplaces'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import { useForm } from 'react-hook-form'
+import useOrderBy from '../hooks/useOrderBy'
+import { useEffect } from 'react'
 
 const FoodplaceListPage = () => {
+	const [filterValue, setFilterValue] = useState(null)
 	const { foodplaces, isLoading } = useFoodplaces()
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-		reset,
-	} = useForm()
+	// const { orderedFoodplaces } = useOrderBy(filterValue)
 
-	const sortByFunction = async data => {
-		console.log(data)
+	const sortByFunction = e => {
+		if (e.target.value) {
+			setFilterValue(e.target.value)
+		}
 	}
 
 	return (
@@ -29,17 +27,12 @@ const FoodplaceListPage = () => {
 					<h3 className='text-center w-100 mt-3 p-3'>
 						There are {foodplaces.length} foodplaces to choose from!
 					</h3>
-					<Form onSubmit={handleSubmit(sortByFunction)}>
+					<Form onChange={sortByFunction}>
 						<Form.Select>
 							<option>Filter by</option>
-							<option {...register('sortBy')} value='name'>
-								Name
-							</option>
-							<option {...register('sortBy')} value='city'>
-								City
-							</option>
+							<option value='name'>Name</option>
+							<option value='city'>City</option>
 						</Form.Select>
-						<Button type='submit'>🔎</Button>
 					</Form>
 					<Row xs={1} sm={1} md={2} lg={8}>
 						{foodplaces.map(foodplace => (

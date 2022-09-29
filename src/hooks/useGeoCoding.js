@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 const useGeoCoding = () => {
 	const [position, setPosition] = useState({})
@@ -25,7 +25,6 @@ const useGeoCoding = () => {
 
 					if (pos) {
 						setPosition(pos)
-						console.log('position', position)
 						return position
 					}
 				} else {
@@ -34,7 +33,6 @@ const useGeoCoding = () => {
 				}
 			}
 		)
-		console.log('position', position)
 		return position
 	}
 

@@ -42,6 +42,7 @@ const NewFoodplaceForm = () => {
 					approved: false,
 				})
 			}
+			console.log(position)
 		} catch (err) {
 			console.log(err.message)
 		}

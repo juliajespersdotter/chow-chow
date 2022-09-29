@@ -2,23 +2,27 @@ import { useState, useEffect } from 'react'
 import { collection, query, onSnapshot } from 'firebase/firestore'
 import { db } from '../firebase'
 
-const useStreamCollection = (collectionName, options = {}) => {
+const useStreamCollection = (col, ...queryConstraint) => {
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        const collectionRef = collection(db, collectionName)
-        const queryRef = query(collectionRef)
+        const colRef = collection(db, col)
+        const queryRef = query(colRef, ...queryConstraint)
+
         const unsubscribe = onSnapshot(queryRef, (snapshot) => {
-            const data = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }))
-            setData(data)
+            const docs = snapshot.docs.map(doc => {
+                return {
+                    id: doc.id,
+                    ...doc.data()
+                }
+            })
+            setData(docs)
             setIsLoading(false)
         })
+
         return unsubscribe
-    }, [collectionName])
+    }, [])
 
     return { data, isLoading }
 }

@@ -35,7 +35,7 @@ const Map = ({ style, center, zoom, children }) => {
 	useEffect(() => {
 		if (map) {
 			map.panTo(center)
-			map.setZoom(zoom)
+			map.setZoom(14)
 		}
 	}, [center])
 

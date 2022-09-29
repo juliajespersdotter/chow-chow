@@ -2,11 +2,12 @@ import Container from 'react-bootstrap/Container'
 import Alert from 'react-bootstrap/Alert'
 import Map from '../components/Map'
 import { Wrapper, Status } from '@googlemaps/react-wrapper'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import useGeoCoding from '../hooks/useGeoCoding'
 import Marker from '../components/Marker'
 import useFoodplaces from '../hooks/useFoodplaces'
 import InfoModal from '../components/InfoModal'
+import SearchForm from '../components/SearchForm'
 
 const MapPage = () => {
 	const [zoom, setZoom] = useState(15) // initial zoom
@@ -16,17 +17,14 @@ const MapPage = () => {
 		lng: 13.01373,
 	})
 	const [errorMsg, setErrorMsg] = useState(null)
-	const addressRef = useRef()
 	const { foodplaces, isLoading } = useFoodplaces()
 	const [showModal, setShowModal] = useState(false)
 	const [place, setPlace] = useState(null)
 
-	const handleSubmit = async e => {
-		e.preventDefault()
-
-		if (addressRef.current.value) {
+	const handleSubmit = async city => {
+		if (city) {
 			try {
-				await getLatLng(addressRef.current.value)
+				await getLatLng(city)
 			} catch (err) {
 				setErrorMsg(err.message)
 				console.log(errorMsg)
@@ -73,16 +71,8 @@ const MapPage = () => {
 					</Map>
 				</div>
 			</Wrapper>
-			<form onSubmit={handleSubmit}>
-				<input
-					type='string'
-					id='address'
-					name='address'
-					ref={addressRef}
-				/>
-				<button type='submit'>submit</button>
-			</form>
-			{/* {form} */}
+
+			<SearchForm onSubmit={handleSubmit} />
 		</Container>
 	)
 }

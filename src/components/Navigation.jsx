@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button'
 import Nav from 'react-bootstrap/Nav'
 import { Link, NavLink } from 'react-router-dom'
 import ThemeContext from '../contexts/ThemeContext'
+import { Image } from 'react-bootstrap'
 
 const Navigation = () => {
 	const { theme, setTheme } = useContext(ThemeContext)
@@ -12,7 +13,7 @@ const Navigation = () => {
 		<Navbar bg='dark' variant='dark' expand='md'>
 			<Container>
 				<Navbar.Brand as={Link} to='/'>
-					Chow Chow
+				 <Image fluid className='' src='images/logo-nav.png' />
 				</Navbar.Brand>
 
 				<Button

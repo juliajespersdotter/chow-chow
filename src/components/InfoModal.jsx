@@ -1,26 +1,23 @@
-import Modal from 'react-bootstrap/Modal'
+import Offcanvas from 'react-bootstrap/Offcanvas'
 
 const InfoModal = ({ data, show, onClick }) => {
 	return (
-		<Modal
+		<Offcanvas
 			show={show}
 			onHide={onClick}
-			size="sm"
-			aria-labelledby="contained-modal-title-vcenter"
-			centered
 		>
-			<Modal.Header closeButton>
-				<Modal.Title id="contained-modal-title-vcenter">
+			<Offcanvas.Header closeButton>
+				<Offcanvas.Title>
 					{data.name}
-				</Modal.Title>
-			</Modal.Header>
-			<Modal.Body>
+				</Offcanvas.Title>
+			</Offcanvas.Header>
+			<Offcanvas.Body>
 				<h6> {data.description} </h6>
-			</Modal.Body>
+			</Offcanvas.Body>
 			{/* <Modal.Footer>
 				<Button onClick={props.onHide}>Close</Button>
 			</Modal.Footer> */}
-		</Modal>
+		</Offcanvas>
 	)
 }
 

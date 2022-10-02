@@ -30,7 +30,7 @@ const FoodplaceListPage = () => {
 						There are {foodplaces.length} foodplaces to choose from!
 					</h3>
 					
-					<Form onSubmit={handleSubmit(sortByFunction)}>
+					{/* <Form onSubmit={handleSubmit(sortByFunction)}>
 						<Row className='justify-content-center'>
 							<Col xs={12} md={6} lg={4}>
 								<Form.Group controlId='formBasic'>
@@ -79,7 +79,7 @@ const FoodplaceListPage = () => {
 								</Button>
 							</Col>
 						</Row>
-					</Form>	
+					</Form>	 */}
 
 					{/* <Form onSubmit={handleSubmit(sortByFunction)}>
 						<Form.Select>

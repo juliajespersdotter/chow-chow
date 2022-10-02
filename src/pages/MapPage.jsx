@@ -8,6 +8,7 @@ import Marker from '../components/Marker'
 import useFoodplaces from '../hooks/useFoodplaces'
 import InfoModal from '../components/InfoModal'
 import SearchForm from '../components/SearchForm'
+import FilterOffcanvas from '../components/FilterOffcanvas'
 
 const MapPage = () => {
 	const [zoom, setZoom] = useState(17) // initial zoom
@@ -45,6 +46,10 @@ const MapPage = () => {
 
 	return (
 	<Container fluid className='m-0 p-0'>
+
+		<div className='filter-button'>
+            <FilterOffcanvas />
+        </div>
 		{isError && (
 			<Alert variant='danger'>An error has occurred: {error}</Alert>
 		)}
@@ -78,7 +83,7 @@ const MapPage = () => {
 			</div>
 		</Wrapper>
 
-		<SearchForm onSubmit={handleSubmit} />
+		{/* <SearchForm onSubmit={handleSubmit} /> */}
 
 		</Container>
 	)

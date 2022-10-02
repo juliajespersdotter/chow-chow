@@ -45,3 +45,18 @@ body,
 .home {
 	height: 100vh;
 }
+
+.filter-button{
+    text-align: center;
+    background-color:  rgb(33, 37, 41);
+    padding-bottom: 10px;
+}
+
+.offcanvas {
+    background-color: rgb(33, 37, 41);
+	color: white;
+}
+
+.offcanvas.offcanvas-start {
+    width: 600px;
+}

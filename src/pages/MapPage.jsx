@@ -83,7 +83,7 @@ const MapPage = () => {
 			</div>
 		</Wrapper>
 
-		{/* <SearchForm onSubmit={handleSubmit} /> */}
+		<SearchForm onSubmit={handleSubmit} />
 
 		</Container>
 	)

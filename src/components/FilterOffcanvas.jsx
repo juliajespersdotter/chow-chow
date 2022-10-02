@@ -5,6 +5,7 @@ import  ListGroup  from 'react-bootstrap/ListGroup'
 import useGetQueryFoodplaces from '../hooks/useGetQueryFoodplaces'
 import FoodPlaceItem from './FoodPlaceItem'
 import SearchForm from '../components/SearchForm'
+import useGeoCoding from '../hooks/useGeoCoding'
 
 
 const FilterOffcanvas = ({}) => {

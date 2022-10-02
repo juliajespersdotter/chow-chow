@@ -6,11 +6,58 @@ import useGetQueryFoodplaces from '../hooks/useGetQueryFoodplaces'
 
 const FilterOffcanvas = ({}) => {
 
+    const [cityWhere, setcityWhere] = useState(null)
+    const [nameOrder, setNameOrder] = useState('asc')
+    const [mealsWhere, setMealsWhere] = useState('All')
+    const [typeWhere, setTypeWhere] = useState('All')
+
+    const [queryLimits, setQueryLimits] = useState({
+        cityWhere,
+        nameOrder,
+        mealsWhere,
+        typeWhere,
+    })
+
+    const handleFoodFilter = (city) => {
+        setQueryLimits({
+            cityWhere: city,
+            nameOrder,
+            mealsWhere,
+            typeWhere,
+        })
+    }
+
+    const columns = useMemo( () => {
+
+        return [
+            {
+                Header: 'Name',
+                accessor: 'name'
+            },
+            {
+                Header: 'City',
+                accessor: 'city'
+            },
+            {
+                Header: 'Meals',
+                accessor: 'meals'
+            },
+            {
+                Header: 'Type',
+                accessor: 'type'
+            },
+            {
+                Header: 'Cuisine',
+                accessor: 'cuisine'
+            }
+        ]
+
+    }, [] )
+
     const { data, loading } = useGetQueryFoodplaces(queryLimits)
 
     const handleShow = () => setShow(true)
     const handleClose = () => setShow(false)
-    
 
     return (
         <>
@@ -27,7 +74,7 @@ const FilterOffcanvas = ({}) => {
             <Offcanvas.body>
 
             </Offcanvas.body>
-            
+
             </Offcanvas>
         </>
     )

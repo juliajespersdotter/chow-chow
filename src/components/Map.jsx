@@ -70,7 +70,7 @@ const Map = ({ style, center, zoom, children }) => {
 
 	return (
 		<>
-			<Button onClick={getCurrentLocation} className='text-center w-100'>
+			<Button onClick={getCurrentLocation} className='text-center w-100 rounded-0'>
 				Pan to current Location
 			</Button>
 			<div id='map' ref={ref} center={center} zoom={zoom}>

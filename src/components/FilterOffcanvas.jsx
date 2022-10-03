@@ -35,6 +35,7 @@ const FilterOffcanvas = ({}) => {
     }
 
     const { data, loading } = useGetQueryFoodplaces(queryLimits)
+    console.log(data)
 
     const handleShow = () => setShow(true)
     const handleClose = () => setShow(false)

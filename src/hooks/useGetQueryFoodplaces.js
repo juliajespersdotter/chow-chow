@@ -43,6 +43,7 @@ const useGetQueryFoodplaces = (queryLimits) => {
         }
     }
 
+
     // Create react-query instance
     const placesQuery = useFirestoreQueryData(queryKey, queryRef, {
         idField: 'id',

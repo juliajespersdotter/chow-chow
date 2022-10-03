@@ -1,4 +1,3 @@
-import useStreamCollection from "./useStreamCollection";
 import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 import { collection, query, where, orderBy } from "firebase/firestore";
 import { db } from "../firebase";
@@ -43,7 +42,6 @@ const useGetQueryFoodplaces = (queryLimits) => {
             queryRef = query(collectionRef, where('type', '==', queryLimits.typeWhere), where('meals', '==', queryLimits.mealsWhere), orderBy('name', queryLimits.nameOrder))
         }
     }
-
 
     // Create react-query instance
     const placesQuery = useFirestoreQueryData(queryKey, queryRef, {

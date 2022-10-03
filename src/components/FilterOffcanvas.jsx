@@ -34,33 +34,6 @@ const FilterOffcanvas = ({}) => {
         })
     }
 
-    const columns = useMemo( () => {
-
-        return [
-            {
-                Header: 'Name',
-                accessor: 'name'
-            },
-            {
-                Header: 'City',
-                accessor: 'city'
-            },
-            {
-                Header: 'Meals',
-                accessor: 'meals'
-            },
-            {
-                Header: 'Type',
-                accessor: 'type'
-            },
-            {
-                Header: 'Cuisine',
-                accessor: 'cuisine'
-            }
-        ]
-
-    }, [] )
-
     const { data, loading } = useGetQueryFoodplaces(queryLimits)
 
     const handleShow = () => setShow(true)
@@ -121,6 +94,20 @@ const FilterOffcanvas = ({}) => {
 
 
                                     <Button onClick={() =>{handleFoodFilter(cityWhere)}} className='btn-color my-3'>Filter</Button>
+
+                                    <ListGroup className="foodplace-listgroup">
+
+                                        {
+                                            data.map((foodplace, index) => (
+                                                <ListGroup.Item action key={index} onClick={() => {(foodplace)}}>
+                                                    <h3>{foodplace.name}</h3>
+                                                    <span>{foodplace.streetadress + ' ' + foodplace.city}</span>
+                                                    <br />
+                                                    <span>{foodplace.meals} | {foodplace.type}</span>
+                                                </ListGroup.Item>
+                                            ))
+                                        }
+                                    </ListGroup>
 
                                 </>
                             )

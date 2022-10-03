@@ -31,6 +31,8 @@ const MapPage = () => {
 				console.log(errorMsg)
 			}
 		}
+
+		onCityFormSubmit(city)
 	}
 
 	const onClick = (foodplace) => {
@@ -48,7 +50,7 @@ const MapPage = () => {
 	<Container fluid className='m-0 p-0'>
 
 		<div className='filter-button'>
-            <FilterOffcanvas />
+            <FilterOffcanvas onCityFormSubmit={handleSubmit}/>
         </div>
 		{isError && (
 			<Alert variant='danger'>An error has occurred: {error}</Alert>

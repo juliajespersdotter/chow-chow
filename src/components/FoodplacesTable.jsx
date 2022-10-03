@@ -1,4 +1,11 @@
-import { useTable, useSortBy } from 'react-table'
+import { useState } from 'react'
+import {
+	useTable,
+	useSortBy,
+	useFilters,
+	useGlobalFilter,
+	useAsyncDebounce,
+} from 'react-table'
 
 const FoodplacesTable = ({ columns, data }) => {
 	const tableInstance = useTable({ columns, data }, useSortBy)
@@ -6,8 +13,35 @@ const FoodplacesTable = ({ columns, data }) => {
 	const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
 		tableInstance
 
+	const GlobalFilter = ({
+		preGlobalFilteredRows,
+		globalFilter,
+		setGlobalFilter,
+	}) => {
+		const count = preGlobalFilteredRows.length
+		const [value, setValue] = useState(globalFilter)
+		const onChange = useAsyncDebounce(value => {
+			setGlobalFilter(value || undefined)
+		}, 200)
+	}
+
 	return (
 		<>
+			<span>
+				Search:{' '}
+				<input
+					value={value || ''}
+					onChange={e => {
+						setValue(e.target.value)
+						onChange(e.target.value)
+					}}
+					placeholder={`${count} records...`}
+					style={{
+						fontSize: '1.1rem',
+						border: '0',
+					}}
+				/>
+			</span>
 			{data && (
 				<table {...getTableProps()}>
 					<thead>

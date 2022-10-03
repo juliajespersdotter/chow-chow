@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image } from 'react-bootstrap'
 
-const FoodPlaceItem = ({ foodplace }) => {
+const FoodplaceItem = ({ foodplace }) => {
 	return (
 		<div className='w-100 m-auto d-flex foodplace-item mb-3 p-1 align-items-center'>
 			<Image fluid className='w-25 p-3' src='images/foodplace.png' />
@@ -30,4 +30,4 @@ const FoodPlaceItem = ({ foodplace }) => {
 	)
 }
 
-export default FoodPlaceItem
+export default FoodplaceItem

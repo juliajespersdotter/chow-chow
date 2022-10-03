@@ -6,8 +6,12 @@ Maps JavaScript API
 Docs: https://developers.google.com/maps/documentation/javascript/tutorials
 https://developers.google.com/maps/documentation/javascript/react-map
 
-2. Sätta upp Jira work board/SCRUM. 
+TODO
+#1 Fixa Geocoding Bugg
+#2 Google Maps länk vägbeskrivning - KLART
+#3 Visa email, page mm om det finns i matinfo - KLART
+#4 Lat Lng i URL för att vid omladdning finnas kvar
+#5 Filtrera Markörer och lista på utbud & kategori
+#6 Sortera lista med namn
+#7 Autocomplete i search bar
 
-3. Dela upp arbetet, vem gör vad. Ordna Databas struktur med storage. 
-
-4. Fundera på utseende och struktur.

@@ -1,81 +1,81 @@
-import { useState } from 'react'
-import {
-	useTable,
-	useSortBy,
-	useFilters,
-	useGlobalFilter,
-	useAsyncDebounce,
-} from 'react-table'
+import { useMemo } from 'react'
+import { useTable, useSortBy, useFilters } from 'react-table'
+import { matchSorterFn } from '../utilities/sorting'
+import MaUTable from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
 
 const FoodplacesTable = ({ columns, data }) => {
-	const tableInstance = useTable({ columns, data }, useSortBy)
+	const defaultColumn = useMemo(
+		() => ({
+			// Let's set up our default Filter UI
+			Filter: '',
+		}),
+		[]
+	)
+	const filterTypes = useMemo(
+		() => ({
+			rankedMatchSorter: matchSorterFn,
+		}),
+		[]
+	)
 
+	const tableInstance = useTable(
+		{
+			columns,
+			data,
+			defaultColumn, // Be sure to pass the defaultColumn option
+			filterTypes,
+		},
+		useFilters, // useFilters!
+		useSortBy
+	)
 	const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
 		tableInstance
 
-	const GlobalFilter = ({
-		preGlobalFilteredRows,
-		globalFilter,
-		setGlobalFilter,
-	}) => {
-		const count = preGlobalFilteredRows.length
-		const [value, setValue] = useState(globalFilter)
-		const onChange = useAsyncDebounce(value => {
-			setGlobalFilter(value || undefined)
-		}, 200)
-	}
-
 	return (
 		<>
-			<span>
-				Search:{' '}
-				<input
-					value={value || ''}
-					onChange={e => {
-						setValue(e.target.value)
-						onChange(e.target.value)
-					}}
-					placeholder={`${count} records...`}
-					style={{
-						fontSize: '1.1rem',
-						border: '0',
-					}}
-				/>
-			</span>
 			{data && (
-				<table {...getTableProps()}>
-					<thead>
+				<MaUTable {...getTableProps()}>
+					<TableHead>
 						{headerGroups.map(headerGroup => (
-							<tr {...headerGroup.getHeaderGroupProps()}>
+							<TableRow {...headerGroup.getHeaderGroupProps()}>
 								{headerGroup.headers.map(column => (
-									<th
+									<TableCell
 										{...column.getHeaderProps(
 											column.getSortByToggleProps()
 										)}
 									>
 										{column.render('Header')}
-									</th>
+										{/* <div> */}
+										{column.canFilter
+											? column.render('Filter')
+											: null}
+										{/* </div> */}
+									</TableCell>
 								))}
-							</tr>
+							</TableRow>
 						))}
-					</thead>
-					<tbody {...getTableBodyProps()}>
+					</TableHead>
+					<TableBody {...getTableBodyProps()}>
 						{rows.map((row, i) => {
 							prepareRow(row)
 							return (
-								<tr {...row.getRowProps()}>
+								<TableRow {...row.getRowProps()}>
 									{row.cells.map(cell => {
 										return (
-											<td {...cell.getCellProps()}>
+											<TableCell {...cell.getCellProps()}>
 												{cell.render('Cell')}
-											</td>
+											</TableCell>
 										)
 									})}
-								</tr>
+								</TableRow>
 							)
 						})}
-					</tbody>
-				</table>
+					</TableBody>
+				</MaUTable>
 			)}
 		</>
 	)

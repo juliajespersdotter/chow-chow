@@ -10,14 +10,23 @@ const InfoModal = ({ data, show, onClick }) => {
 			onHide={onClick}
 		>
 			<Offcanvas.Header closeButton>
-				<Offcanvas.Title>
-					{data.name}
+				<Offcanvas.Title className="d-flex flex-column align-items-start">
+					<h2>{data.name}</h2>
+					<img src='https://via.placeholder.com/150?text=No image found' alt="image for restaurant" />
 				</Offcanvas.Title>
 			</Offcanvas.Header>
-			<Offcanvas.Body>
-				<h6> {data.description} </h6>
-				Show directions on Google Maps:
-				<a href={url(data.name)} target='_blank'>Click here</a>
+			<Offcanvas.Body className="d-flex flex-column align-items-start">
+				<span className="text-muted fst-italic">{data.cuisine}</span>
+				<h5> {data.description} </h5>
+
+				{data.url && (<span>{data.url}</span>)}
+				{data.email && (<span>{data.email}</span>)}
+				{data.phone && (<span>{data.phone}</span>)}
+				{data.facebook && (<span>{data.facebook}</span>)}
+
+				<a href={url(data.name)} target='_blank'>
+					Show on Google Maps
+				</a>
 			</Offcanvas.Body>
 			{/* <Modal.Footer>
 				<Button onClick={props.onHide}>Close</Button>

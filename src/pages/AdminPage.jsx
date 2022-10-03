@@ -17,9 +17,7 @@ const AdminPage = () => {
 	const columns = useMemo(
 		() => [
 			{
-				// first group - TV Show
 				Header: 'Unapproved Foodplaces',
-				// First group columns
 				columns: [
 					{
 						Header: 'Name',
@@ -62,7 +60,6 @@ const AdminPage = () => {
 	const approveFoodplace = async foodplace => {
 		const foodplaceRef = doc(db, 'foodplaces', foodplace.id)
 
-		// Set the "capital" field of the city 'DC'
 		await updateDoc(foodplaceRef, {
 			approved: true,
 		})

@@ -10,9 +10,7 @@ const FoodplaceListPage = () => {
 	const columns = useMemo(
 		() => [
 			{
-				// first group - TV Show
 				Header: 'Foodplace List',
-				// First group columns
 				columns: [
 					{
 						Header: 'Name',

@@ -20,8 +20,6 @@ export function TextSearchFilter({
 export const DropdownFilter = ({
 	column: { filterValue, setFilter, preFilteredRows, id },
 }) => {
-	// Calculate the options for filtering
-	// using the preFilteredRows
 	const options = React.useMemo(() => {
 		const options = new Set()
 		preFilteredRows.forEach(row => {
@@ -30,7 +28,6 @@ export const DropdownFilter = ({
 		return [...options.values()]
 	}, [id, preFilteredRows])
 
-	// Render a multi-select box
 	return (
 		<select
 			value={filterValue}

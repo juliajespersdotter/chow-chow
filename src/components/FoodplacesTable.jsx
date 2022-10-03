@@ -10,7 +10,6 @@ import TableRow from '@mui/material/TableRow'
 const FoodplacesTable = ({ columns, data }) => {
 	const defaultColumn = useMemo(
 		() => ({
-			// Let's set up our default Filter UI
 			Filter: '',
 		}),
 		[]
@@ -26,10 +25,10 @@ const FoodplacesTable = ({ columns, data }) => {
 		{
 			columns,
 			data,
-			defaultColumn, // Be sure to pass the defaultColumn option
+			defaultColumn,
 			filterTypes,
 		},
-		useFilters, // useFilters!
+		useFilters,
 		useSortBy
 	)
 	const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =

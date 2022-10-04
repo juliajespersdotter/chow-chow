@@ -21,21 +21,19 @@ const MapPage = () => {
 	const [showModal, setShowModal] = useState(false)
 	const [place, setPlace] = useState(null)
 	const [searchParams, setSearchParams] = useSearchParams(undefined)
-	const [userMarker, setUserMarker] = useState()
 	const [center, setCenter] = useState(() => {
-		if (searchParams) {
+		if (searchParams.get("lat")) {
 			return {
 				lat: Number(searchParams.get("lat")),
 				lng: Number(searchParams.get("lng")),
 			}
 		}
-			return {
-				lat: 55.60587,
-				lng: 13.00073,
-			}
+		return {
+			lat: 55.58354,
+			lng: 13.01373,
+		}
 
 	})
-	console.log("CNETER BITCHEWZ", center)
 
 	const handleSubmit = async city => {
 		if (city) {
@@ -47,7 +45,6 @@ const MapPage = () => {
 				}
 				setCenter(position)
 				setSearchParams(position)
-				console.log('position', position)
 			} catch (err) {
 				setErrorMsg(err.message)
 				console.log(errorMsg)
@@ -59,60 +56,6 @@ const MapPage = () => {
 		setPlace(foodplace)
 		setShowModal(!showModal)
 	}
-
-	// useEffect(() => {
-	// 	if (position.lat && position.lng) {
-	// 		setCenter({ lat: position.lat, lng: position.lng })
-	// 	}
-	// }, [position])
-	const getCurrentLocation = () => {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(position => {
-				const pos = {
-					lat: position.coords.latitude,
-					lng: position.coords.longitude,
-				}
-				setCenter(pos)
-				setUserMarker(pos)
-				setSearchParams(pos)
-			})
-		} else {
-			// Browser doesn't support Geolocation
-			handleLocationError(false, infoWindow, setCenter({
-				lat: 55.60587,
-				lng: 13.00073,
-			}))
-		}
-	}
-
-	// useEffect(() => {
-	// 	if (position.lat && position.lng) {
-	// 		setCenter({ lat: position.lat, lng: position.lng })
-	// 		setSearchParams(position)
-	// 	}
-	// }, [position])
-
-	useEffect(() => {
-		if (!searchParams) {
-			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(position => {
-					const pos = {
-						lat: position.coords.latitude,
-						lng: position.coords.longitude,
-					}
-					setCenter(pos)
-					setUserMarker(pos)
-					setSearchParams(pos)
-				})
-			} else {
-				// Browser doesn't support Geolocation
-				handleLocationError(false, infoWindow, setCenter({
-					lat: 55.60587,
-					lng: 13.00073,
-				}))
-			}
-		}
-	}, [navigator.geolocation])
 
 	return (
 		<Container fluid className='m-0 p-0'>
@@ -131,7 +74,6 @@ const MapPage = () => {
 					<Map
 						center={center}
 						zoom={zoom}
-						userMarker={userMarker}
 					>
 						{foodplaces &&
 							foodplaces.map(foodplace => (

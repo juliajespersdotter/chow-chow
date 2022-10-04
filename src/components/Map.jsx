@@ -7,14 +7,21 @@ import {
 	useEffect,
 	useContext,
 } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import ThemeContext from '../contexts/ThemeContext'
 import UserMarker from './UserMarker'
 
-const Map = ({ style, center, zoom, children, userMarker }) => {
+const Map = ({ center, zoom, children }) => {
 	const { theme } = useContext(ThemeContext)
 	const ref = useRef(null)
 	const [map, setMap] = useState()
+	const [userMarker, setUserMarker] = useState()
+	const [searchParams, setSearchParams] = useSearchParams(undefined)
+	const position = {
+		lat: Number(searchParams.get("lat")),
+		lng: Number(searchParams.get("lng")),
+	}
 	// const [userMarker, setUserMarker] = useState()
 	let mapId = theme == 'dark' ? 'a364ebbb8399f681' : ''
 
@@ -25,7 +32,7 @@ const Map = ({ style, center, zoom, children, userMarker }) => {
 				new window.google.maps.Map(ref.current, {
 					mapId: mapId,
 					center: center,
-					style: style,
+					// style: style,
 					zoom: zoom,
 				})
 			)
@@ -34,6 +41,7 @@ const Map = ({ style, center, zoom, children, userMarker }) => {
 
 	useEffect(() => {
 		if (map) {
+			// console.log("THIS IS CENTER IN USEEFFECT", center)
 			map.panTo(center)
 			map.setZoom(14)
 		}
@@ -45,41 +53,35 @@ const Map = ({ style, center, zoom, children, userMarker }) => {
 				new window.google.maps.Map(ref.current, {
 					mapId: mapId,
 					center: center,
-					style: style,
+					// style: style,
 					zoom: zoom,
 				})
 			)
 		}
 	}, [ref, map])
 
-	// const getCurrentLocation = () => {
-	// 	if (navigator.geolocation) {
-	// 		navigator.geolocation.getCurrentPosition(position => {
-	// 			const pos = {
-	// 				lat: position.coords.latitude,
-	// 				lng: position.coords.longitude,
-	// 			}
-	// 			setCenter(pos)
-	// 			setUserMarker(pos)
-	// 			setSearchParams(pos)
-	// 		})
-	// 	} else {
-	// 		// Browser doesn't support Geolocation
-	// 		handleLocationError(false, infoWindow, map.getCenter())
-	// 	}
-	// }
-
-	// useEffect(() => {
-	// 	if (!searchParams) {
-	// 		getCurrentLocation()
-	// 	}
-	// }, [])
+	const getCurrentLocation = () => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(position => {
+				const pos = {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				}
+				map.setCenter(pos)
+				setUserMarker(pos)
+				setSearchParams(pos)
+			})
+		} else {
+			// Browser doesn't support Geolocation
+			handleLocationError(false, infoWindow, map.getCenter())
+		}
+	}
 
 	return (
 		<>
-			{/* <Button onClick={getCurrentLocation} className='text-center w-100 rounded-0'>
+			<Button onClick={getCurrentLocation} className='text-center w-100 rounded-0'>
 				Pan to current Location
-			</Button> */}
+			</Button>
 			<div id='map' ref={ref} center={center} zoom={zoom}>
 				{Children.map(children, child => {
 					if (isValidElement(child)) {

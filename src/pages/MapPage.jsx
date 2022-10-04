@@ -51,6 +51,7 @@ const MapPage = () => {
 
 		<div className='filter-button'>
             <FilterOffcanvas onCityFormSubmit={handleSubmit}/>
+			{/* <SearchForm onSubmit={handleSubmit} /> */}
         </div>
 		{isError && (
 			<Alert variant='danger'>An error has occurred: {error}</Alert>
@@ -84,8 +85,6 @@ const MapPage = () => {
 				</Map>
 			</div>
 		</Wrapper>
-
-		<SearchForm onSubmit={handleSubmit} />
 
 		</Container>
 	)

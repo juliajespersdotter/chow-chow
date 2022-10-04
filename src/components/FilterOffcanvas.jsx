@@ -94,7 +94,7 @@ const FilterOffcanvas = ({}) => {
                                     </select>
 
 
-                                    <Button onClick={() =>{handleFoodFilter(cityWhere)}} className='btn-color my-3'>Filter</Button>
+                                    <Button onClick={() =>{handleFoodFilter()}} className='btn-color my-3'>Filter</Button>
 
                                     <ListGroup className="foodplace-listgroup">
 

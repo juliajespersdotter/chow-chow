@@ -114,8 +114,6 @@ const FilterOffcanvas = ({}) => {
                             )
                         }
 
-                    <SearchForm onSubmit={handleSubmit} />
-
                 </Offcanvas.Body>
 
             </Offcanvas>

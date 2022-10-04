@@ -1,42 +1,39 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 
 const useGeoCoding = () => {
-	const [position, setPosition] = useState({})
-	const [error, setError] = useState('')
-	const [isError, setIsError] = useState(false)
-
 	const getLatLng = async address => {
-		setIsError(false)
-		setError('')
 		const geocoder = new google.maps.Geocoder()
 		console.log(address)
 
-		await geocoder.geocode(
+		const res = await geocoder.geocode(
 			{
 				address: address,
-			},
-			(results, status) => {
-				if (status == google.maps.GeocoderStatus.OK) {
-					// console.log(results[0].address_components[2].long_name)
-					const pos = {
-						lat: results[0].geometry.location.lat(),
-						lng: results[0].geometry.location.lng(),
-					}
-
-					if (pos) {
-						setPosition(pos)
-						return position
-					}
-				} else {
-					setError(status)
-					setIsError(true)
-				}
 			}
+			// (results, status) => {
+			// 	if (status == google.maps.GeocoderStatus.OK) {
+			// 		// console.log(results[0].address_components[2].long_name)
+			// 		const position = {
+			// 			lat: results[0].geometry.location.lat(),
+			// 			lng: results[0].geometry.location.lng(),
+			// 		}
+
+			// 		if (position) {
+			// 			console.log('position in hook', position)
+			// 			return position
+			// 		}
+			// 	} else {
+			// 		return 'No position found'
+			// 	}
+			// }
 		)
-		return position
+		console.log('res', res)
+		return res
 	}
 
-	return { position, getLatLng, error, isError }
+	// useEffect(() => {
+	// 	const position = getLatLng(address)
+	// }, [address])
+	return { getLatLng }
 }
 
 export default useGeoCoding

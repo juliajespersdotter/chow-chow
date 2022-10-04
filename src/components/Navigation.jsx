@@ -13,7 +13,7 @@ const Navigation = () => {
 		<Navbar bg='dark' variant='dark' expand='md'>
 			<Container>
 				<Navbar.Brand as={Link} to='/'>
-				 <Image fluid className='' src='images/logo-nav.png' />
+					<Image fluid className='' src='images/logo-nav.png' />
 				</Navbar.Brand>
 
 				<Button

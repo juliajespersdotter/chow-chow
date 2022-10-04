@@ -1,4 +1,4 @@
-import React from 'react'
+import { useMemo } from 'react'
 import Container from 'react-bootstrap/Container'
 import { doc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import useFoodplaces from '../hooks/useFoodplaces'
+import { DropdownFilter } from '../utilities/filters'
 
 const AdminPage = () => {
 	const { foodplaces, isLoading } = useFoodplaces({
@@ -13,10 +14,52 @@ const AdminPage = () => {
 	})
 	console.log(foodplaces)
 
+	const columns = useMemo(
+		() => [
+			{
+				Header: 'Unapproved Foodplaces',
+				columns: [
+					{
+						Header: 'Name',
+						accessor: 'name',
+					},
+					{
+						Header: 'Address',
+						accessor: 'streetadress',
+					},
+					{
+						Header: 'City',
+						accessor: 'city',
+						Filter: DropdownFilter,
+					},
+					{
+						Header: 'Description',
+						accessor: 'description',
+					},
+					{
+						Header: 'Cuisine',
+						accessor: 'cuisine',
+						Filter: DropdownFilter,
+					},
+					{
+						Header: 'Type',
+						accessor: 'type',
+						Filter: DropdownFilter,
+					},
+					{
+						Header: 'Meals',
+						accessor: 'meals',
+						Filter: DropdownFilter,
+					},
+				],
+			},
+		],
+		[]
+	)
+
 	const approveFoodplace = async foodplace => {
 		const foodplaceRef = doc(db, 'foodplaces', foodplace.id)
 
-		// Set the "capital" field of the city 'DC'
 		await updateDoc(foodplaceRef, {
 			approved: true,
 		})

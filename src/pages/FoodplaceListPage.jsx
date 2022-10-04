@@ -1,48 +1,65 @@
-import { useState } from 'react'
-import FoodPlaceItem from '../components/FoodPlaceItem'
+import { useState, useMemo } from 'react'
 import useFoodplaces from '../hooks/useFoodplaces'
 import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Form from 'react-bootstrap/Form'
-import useOrderBy from '../hooks/useOrderBy'
-import { useEffect } from 'react'
+import FoodplacesTable from '../components/FoodplacesTable'
+import { DropdownFilter } from '../utilities/filters'
 
 const FoodplaceListPage = () => {
-	const [filterValue, setFilterValue] = useState(null)
 	const { foodplaces, isLoading } = useFoodplaces()
-	// const { orderedFoodplaces } = useOrderBy(filterValue)
 
-	const sortByFunction = e => {
-		if (e.target.value) {
-			setFilterValue(e.target.value)
-		}
-	}
+	const columns = useMemo(
+		() => [
+			{
+				Header: 'Foodplace List',
+				columns: [
+					{
+						Header: 'Name',
+						accessor: 'name',
+					},
+					{
+						Header: 'Address',
+						accessor: 'streetadress',
+					},
+					{
+						Header: 'City',
+						accessor: 'city',
+						Filter: DropdownFilter,
+					},
+					{
+						Header: 'Description',
+						accessor: 'description',
+					},
+					{
+						Header: 'Cuisine',
+						accessor: 'cuisine',
+						Filter: DropdownFilter,
+					},
+					{
+						Header: 'Type',
+						accessor: 'type',
+						Filter: DropdownFilter,
+					},
+					{
+						Header: 'Meals',
+						accessor: 'meals',
+						Filter: DropdownFilter,
+					},
+				],
+			},
+		],
+		[]
+	)
 
 	return (
 		<Container>
-			{isLoading && <p>Loading...</p>}
-			{!isLoading && (
-				<>
-					<h3 className='text-center w-100 mt-3 p-3'>
-						There are {foodplaces.length} foodplaces to choose from!
-					</h3>
-					<Form onChange={sortByFunction}>
-						<Form.Select>
-							<option>Filter by</option>
-							<option value='name'>Name</option>
-							<option value='city'>City</option>
-						</Form.Select>
-					</Form>
-					<Row xs={1} sm={1} md={2} lg={8}>
-						{foodplaces.map(foodplace => (
-							<Col key={foodplace.id} className='d-flex mb-4'>
-								<FoodPlaceItem foodplace={foodplace} />
-							</Col>
-						))}
-					</Row>
-				</>
-			)}
+			<div className='p-3'>
+				{isLoading && <p>Loading...</p>}
+				{foodplaces && (
+					<>
+						<FoodplacesTable columns={columns} data={foodplaces} />
+					</>
+				)}
+			</div>
 		</Container>
 	)
 }

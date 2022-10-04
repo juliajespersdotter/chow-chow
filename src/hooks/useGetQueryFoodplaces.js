@@ -10,7 +10,6 @@ const useGetQueryFoodplaces = () => {
 	const [queryRef, setQueryRef] = useState('')
 
 	const filterFoodplaces = (queryLimits = {}) => {
-		console.log('queryLimits', queryLimits)
 		let collectionRef = collection(db, 'foodplaces')
 		if (
 			queryLimits.fetchAll ||
@@ -21,7 +20,8 @@ const useGetQueryFoodplaces = () => {
 			setQueryRef(query(collectionRef, where('approved', '==', true)))
 			return
 		}
-		// collectionRef = collection(db, 'foodplaces')
+
+		console.log('foodplaces', foodplaces)
 
 		// when queryLimits change update the query
 		setQueryKey(['foodplaces', queryLimits])
@@ -37,8 +37,7 @@ const useGetQueryFoodplaces = () => {
 						'array-contains',
 						`${queryLimits.cuisine}`
 					),
-					where('approved', '==', true),
-					orderBy(queryLimits.order)
+					where('approved', '==', true)
 				)
 			)
 		}
@@ -47,12 +46,7 @@ const useGetQueryFoodplaces = () => {
 				query(
 					collectionRef,
 					where('approved', '==', true),
-					where(
-						'cuisine',
-						'array-contains',
-						`${queryLimits.cuisine}`
-					),
-					orderBy(queryLimits.order)
+					where('cuisine', 'array-contains', `${queryLimits.cuisine}`)
 				)
 			)
 		}
@@ -61,13 +55,11 @@ const useGetQueryFoodplaces = () => {
 				query(
 					collectionRef,
 					where('approved', '==', true),
-					where('type', '==', `${queryLimits.type}`),
-					orderBy(queryLimits.order)
+					where('type', '==', `${queryLimits.type}`)
 				)
 			)
 		}
 	}
-	console.log('queryRef', queryRef)
 	const { data: foodplaces, isLoading } = useFirestoreQueryData(
 		queryKey,
 		queryRef,
@@ -75,8 +67,6 @@ const useGetQueryFoodplaces = () => {
 			idField: 'id',
 		}
 	)
-
-	console.log('foodplaces inside', foodplaces)
 
 	return { filterFoodplaces, foodplaces, isLoading }
 }

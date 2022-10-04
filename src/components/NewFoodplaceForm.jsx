@@ -6,7 +6,7 @@ import useGeoCoding from '../hooks/useGeoCoding'
 import { db } from '../firebase'
 
 const NewFoodplaceForm = () => {
-	const { position, getLatLng, error, isError } = useGeoCoding()
+	const { getLatLng, error, isError } = useGeoCoding()
 	const {
 		register,
 		handleSubmit,
@@ -23,7 +23,11 @@ const NewFoodplaceForm = () => {
 		const cuisine = data.cuisine.split(',')
 
 		try {
-			await getLatLng(data.address)
+			const latLng = await getLatLng(data.address)
+			const position = {
+				lat: latLng.results[0].geometry.location.lat(),
+				lng: latLng.results[0].geometry.location.lng(),
+			}
 
 			if (position.lat && position.lng) {
 				await addDoc(collection(db, 'foodplaces'), {

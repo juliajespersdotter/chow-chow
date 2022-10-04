@@ -4,14 +4,13 @@ import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Form from 'react-bootstrap/Form'
 import useGetQueryFoodplaces from '../hooks/useGetQueryFoodplaces'
-import FoodPlaceItem from './FoodPlaceItem'
 import { useForm } from 'react-hook-form'
 import SearchForm from '../components/SearchForm'
 import useGeoCoding from '../hooks/useGeoCoding'
 import useFoodplaces from '../hooks/useFoodplaces'
 import { useEffect } from 'react'
 
-const FilterOffcanvas = ({}) => {
+const FilterOffcanvas = ({ filterFoodplaces }) => {
 	const {
 		register,
 		handleSubmit,
@@ -26,7 +25,7 @@ const FilterOffcanvas = ({}) => {
 		filterFoodplaces({ fetchAll: true })
 	}, [])
 
-	const { foodplaces, filterFoodplaces, isLoading } = useGetQueryFoodplaces()
+	const { foodplaces, isLoading } = useGetQueryFoodplaces()
 
 	const handleShow = () => setShow(true)
 	const handleClose = () => setShow(false)
@@ -34,15 +33,6 @@ const FilterOffcanvas = ({}) => {
 	const FilterFoodplaces = async data => {
 		console.log('data after submit', data)
 		filterFoodplaces(data)
-
-		// if (city) {
-		// 	try {
-		// 		await getLatLng(city)
-		// 	} catch (err) {
-		// 		setErrorMsg(err.message)
-		// 		console.log(errorMsg)
-		// 	}
-		// }
 	}
 
 	return (
@@ -75,9 +65,6 @@ const FilterOffcanvas = ({}) => {
 											{foodplace.type}
 										</option>
 									))}
-									{/* <option value='Kiosk/Grill'>Kiosk/Grill</option>
-								<option value='Restaurant'>Restaurant</option>
-								<option value='Fast food'>Fast food</option> */}
 								</Form.Select>
 
 								<p>By Cuisine</p>
@@ -97,27 +84,12 @@ const FilterOffcanvas = ({}) => {
 									))}
 								</Form.Select>
 
-								<p>Sort name: </p>
-								<Form.Select
-									{...register('order')}
-									className='form-select mb-3'
-								>
-									<option value='asc'>Ascending</option>
-									<option value='desc'>Descending</option>
-								</Form.Select>
-
 								<Button
 									type='submit'
 									className='btn-color my-3'
 								>
 									Filter
 								</Button>
-								{/* <Button
-									className='btn-color my-3'
-									onClick={() => reset()}
-								>
-									Reset
-								</Button> */}
 							</Form>
 
 							<ListGroup className='foodplace-listgroup'>
@@ -145,7 +117,7 @@ const FilterOffcanvas = ({}) => {
 						</>
 					)}
 
-					<SearchForm />
+					{/* <SearchForm /> */}
 				</Offcanvas.Body>
 			</Offcanvas>
 		</>

@@ -57,7 +57,7 @@ const MapPage = () => {
 			<div className='filter-button'>
 				<FilterOffcanvas
 					onCityFormSubmit={handleSubmit}
-					filterFoodplaces={filterFoodplaces}
+					filterMarkers={filterFoodplaces}
 				/>
 			</div>
 			{/* {isError && (

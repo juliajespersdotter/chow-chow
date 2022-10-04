@@ -1,7 +1,6 @@
 import { useFirestoreQueryData } from '@react-query-firebase/firestore'
 import { collection, query, where, orderBy } from 'firebase/firestore'
 import { useState } from 'react'
-import { useEffect } from 'react'
 import { db } from '../firebase'
 
 const useGetQueryFoodplaces = () => {
@@ -15,13 +14,10 @@ const useGetQueryFoodplaces = () => {
 			queryLimits.fetchAll ||
 			(queryLimits.type === 'All' && queryLimits.cuisine === 'All')
 		) {
-			console.log('asdsad')
 			setQueryKey(['foodplaces'])
 			setQueryRef(query(collectionRef, where('approved', '==', true)))
 			return
 		}
-
-		console.log('foodplaces', foodplaces)
 
 		// when queryLimits change update the query
 		setQueryKey(['foodplaces', queryLimits])

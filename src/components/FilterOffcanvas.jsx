@@ -10,7 +10,7 @@ import useGeoCoding from '../hooks/useGeoCoding'
 import useFoodplaces from '../hooks/useFoodplaces'
 import { useEffect } from 'react'
 
-const FilterOffcanvas = ({ filterFoodplaces }) => {
+const FilterOffcanvas = ({ filterMarkers }) => {
 	const {
 		register,
 		handleSubmit,
@@ -22,17 +22,18 @@ const FilterOffcanvas = ({ filterFoodplaces }) => {
 	const [errorMsg, setErrorMsg] = useState(null)
 
 	useEffect(() => {
+		filterMarkers({ fetchAll: true })
 		filterFoodplaces({ fetchAll: true })
 	}, [])
 
-	const { foodplaces, isLoading } = useGetQueryFoodplaces()
+	const { foodplaces, isLoading, filterFoodplaces } = useGetQueryFoodplaces()
 
 	const handleShow = () => setShow(true)
 	const handleClose = () => setShow(false)
 
 	const FilterFoodplaces = async data => {
-		console.log('data after submit', data)
 		filterFoodplaces(data)
+		filterMarkers(data)
 	}
 
 	return (

@@ -9,9 +9,10 @@ import {
 	updatePassword,
 	updateProfile,
 } from 'firebase/auth'
+import { doc, setDoc } from 'firebase/firestore'
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage'
-import { auth, storage } from '../firebase'
-import SyncLoader from 'react-spinners/SyncLoader'
+import { auth, db, storage } from '../firebase'
+import PacmanLoader from 'react-spinners/PacmanLoader'
 
 const AuthContext = createContext()
 
@@ -26,8 +27,26 @@ const AuthContextProvider = ({ children }) => {
 	const [userPhotoUrl, setUserPhotoUrl] = useState(null)
 	const [loading, setLoading] = useState(true)
 
-	const signup = (email, password) => {
-		return createUserWithEmailAndPassword(auth, email, password)
+	const signup = async (email, password, name, photo) => {
+		// create the user
+		await createUserWithEmailAndPassword(auth, email, password)
+
+		// auth.currentUser.uid = "3l97yFNSCcY77HmsjFO3aKPmkzC2"
+
+		// set name and photo
+		await setDisplayNameAndPhoto(name, photo)
+
+		// reload user
+		await reloadUser()
+
+		// create user document
+		const docRef = doc(db, 'users', auth.currentUser.uid) // "users/3l97yFNSCcY77HmsjFO3aKPmkzC2"
+		await setDoc(docRef, {
+			admin: true,
+			name,
+			email,
+			photoURL: auth.currentUser.photoURL,
+		})
 	}
 
 	const login = (email, password) => {
@@ -69,21 +88,16 @@ const AuthContextProvider = ({ children }) => {
 				`photos/${auth.currentUser.email}/${photo.name}`
 			)
 
-			try {
-				// upload photo to fileRef
-				const uploadResult = await uploadBytes(fileRef, photo)
+			// upload photo to fileRef
+			const uploadResult = await uploadBytes(fileRef, photo)
 
-				// get download url to uploaded file
-				photoURL = await getDownloadURL(uploadResult.ref)
+			// get download url to uploaded file
+			photoURL = await getDownloadURL(uploadResult.ref)
 
-				console.log(
-					'Photo uploaded successfully, download url is:',
-					photoURL
-				)
-			} catch (e) {
-				console.log('Upload failed', e)
-				setError('Photo failed to upload!')
-			}
+			console.log(
+				'Photo uploaded successfully, download url is:',
+				photoURL
+			)
 		}
 
 		return updateProfile(auth.currentUser, {
@@ -92,7 +106,6 @@ const AuthContextProvider = ({ children }) => {
 		})
 	}
 
-	// add auth-state observer here (somehow... 😈)
 	useEffect(() => {
 		// listen for auth-state changes
 		const unsubscribe = onAuthStateChanged(auth, user => {
@@ -126,11 +139,7 @@ const AuthContextProvider = ({ children }) => {
 		<AuthContext.Provider value={contextValues}>
 			{loading ? (
 				<div id='initial-loader'>
-					<SyncLoader
-						color={'#888'}
-						size={15}
-						speedMultiplier={1.1}
-					/>
+					<PacmanLoader color={'#888'} size={50} />
 				</div>
 			) : (
 				children

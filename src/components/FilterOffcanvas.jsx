@@ -1,124 +1,128 @@
 import { useState, useMemo } from 'react'
-import  Offcanvas  from 'react-bootstrap/Offcanvas'
+import Offcanvas from 'react-bootstrap/Offcanvas'
 import Button from 'react-bootstrap/Button'
-import  ListGroup  from 'react-bootstrap/ListGroup'
+import ListGroup from 'react-bootstrap/ListGroup'
+import Form from 'react-bootstrap/Form'
 import useGetQueryFoodplaces from '../hooks/useGetQueryFoodplaces'
-import FoodPlaceItem from './FoodPlaceItem'
+import { useForm } from 'react-hook-form'
 import SearchForm from '../components/SearchForm'
 import useGeoCoding from '../hooks/useGeoCoding'
+import useFoodplaces from '../hooks/useFoodplaces'
+import { useEffect } from 'react'
 
+const FilterOffcanvas = ({ filterMarkers }) => {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+		reset,
+	} = useForm()
 
-const FilterOffcanvas = ({}) => {
+	const [show, setShow] = useState(false)
+	const [errorMsg, setErrorMsg] = useState(null)
 
-    const [cityWhere, setcityWhere] = useState(null)
-    const [nameOrder, setNameOrder] = useState('asc')
-    const [mealsWhere, setMealsWhere] = useState('All')
-    const [typeWhere, setTypeWhere] = useState('All')
+	useEffect(() => {
+		filterMarkers({ fetchAll: true })
+		filterFoodplaces({ fetchAll: true })
+	}, [])
 
-    const [queryLimits, setQueryLimits] = useState({
-        cityWhere,
-        nameOrder,
-        mealsWhere,
-        typeWhere,
-    })
+	const { foodplaces, isLoading, filterFoodplaces } = useGetQueryFoodplaces()
 
-    const [show, setShow] = useState(false)
-    const [errorMsg, setErrorMsg] = useState(null)
+	const handleShow = () => setShow(true)
+	const handleClose = () => setShow(false)
 
-    const handleFoodFilter = (city) => {
-        setQueryLimits({
-            cityWhere: city,
-            nameOrder,
-            mealsWhere,
-            typeWhere,
-        })
-    }
-
-    const { data, loading } = useGetQueryFoodplaces(queryLimits)
-    console.log(data)
-
-    const handleShow = () => setShow(true)
-    const handleClose = () => setShow(false)
-
-    const handleSubmit = async (city) => {
-		if (city) {
-			try {
-				await getLatLng(city)
-			} catch (err) {
-				setErrorMsg(err.message)
-				console.log(errorMsg)
-			}
-		}
+	const FilterFoodplaces = async data => {
+		filterFoodplaces(data)
+		filterMarkers(data)
 	}
 
-    return (
-        <>
-            <Button  onClick={handleShow} className="outline-primary">
-                Filter Restaurants
-            </Button>
+	return (
+		<>
+			<Button onClick={handleShow} className='outline-primary'>
+				Filter Restaurants
+			</Button>
 
-            <Offcanvas show={show} onHide={handleClose} className='offcanvas'>
+			<Offcanvas show={show} onHide={handleClose} className='offcanvas'>
+				<Offcanvas.Header closeButton>
+					<Offcanvas.Title className='h-text'>
+						Filter through restaurants
+					</Offcanvas.Title>
+				</Offcanvas.Header>
 
-                <Offcanvas.Header closeButton>
-                    <Offcanvas.Title className='h-text'>Filter through restaurants</Offcanvas.Title>
-                </Offcanvas.Header>
+				<Offcanvas.Body>
+					{isLoading && <p>Loading ....</p>}
+					{foodplaces && (
+						<>
+							<Form onSubmit={handleSubmit(FilterFoodplaces)}>
+								<p>By type</p>
+								<Form.Select
+									{...register('type')}
+									className='form-select mb-3'
+								>
+									<option value='All'>All Types</option>
 
-                <Offcanvas.Body>
-                    {loading && (
-                        <p>Loading ....</p>
-                    )}
-                        {
-                            data && (
-                                <>
+									{foodplaces.map((foodplace, i) => (
+										<option key={i} value={foodplace.type}>
+											{foodplace.type}
+										</option>
+									))}
+								</Form.Select>
 
-                                    <p>By type</p>
-                                    <select className="form-select mb-3" onChange={(e)=>{setTypeWhere(e.target.value)}} defaultValue={typeWhere}>
-                                        <option value="All">All types</option>
-                                        <option value="Kiosk/Grill">Kiosk/Grill</option>
-                                        <option value="Restaurant">Restaurant</option>
-                                        <option value="Fast food">Fast food</option>
-                                    </select>
+								<p>By Cuisine</p>
+								<Form.Select
+									{...register('cuisine')}
+									className='form-select mb-3'
+								>
+									<option value='All'>All Cuisine</option>
 
-                                    <p>By Meal</p>
-                                    <select className="form-select mb-3" onChange={(e)=>{setMealsWhere(e.target.value)}} defaultValue={mealsWhere}>
-                                        <option value="All">All Meals</option>
-                                        <option value="Lunch">Lunch</option>
-                                        <option value="Dinner">Dinner</option>
-                                        <option value="After Work">After Work</option>
-                                    </select>
+									{foodplaces.map((foodplace, i) => (
+										<option
+											key={i}
+											value={foodplace.cuisine}
+										>
+											{foodplace.cuisine}
+										</option>
+									))}
+								</Form.Select>
 
-                                    <p>Sort name: </p>
-                                    <select className="form-select mb-3" onChange={(e)=>{setNameOrder(e.target.value)}} defaultValue={nameOrder}>
-                                        <option value="asc">Ascending</option>
-                                        <option value="desc">Descending</option>
-                                    </select>
+								<Button
+									type='submit'
+									className='btn-color my-3'
+								>
+									Filter
+								</Button>
+							</Form>
 
+							<ListGroup className='foodplace-listgroup'>
+								{foodplaces.map((foodplace, index) => (
+									<ListGroup.Item
+										action
+										key={index}
+										onClick={() => {
+											foodplace
+										}}
+									>
+										<h3>{foodplace.name}</h3>
+										<span>
+											{foodplace.streetadress +
+												' ' +
+												foodplace.city}
+										</span>
+										<br />
+										<span>
+											{foodplace.meals} | {foodplace.type}
+										</span>
+									</ListGroup.Item>
+								))}
+							</ListGroup>
+						</>
+					)}
 
-                                    <Button onClick={() =>{handleFoodFilter()}} className='btn-color my-3'>Filter</Button>
-
-                                    <ListGroup className="foodplace-listgroup">
-
-                                        {
-                                            data.map((foodplace, index) => (
-                                                <ListGroup.Item action key={index} onClick={() => {(foodplace)}}>
-                                                    <h3>{foodplace.name}</h3>
-                                                    <span>{foodplace.streetadress + ' ' + foodplace.city}</span>
-                                                    <br />
-                                                    <span>{foodplace.meals} | {foodplace.type}</span>
-                                                </ListGroup.Item>
-                                            ))
-                                        }
-                                    </ListGroup>
-
-                                </>
-                            )
-                        }
-
-                </Offcanvas.Body>
-
-            </Offcanvas>
-        </>
-    )
+					{/* <SearchForm /> */}
+				</Offcanvas.Body>
+			</Offcanvas>
+		</>
+	)
 }
 
 export default FilterOffcanvas

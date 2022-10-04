@@ -4,9 +4,10 @@ import { useForm } from 'react-hook-form'
 import { collection, addDoc } from 'firebase/firestore'
 import useGeoCoding from '../hooks/useGeoCoding'
 import { db } from '../firebase'
+import { useState } from 'react'
 
 const NewFoodplaceForm = () => {
-	const { position, getLatLng, error, isError } = useGeoCoding()
+	const { getLatLng, error, isError } = useGeoCoding()
 	const {
 		register,
 		handleSubmit,
@@ -20,34 +21,42 @@ const NewFoodplaceForm = () => {
 
 	const onCreateFoodPlace = async data => {
 		// post to the database
-		const cuisine = data.cuisine.split(',')
+		if (data.address) {
+			const cuisine = data.cuisine.split(',')
 
-		try {
-			await getLatLng(data.address)
+			try {
+				const latLng = await getLatLng(data.address)
+				const position = {
+					lat: latLng.results[0].geometry.location.lat(),
+					lng: latLng.results[0].geometry.location.lng(),
+				}
 
-			if (position.lat && position.lng) {
-				await addDoc(collection(db, 'foodplaces'), {
-					city: data.city,
-					name: data.name,
-					description: data.description,
-					streetadress: data.address,
-					type: data.type,
-					cuisine: cuisine,
-					meals: data.meals,
-					email: data.email,
-					phone: data.phone,
-					url: data.url,
-					geopoint: position,
-					facebook: data.facebook,
-					approved: false,
-				})
+				if (pos.lat && pos.lng) {
+					await addDoc(collection(db, 'foodplaces'), {
+						city: data.city,
+						name: data.name,
+						description: data.description,
+						streetadress: data.address,
+						type: data.type,
+						cuisine: cuisine,
+						meals: data.meals,
+						email: data.email,
+						phone: data.phone,
+						url: data.url,
+						geopoint: position,
+						facebook: data.facebook,
+						approved: false,
+					})
+				} else {
+					throw new Error('No position found')
+				}
+				// console.log(position)
+			} catch (err) {
+				console.log(err.message)
 			}
-		} catch (err) {
-			console.log(err.message)
+			console.log(data)
+			reset()
 		}
-
-		console.log(data)
-		reset()
 	}
 
 	return (

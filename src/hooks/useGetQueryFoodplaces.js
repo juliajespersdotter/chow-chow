@@ -1,56 +1,70 @@
-import { useFirestoreQueryData } from "@react-query-firebase/firestore";
-import { collection, query, where, orderBy } from "firebase/firestore";
-import { db } from "../firebase";
+import { useFirestoreQueryData } from '@react-query-firebase/firestore'
+import { collection, query, where, orderBy } from 'firebase/firestore'
+import { useState } from 'react'
+import { db } from '../firebase'
 
-const useGetQueryFoodplaces = (queryLimits) => {
+const useGetQueryFoodplaces = () => {
+	//collection ref from firestore
+	const [queryKey, setQueryKey] = useState('')
+	const [queryRef, setQueryRef] = useState('')
 
-    //collection ref from firestore
-    const collectionRef = collection(db, "foodplaces");
+	const filterFoodplaces = (queryLimits = {}) => {
+		let collectionRef = collection(db, 'foodplaces')
+		if (
+			queryLimits.fetchAll ||
+			(queryLimits.type === 'All' && queryLimits.cuisine === 'All')
+		) {
+			setQueryKey(['foodplaces'])
+			setQueryRef(query(collectionRef, where('approved', '==', true)))
+			return
+		}
 
-    // when queryLimits change update the query
-    const queryKey = ["foodplaces", queryLimits];
+		// when queryLimits change update the query
+		setQueryKey(['foodplaces', queryLimits])
 
-    // variable for keeping track of the diffrent constraints
-    let queryRef
+		// variable for keeping track of the diffrent constraints
+		if (queryLimits.type !== 'All' && queryLimits.cuisine !== 'All') {
+			setQueryRef(
+				query(
+					collectionRef,
+					where('type', '==', `${queryLimits.type}`),
+					where(
+						'cuisine',
+						'array-contains',
+						`${queryLimits.cuisine}`
+					),
+					where('approved', '==', true)
+				)
+			)
+		}
+		if (queryLimits.type === 'All' && queryLimits.cuisine !== 'All') {
+			setQueryRef(
+				query(
+					collectionRef,
+					where('approved', '==', true),
+					where('cuisine', 'array-contains', `${queryLimits.cuisine}`)
+				)
+			)
+		}
+		if (queryLimits.cuisine === 'All' && queryLimits.type !== 'All') {
+			setQueryRef(
+				query(
+					collectionRef,
+					where('approved', '==', true),
+					where('type', '==', `${queryLimits.type}`)
+				)
+			)
+		}
+	}
+	const { data: foodplaces, isLoading } = useFirestoreQueryData(
+		queryKey,
+		queryRef,
+		{
+			idField: 'id',
+		}
+	)
 
-    if (queryLimits.cityWhere) {
-        // Query to use if neither type or meals has been restricted
-        if (queryLimits.typeWhere === 'All' && queryLimits.mealsWhere === 'All') {
-            queryRef = query(collectionRef, where('city', '==', queryLimits.cityWhere), orderBy('name', queryLimits.nameOrder))
-        // Query to use if meals has been restricted
-        } else if (queryLimits.typeWhere === 'All') {
-            queryRef = query(collectionRef, where('meals', '==', queryLimits.mealsWhere), where('city', '==', queryLimits.cityWhere), orderBy('name', queryLimits.nameOrder))
-        // Query to use if type has been restricted
-        } else if (queryLimits.mealsWhere === 'All') {
-            queryRef = query(collectionRef, where('type', '==', queryLimits.typeWhere), where('city', '==', queryLimits.cityWhere), orderBy('name', queryLimits.nameOrder))
-        // Query to use if both type and meals has been restricted
-        } else {
-            queryRef = query(collectionRef, where('type', '==', queryLimits.typeWhere), where('meals', '==', queryLimits.mealsWhere), where('city', '==', queryLimits.cityWhere), orderBy('name', queryLimits.nameOrder))
-        }
-    } else {
-        // Query to use if neither type or meals has been restricted
-        if (queryLimits.typeWhere === 'All' && queryLimits.mealsWhere === 'All') {
-            queryRef = query(collectionRef, orderBy('name', queryLimits.nameOrder))
-        // Query to use if meals has been restricted
-        } else if (queryLimits.typeWhere === 'All') {
-            queryRef = query(collectionRef, where('meals', '==', queryLimits.mealsWhere), orderBy('name', queryLimits.nameOrder))
-        // Query to use if type has been restricted
-        } else if (queryLimits.mealsWhere === 'All') {
-            queryRef = query(collectionRef, where('type', '==', queryLimits.typeWhere), orderBy('name', queryLimits.nameOrder))
-        // Query to use if both type and meals has been restricted
-        } else {
-            queryRef = query(collectionRef, where('type', '==', queryLimits.typeWhere), where('meals', '==', queryLimits.mealsWhere), orderBy('name', queryLimits.nameOrder))
-        }
-    }
-
-
-    // Create react-query instance
-    const placesQuery = useFirestoreQueryData(queryKey, queryRef, {
-        idField: 'id',
-    })
-
-    return placesQuery
-
+	return { filterFoodplaces, foodplaces, isLoading }
 }
 
-export default  useGetQueryFoodplaces
+export default useGetQueryFoodplaces

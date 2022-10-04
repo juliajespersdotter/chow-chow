@@ -10,6 +10,7 @@ import MapPage from './pages/MapPage'
 import './assets/scss/App.scss'
 import AdminPage from './pages/AdminPage'
 import RequireAuth from './components/RequireAuth'
+import LoginPage from './pages/LoginPage'
 
 function App() {
 	const [theme, setTheme] = useState('light')
@@ -22,8 +23,9 @@ function App() {
 
 				<Routes>
 					<Route path='/' element={<HomePage />} />
-					<Route path='/map' element={<MapPage />} />
 					<Route path='*' element={<NotFound />} />
+					<Route path='/map' element={<MapPage />} />
+					<Route path='/login' element={<LoginPage />} />
 					<Route path='/add' element={<AddFoodplacePage />} />
 					<Route path='/foodplaces' element={<FoodplaceListPage />} />
 					<Route

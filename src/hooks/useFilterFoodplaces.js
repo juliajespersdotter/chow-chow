@@ -1,8 +1,8 @@
 import { useFirestoreQueryData } from '@react-query-firebase/firestore'
-import { collection, query, orderBy, where } from 'firebase/firestore'
+import { collection, query, where, orderBy } from 'firebase/firestore'
 import { db } from '../firebase'
 
-const useFoodplaces = (options = { fetchUnApproved: false }) => {
+const useFoodplaces = () => {
 	// const { currentUser } = useAuthContext()
 
 	// create ref to collection 'foodplaces'
@@ -10,14 +10,10 @@ const useFoodplaces = (options = { fetchUnApproved: false }) => {
 
 	// create queryKey
 	// can redo this later to account for options to only show some foodplaces based on certain factors
-	const queryKey = options.fetchUnApproved
-		? ['foodplaces', { approved: false }]
-		: ['foodplaces']
+	const queryKey = ['foodplaces']
 
 	// create query for collectionRef, order result by name
-	const queryRef = options.fetchUnApproved
-		? query(collectionRef, where('approved', '==', false))
-		: query(collectionRef, where('approved', '==', true))
+	const queryRef = query(collectionRef, orderBy('name'))
 
 	// run query
 	const { data: foodplaces, isLoading } = useFirestoreQueryData(

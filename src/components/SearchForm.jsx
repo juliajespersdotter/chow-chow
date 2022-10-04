@@ -4,6 +4,11 @@ import Form from 'react-bootstrap/Form'
 const SearchForm = ({ onSubmit }) => {
 	const cityRef = useRef()
 
+    const filteredFoodplaces =
+        searchInput === ""
+            ? foodplaces
+            : foodplaces.filter()
+
 	const handleSearch = (e) => {
 		e.preventDefault()
 
@@ -30,21 +35,16 @@ export default SearchForm
 
 // const SearchForm = ({onSubmit}) => {
 
-//     // Reference element for input element
 //     const addressRef = useRef()
 
-//     // Function to handle form before beeing fully submitted
 //     const handleSearch = (e) => {
 
-//         // Stop default form behaviour
 //         e.preventDefault()
 
-//         // If input field is empty, return from function
 //         if (!addressRef.current.value) {
 //             return
 //         }
 
-//         // Call function provided though prop, and give it input field value as parameter
 //         onSubmit(addressRef.current.value)
 
 //         addressRef.current.value = ''
@@ -55,7 +55,6 @@ export default SearchForm
 //         <Form onSubmit={handleSearch} className='searchaddressform'>
 //             <Form.Group controlId='address'>
 //                 <Form.Label>Enter city</Form.Label>
-//                 {/* Use Autocomplete from @react-google-maps/api to give user search suggestions */}
 //                 <Autocomplete>
 //                     <Form.Control type='text' ref={addressRef} required />
 //                 </Autocomplete>

@@ -8,6 +8,7 @@ const InfoModal = ({ data, show, onClick }) => {
 		<Offcanvas
 			show={show}
 			onHide={onClick}
+			className="bg-dark text-light"
 		>
 			<Offcanvas.Header closeButton>
 				<Offcanvas.Title className="d-flex flex-column align-items-start">

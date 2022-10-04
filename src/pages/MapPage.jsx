@@ -10,19 +10,32 @@ import InfoModal from '../components/InfoModal'
 import SearchForm from '../components/SearchForm'
 import FilterOffcanvas from '../components/FilterOffcanvas'
 import useGetQueryFoodplaces from '../hooks/useGetQueryFoodplaces'
+import { useSearchParams } from 'react-router-dom'
 
 const MapPage = () => {
 	const [zoom, setZoom] = useState(17) // initial zoom
 	const { getLatLng } = useGeoCoding()
-	const [center, setCenter] = useState({
-		lat: 55.58354,
-		lng: 13.01373,
-	})
 	const [errorMsg, setErrorMsg] = useState(null)
 	// const { foodplaces, isLoading } = useFoodplaces()
 	const { foodplaces, filterFoodplaces, isLoading } = useGetQueryFoodplaces()
 	const [showModal, setShowModal] = useState(false)
 	const [place, setPlace] = useState(null)
+	const [searchParams, setSearchParams] = useSearchParams(undefined)
+	const [userMarker, setUserMarker] = useState()
+	const [center, setCenter] = useState(() => {
+		if (searchParams) {
+			return {
+				lat: Number(searchParams.get("lat")),
+				lng: Number(searchParams.get("lng")),
+			}
+		}
+			return {
+				lat: 55.60587,
+				lng: 13.00073,
+			}
+
+	})
+	console.log("CNETER BITCHEWZ", center)
 
 	const handleSubmit = async city => {
 		if (city) {
@@ -33,6 +46,7 @@ const MapPage = () => {
 					lng: latLng.results[0].geometry.location.lng(),
 				}
 				setCenter(position)
+				setSearchParams(position)
 				console.log('position', position)
 			} catch (err) {
 				setErrorMsg(err.message)
@@ -51,6 +65,54 @@ const MapPage = () => {
 	// 		setCenter({ lat: position.lat, lng: position.lng })
 	// 	}
 	// }, [position])
+	const getCurrentLocation = () => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(position => {
+				const pos = {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				}
+				setCenter(pos)
+				setUserMarker(pos)
+				setSearchParams(pos)
+			})
+		} else {
+			// Browser doesn't support Geolocation
+			handleLocationError(false, infoWindow, setCenter({
+				lat: 55.60587,
+				lng: 13.00073,
+			}))
+		}
+	}
+
+	// useEffect(() => {
+	// 	if (position.lat && position.lng) {
+	// 		setCenter({ lat: position.lat, lng: position.lng })
+	// 		setSearchParams(position)
+	// 	}
+	// }, [position])
+
+	useEffect(() => {
+		if (!searchParams) {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(position => {
+					const pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude,
+					}
+					setCenter(pos)
+					setUserMarker(pos)
+					setSearchParams(pos)
+				})
+			} else {
+				// Browser doesn't support Geolocation
+				handleLocationError(false, infoWindow, setCenter({
+					lat: 55.60587,
+					lng: 13.00073,
+				}))
+			}
+		}
+	}, [navigator.geolocation])
 
 	return (
 		<Container fluid className='m-0 p-0'>
@@ -69,15 +131,7 @@ const MapPage = () => {
 					<Map
 						center={center}
 						zoom={zoom}
-						options={{
-							styles: [
-								{
-									featureType: 'all',
-									elementType: 'all',
-									stylers: [{ visibility: 'off' }],
-								},
-							],
-						}}
+						userMarker={userMarker}
 					>
 						{foodplaces &&
 							foodplaces.map(foodplace => (

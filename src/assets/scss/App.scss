@@ -45,7 +45,6 @@ body,
 .home {
 	height: 100vh;
 }
-<<<<<<< HEAD
 table {
 	padding: 2rem;
 	border-spacing: 0;
@@ -71,20 +70,18 @@ table {
 		}
 	}
 }
-=======
 
-.filter-button{
-    text-align: center;
-    background-color:  rgb(33, 37, 41);
-    padding-bottom: 10px;
+.filter-button {
+	text-align: center;
+	background-color: rgb(33, 37, 41);
+	padding-bottom: 10px;
 }
 
 .offcanvas {
-    background-color: rgb(33, 37, 41);
+	background-color: rgb(33, 37, 41);
 	color: white;
 }
 
 .offcanvas.offcanvas-start {
-    width: 600px;
+	width: 600px;
 }
->>>>>>> filter/julia

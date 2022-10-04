@@ -7,7 +7,7 @@ import { db } from '../firebase'
 import { useState } from 'react'
 
 const NewFoodplaceForm = () => {
-	const { position, getLatLng, error, isError } = useGeoCoding()
+	const { getLatLng, error, isError } = useGeoCoding()
 	const {
 		register,
 		handleSubmit,
@@ -25,8 +25,11 @@ const NewFoodplaceForm = () => {
 			const cuisine = data.cuisine.split(',')
 
 			try {
-				const pos = await getLatLng(data.address)
-				console.log('pos in component', pos)
+				const latLng = await getLatLng(data.address)
+				const position = {
+					lat: latLng.results[0].geometry.location.lat(),
+					lng: latLng.results[0].geometry.location.lng(),
+				}
 
 				if (pos.lat && pos.lng) {
 					await addDoc(collection(db, 'foodplaces'), {

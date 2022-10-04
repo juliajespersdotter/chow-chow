@@ -11,11 +11,11 @@ import Button from 'react-bootstrap/Button'
 import ThemeContext from '../contexts/ThemeContext'
 import UserMarker from './UserMarker'
 
-const Map = ({ style, center, zoom, children }) => {
+const Map = ({ style, center, zoom, children, userMarker }) => {
 	const { theme } = useContext(ThemeContext)
 	const ref = useRef(null)
 	const [map, setMap] = useState()
-	const [userMarker, setUserMarker] = useState()
+	// const [userMarker, setUserMarker] = useState()
 	let mapId = theme == 'dark' ? 'a364ebbb8399f681' : ''
 
 	useEffect(() => {
@@ -52,27 +52,34 @@ const Map = ({ style, center, zoom, children }) => {
 		}
 	}, [ref, map])
 
-	const getCurrentLocation = () => {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(position => {
-				const pos = {
-					lat: position.coords.latitude,
-					lng: position.coords.longitude,
-				}
-				map.setCenter(pos)
-				setUserMarker(pos)
-			})
-		} else {
-			// Browser doesn't support Geolocation
-			handleLocationError(false, infoWindow, map.getCenter())
-		}
-	}
+	// const getCurrentLocation = () => {
+	// 	if (navigator.geolocation) {
+	// 		navigator.geolocation.getCurrentPosition(position => {
+	// 			const pos = {
+	// 				lat: position.coords.latitude,
+	// 				lng: position.coords.longitude,
+	// 			}
+	// 			setCenter(pos)
+	// 			setUserMarker(pos)
+	// 			setSearchParams(pos)
+	// 		})
+	// 	} else {
+	// 		// Browser doesn't support Geolocation
+	// 		handleLocationError(false, infoWindow, map.getCenter())
+	// 	}
+	// }
+
+	// useEffect(() => {
+	// 	if (!searchParams) {
+	// 		getCurrentLocation()
+	// 	}
+	// }, [])
 
 	return (
 		<>
-			<Button onClick={getCurrentLocation} className='text-center w-100 rounded-0'>
+			{/* <Button onClick={getCurrentLocation} className='text-center w-100 rounded-0'>
 				Pan to current Location
-			</Button>
+			</Button> */}
 			<div id='map' ref={ref} center={center} zoom={zoom}>
 				{Children.map(children, child => {
 					if (isValidElement(child)) {

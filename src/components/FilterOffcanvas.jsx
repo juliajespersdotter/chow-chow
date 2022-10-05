@@ -24,6 +24,7 @@ const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 
 	const { foodplaces, isLoading, filterFoodplaces } = useGetQueryFoodplaces()
 
+	console.log(foodplaces)
 	const handleShow = () => setShow(true)
 	const handleClose = () => setShow(false)
 
@@ -53,6 +54,7 @@ const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 							<Form onSubmit={handleSubmit(FilterFoodplaces)}>
 								<p>By type</p>
 								<Form.Select
+									placeholder='Select cuisine'
 									{...register('type')}
 									className='form-select mb-3'
 								>
@@ -70,19 +72,24 @@ const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 
 								<p>By Cuisine</p>
 								<Form.Select
+									placeholder='Select cuisine'
 									{...register('cuisine')}
 									className='form-select mb-3'
 								>
 									<option value='All'>All Cuisine</option>
 
-									{foodplaces.map((foodplace, i) => (
-										<option
-											key={i}
-											value={foodplace.cuisine}
-										>
-											{foodplace.cuisine}
-										</option>
-									))}
+									{foodplaces.map(foodplace =>
+										foodplace.cuisine.map(
+											(cuisineItem, i) => (
+												<option
+													key={i}
+													value={cuisineItem}
+												>
+													{cuisineItem}
+												</option>
+											)
+										)
+									)}
 								</Form.Select>
 								<Form.Group controlId='city' className='mb-3'>
 									<Form.Control

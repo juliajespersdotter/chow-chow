@@ -23,7 +23,13 @@ const NewFoodplaceForm = () => {
 		// post to the database
 		if (data.address) {
 			const cuisine = data.cuisine.split(',')
-			console.log(cuisine)
+
+			const newArray = cuisine.map(item => {
+				const newItem = item.trim()
+				return newItem.charAt(0).toUpperCase() + newItem.slice(1)
+			})
+
+			console.log(newArray)
 
 			try {
 				const latLng = await getLatLng(data.address)

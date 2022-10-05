@@ -5,9 +5,6 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Form from 'react-bootstrap/Form'
 import useGetQueryFoodplaces from '../hooks/useGetQueryFoodplaces'
 import { useForm } from 'react-hook-form'
-import SearchForm from '../components/SearchForm'
-import useGeoCoding from '../hooks/useGeoCoding'
-import useFoodplaces from '../hooks/useFoodplaces'
 import { useEffect } from 'react'
 
 const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
@@ -19,7 +16,6 @@ const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 	} = useForm()
 
 	const [show, setShow] = useState(false)
-	const [errorMsg, setErrorMsg] = useState(null)
 
 	useEffect(() => {
 		filterMarkers({ fetchAll: true })
@@ -32,6 +28,7 @@ const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 	const handleClose = () => setShow(false)
 
 	const FilterFoodplaces = async data => {
+		console.log(data)
 		filterFoodplaces(data)
 		filterMarkers(data)
 	}
@@ -60,13 +57,6 @@ const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 									className='form-select mb-3'
 								>
 									<option value='All'>All Types</option>
-
-									{/* {foodplaces.map((foodplace, i) => (
-										<option key={i} value={foodplace.type}>
-											{foodplace.type}
-										</option>
-									))} */}
-
 									<option value='kiosk/grill'>
 										Kiosk/Grill
 									</option>
@@ -94,6 +84,13 @@ const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 										</option>
 									))}
 								</Form.Select>
+								<Form.Group controlId='city' className='mb-3'>
+									<Form.Control
+										{...register('city')}
+										type='text'
+										placeholder='Search by city'
+									/>
+								</Form.Group>
 
 								<Button
 									type='submit'
@@ -139,7 +136,10 @@ const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 						</>
 					)}
 
-					<SearchForm onSubmit={onSubmit} />
+					{/* <SearchForm
+						onSubmit={onSubmit}
+						filterFoodplaces={FilterFoodplaces}
+					/> */}
 				</Offcanvas.Body>
 			</Offcanvas>
 		</>

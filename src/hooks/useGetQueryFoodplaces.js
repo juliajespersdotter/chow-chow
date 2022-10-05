@@ -12,7 +12,9 @@ const useGetQueryFoodplaces = () => {
 		let collectionRef = collection(db, 'foodplaces')
 		if (
 			queryLimits.fetchAll ||
-			(queryLimits.type === 'All' && queryLimits.cuisine === 'All')
+			(queryLimits.type === 'All' &&
+				queryLimits.cuisine === 'All' &&
+				!queryLimits.city)
 		) {
 			setQueryKey(['foodplaces'])
 			setQueryRef(query(collectionRef, where('approved', '==', true)))
@@ -21,39 +23,106 @@ const useGetQueryFoodplaces = () => {
 
 		// when queryLimits change update the query
 		setQueryKey(['foodplaces', queryLimits])
+		let city = ''
+
+		if (queryLimits.city) {
+			city =
+				queryLimits.city.charAt(0).toUpperCase() +
+				queryLimits.city.slice(1)
+			console.log(city)
+		}
 
 		// variable for keeping track of the diffrent constraints
 		if (queryLimits.type !== 'All' && queryLimits.cuisine !== 'All') {
-			setQueryRef(
-				query(
-					collectionRef,
-					where('type', '==', `${queryLimits.type}`),
-					where(
-						'cuisine',
-						'array-contains',
-						`${queryLimits.cuisine}`
-					),
-					where('approved', '==', true)
+			if (city) {
+				setQueryRef(
+					query(
+						collectionRef,
+						where('approved', '==', true),
+						where(
+							'cuisine',
+							'array-contains',
+							`${queryLimits.cuisine}`
+						),
+						where('type', '==', `${queryLimits.type}`),
+						where('city', '==', `${city}`)
+					)
 				)
-			)
+			} else {
+				setQueryRef(
+					query(
+						collectionRef,
+						where('approved', '==', true),
+						where(
+							'cuisine',
+							'array-contains',
+							`${queryLimits.cuisine}`
+						),
+						where('type', '==', `${queryLimits.type}`)
+					)
+				)
+			}
 		}
 		if (queryLimits.type === 'All' && queryLimits.cuisine !== 'All') {
-			setQueryRef(
-				query(
-					collectionRef,
-					where('approved', '==', true),
-					where('cuisine', 'array-contains', `${queryLimits.cuisine}`)
+			if (city) {
+				setQueryRef(
+					query(
+						collectionRef,
+						where('approved', '==', true),
+						where(
+							'cuisine',
+							'array-contains',
+							`${queryLimits.cuisine}`
+						),
+						where('city', '==', `${city}`)
+					)
 				)
-			)
+			} else {
+				setQueryRef(
+					query(
+						collectionRef,
+						where('approved', '==', true),
+						where(
+							'cuisine',
+							'array-contains',
+							`${queryLimits.cuisine}`
+						)
+					)
+				)
+			}
 		}
 		if (queryLimits.cuisine === 'All' && queryLimits.type !== 'All') {
-			setQueryRef(
-				query(
-					collectionRef,
-					where('approved', '==', true),
-					where('type', '==', `${queryLimits.type}`)
+			if (city) {
+				setQueryRef(
+					query(
+						collectionRef,
+						where('approved', '==', true),
+						where('type', '==', `${queryLimits.type}`),
+						where('city', '==', `${city}`)
+					)
 				)
-			)
+			} else {
+				setQueryRef(
+					query(
+						collectionRef,
+						where('approved', '==', true),
+						where('type', '==', `${queryLimits.type}`)
+					)
+				)
+			}
+		}
+		if (queryLimits.cuisine === 'All' && queryLimits.type === 'All') {
+			if (city) {
+				setQueryRef(
+					query(
+						collectionRef,
+						where('approved', '==', true),
+						where('city', '==', `${city}`)
+					)
+				)
+			} else {
+				setQueryRef(query(collectionRef, where('approved', '==', true)))
+			}
 		}
 	}
 	const { data: foodplaces, isLoading } = useFirestoreQueryData(

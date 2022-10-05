@@ -7,6 +7,8 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import useFoodplaces from '../hooks/useFoodplaces'
 import { DropdownFilter } from '../utilities/filters'
+import FoodplacesTable from '../components/FoodplacesTable'
+import AdminTable from '../components/AdminTable'
 
 const AdminPage = () => {
 	const { foodplaces, isLoading } = useFoodplaces({
@@ -20,6 +22,7 @@ const AdminPage = () => {
 				Header: 'Unapproved Foodplaces',
 				columns: [
 					{
+						id: 'id',
 						Header: 'Name',
 						accessor: 'name',
 					},
@@ -74,7 +77,15 @@ const AdminPage = () => {
 				<p>No foodplaces to approve...</p>
 			)}
 
-			{!isLoading && (
+			<div className='p-3'>
+				{foodplaces && (
+					<>
+						<AdminTable columns={columns} data={foodplaces} />
+					</>
+				)}
+			</div>
+
+			{/* {!isLoading && (
 				<Row xs={1} sm={1} md={2} lg={8}>
 					{foodplaces.map(foodplace => (
 						<Col key={foodplace.id} className='d-flex mb-4'>
@@ -89,7 +100,7 @@ const AdminPage = () => {
 						</Col>
 					))}
 				</Row>
-			)}
+			)} */}
 		</Container>
 	)
 }

@@ -6,6 +6,7 @@ import { DropdownFilter } from '../utilities/filters'
 
 const FoodplaceListPage = () => {
 	const { foodplaces, isLoading } = useFoodplaces()
+	console.log(foodplaces)
 
 	const columns = useMemo(
 		() => [

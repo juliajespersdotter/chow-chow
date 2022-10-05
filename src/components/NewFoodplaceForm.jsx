@@ -23,6 +23,7 @@ const NewFoodplaceForm = () => {
 		// post to the database
 		if (data.address) {
 			const cuisine = data.cuisine.split(',')
+			console.log(cuisine)
 
 			try {
 				const latLng = await getLatLng(data.address)
@@ -31,7 +32,7 @@ const NewFoodplaceForm = () => {
 					lng: latLng.results[0].geometry.location.lng(),
 				}
 
-				if (pos.lat && pos.lng) {
+				if (position.lat && position.lng) {
 					await addDoc(collection(db, 'foodplaces'), {
 						city: data.city,
 						name: data.name,

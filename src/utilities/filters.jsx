@@ -1,4 +1,4 @@
-import React from 'react'
+import { useMemo } from 'react'
 
 // text search input
 /*
@@ -16,11 +16,10 @@ export function TextSearchFilter({
 	)
 }*/
 
-// a dropdown list filter
 export const DropdownFilter = ({
 	column: { filterValue, setFilter, preFilteredRows, id },
 }) => {
-	const options = React.useMemo(() => {
+	const options = useMemo(() => {
 		const options = new Set()
 		preFilteredRows.forEach(row => {
 			options.add(row.values[id])

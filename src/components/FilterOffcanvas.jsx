@@ -10,7 +10,7 @@ import useGeoCoding from '../hooks/useGeoCoding'
 import useFoodplaces from '../hooks/useFoodplaces'
 import { useEffect } from 'react'
 
-const FilterOffcanvas = ({ filterMarkers }) => {
+const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 	const {
 		register,
 		handleSubmit,
@@ -61,11 +61,21 @@ const FilterOffcanvas = ({ filterMarkers }) => {
 								>
 									<option value='All'>All Types</option>
 
-									{foodplaces.map((foodplace, i) => (
+									{/* {foodplaces.map((foodplace, i) => (
 										<option key={i} value={foodplace.type}>
 											{foodplace.type}
 										</option>
-									))}
+									))} */}
+
+									<option value='kiosk/grill'>
+										Kiosk/Grill
+									</option>
+									<option value='café'>Café</option>
+									<option value='restaurant'>
+										Restaurant
+									</option>
+									<option value='fast-food'>Fast-Food</option>
+									<option value='foodtruck'>Foodtruck</option>
 								</Form.Select>
 
 								<p>By Cuisine</p>
@@ -109,8 +119,19 @@ const FilterOffcanvas = ({ filterMarkers }) => {
 												foodplace.city}
 										</span>
 										<br />
-										<span>
-											{foodplace.meals} | {foodplace.type}
+										<span className='text-muted meals-types'>
+											{foodplace.meals.map(meal => (
+												<span
+													key={meal}
+													className='pe-1'
+												>
+													{meal}
+												</span>
+											))}
+											|{' '}
+											<span className='p-1'>
+												{foodplace.type}
+											</span>
 										</span>
 									</ListGroup.Item>
 								))}
@@ -118,7 +139,7 @@ const FilterOffcanvas = ({ filterMarkers }) => {
 						</>
 					)}
 
-					{/* <SearchForm /> */}
+					<SearchForm onSubmit={onSubmit} />
 				</Offcanvas.Body>
 			</Offcanvas>
 		</>

@@ -22,17 +22,16 @@ const MapPage = () => {
 	const [place, setPlace] = useState(null)
 	const [searchParams, setSearchParams] = useSearchParams(undefined)
 	const [center, setCenter] = useState(() => {
-		if (searchParams.get("lat")) {
+		if (searchParams.get('lat')) {
 			return {
-				lat: Number(searchParams.get("lat")),
-				lng: Number(searchParams.get("lng")),
+				lat: Number(searchParams.get('lat')),
+				lng: Number(searchParams.get('lng')),
 			}
 		}
 		return {
 			lat: 55.58354,
 			lng: 13.01373,
 		}
-
 	})
 
 	const handleSubmit = async city => {
@@ -61,7 +60,7 @@ const MapPage = () => {
 		<Container fluid className='m-0 p-0'>
 			<div className='filter-button'>
 				<FilterOffcanvas
-					onCityFormSubmit={handleSubmit}
+					onSubmit={handleSubmit}
 					filterMarkers={filterFoodplaces}
 				/>
 			</div>
@@ -71,10 +70,7 @@ const MapPage = () => {
 			{isLoading && <p>Loading...</p>}
 			<Wrapper apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
 				<div className='vh-75'>
-					<Map
-						center={center}
-						zoom={zoom}
-					>
+					<Map center={center} zoom={zoom}>
 						{foodplaces &&
 							foodplaces.map(foodplace => (
 								<Marker
@@ -95,7 +91,7 @@ const MapPage = () => {
 				</div>
 			</Wrapper>
 
-			<SearchForm onSubmit={handleSubmit} />
+			{/* <SearchForm onSubmit={handleSubmit} /> */}
 		</Container>
 	)
 }

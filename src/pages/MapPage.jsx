@@ -54,11 +54,12 @@ const MapPage = () => {
 
 	return (
 		<Container fluid className='m-0 p-0'>
-			<div className='filter-button'>
+			<div className='filter-search'>
 				<FilterOffcanvas
 					onCityFormSubmit={handleSubmit}
 					filterMarkers={filterFoodplaces}
 				/>
+				<SearchForm onSubmit={handleSubmit} />
 			</div>
 			{/* {isError && (
 				<Alert variant='danger'>An error has occurred: {error}</Alert>
@@ -99,7 +100,7 @@ const MapPage = () => {
 				</div>
 			</Wrapper>
 
-			<SearchForm onSubmit={handleSubmit} />
+			
 		</Container>
 	)
 }

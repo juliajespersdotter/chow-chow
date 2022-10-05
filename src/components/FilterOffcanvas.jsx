@@ -38,7 +38,7 @@ const FilterOffcanvas = ({ filterMarkers }) => {
 
 	return (
 		<>
-			<Button onClick={handleShow} className='outline-primary'>
+			<Button onClick={handleShow} className='filter-btn'>
 				Filter Restaurants
 			</Button>
 

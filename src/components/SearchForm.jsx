@@ -1,5 +1,5 @@
+import { flexbox } from '@mui/system'
 import { useRef } from 'react'
-import { useState } from 'react'
 import Form from 'react-bootstrap/Form'
 import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 import useFoodplaces from '../hooks/useFoodplaces'
@@ -32,7 +32,6 @@ const SearchForm = ({ onSubmit }) => {
 	const handleOnSearch = (string, results) => {
 		// onSearch will have as the first callback parameter
 		// the string searched and for the second the results.
-		console.log(string, results)
 	  }
 	
 	  const handleOnHover = (result) => {
@@ -54,6 +53,7 @@ const SearchForm = ({ onSubmit }) => {
 		  <>
 			{/* <span style={{ display: 'block', textAlign: 'left' }}>id: {item.id}</span> */}
 			<span style={{ display: 'block', textAlign: 'left' }}>{item.name}</span>
+			<span style={{ display: 'block', textAlign: 'left' }}>{item.city}</span>
 		  </>
 		)
 	  }
@@ -80,8 +80,30 @@ const SearchForm = ({ onSubmit }) => {
 
 	return (
 		<>
-			<div style={{ width: 400, height: 100 }}>
-				<ReactSearchAutocomplete
+			<div style={{ 
+				width: 400, 
+				marginTop: 20,
+				marginBottom: 20,
+				}}>
+				<ReactSearchAutocomplete className="searchbar"
+					items={items}
+					maxResults={4}
+					fuseOptions={{ keys: ["city"] }}
+					onSearch={handleOnSearch}
+					onHover={handleOnHover}
+					onSelect={handleOnSelect}
+					onFocus={handleOnFocus}
+					formatResult={formatResult}
+					onSubmit={handleSubmit}
+					ref={cityRef}
+					styling={{ zIndex: 4 }}
+					autoFocus
+				/>
+			</div>
+
+			{/* <Form className='p-1' onSubmit={handleSubmit}>
+				<Form.Group controlId='city' className='mb-3'>
+					<Form.Control 
 					items={items}
 					onSearch={handleOnSearch}
 					onHover={handleOnHover}
@@ -89,14 +111,11 @@ const SearchForm = ({ onSubmit }) => {
 					onFocus={handleOnFocus}
 					autoFocus
 					formatResult={formatResult}
-				/>
-			</div>
-
-			<Form className='p-1' onSubmit={handleSubmit}>
-				<Form.Group controlId='city' className='mb-3'>
-					<Form.Control ref={cityRef} type='text' placeholder="Search by city"/>
+					ref={cityRef} 
+					type='text' 
+					placeholder="Search by city"/>
 				</Form.Group>	
-			</Form>
+			</Form> */}
 		</>
 	)
 }

@@ -3,6 +3,7 @@ import useFoodplaces from '../hooks/useFoodplaces'
 import Container from 'react-bootstrap/Container'
 import FoodplacesTable from '../components/FoodplacesTable'
 import { DropdownFilter } from '../utilities/filters'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 const FoodplaceListPage = () => {
 	const { foodplaces, isLoading } = useFoodplaces()
@@ -54,7 +55,7 @@ const FoodplaceListPage = () => {
 	return (
 		<Container>
 			<div className='p-3'>
-				{isLoading && <p>Loading...</p>}
+				{isLoading && <LoadingSpinner />}
 				{foodplaces && (
 					<>
 						<FoodplacesTable columns={columns} data={foodplaces} />

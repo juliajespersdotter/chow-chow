@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useTable, useSortBy, useFilters, useRowSelect } from 'react-table'
 import { matchSorterFn } from '../utilities/sorting'
-import { doc, updateDoc, writeBatch } from 'firebase/firestore'
+import { doc, writeBatch } from 'firebase/firestore'
 import { db } from '../firebase'
 import MaUTable from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -131,21 +131,6 @@ const AdminTable = ({ columns, data }) => {
 					Approve
 				</Button>
 			</div>
-			<>
-				<pre>
-					<code>
-						{JSON.stringify(
-							{
-								selectedFlatRows: selectedFlatRows.map(
-									row => row.original
-								),
-							},
-							null,
-							2
-						)}
-					</code>
-				</pre>
-			</>
 		</>
 	)
 }

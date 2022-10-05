@@ -142,11 +142,6 @@ const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 							</ListGroup>
 						</>
 					)}
-
-					{/* <SearchForm
-						onSubmit={onSubmit}
-						filterFoodplaces={FilterFoodplaces}
-					/> */}
 				</Offcanvas.Body>
 			</Offcanvas>
 		</>

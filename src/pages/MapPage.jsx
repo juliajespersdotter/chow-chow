@@ -1,16 +1,14 @@
 import Container from 'react-bootstrap/Container'
-import Alert from 'react-bootstrap/Alert'
 import Map from '../components/Map'
 import { Wrapper, Status } from '@googlemaps/react-wrapper'
 import { useState, useEffect } from 'react'
 import useGeoCoding from '../hooks/useGeoCoding'
 import Marker from '../components/Marker'
-import useFoodplaces from '../hooks/useFoodplaces'
 import InfoModal from '../components/InfoModal'
-import SearchForm from '../components/SearchForm'
 import FilterOffcanvas from '../components/FilterOffcanvas'
 import useGetQueryFoodplaces from '../hooks/useGetQueryFoodplaces'
 import { useSearchParams } from 'react-router-dom'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 const MapPage = () => {
 	const [zoom, setZoom] = useState(17) // initial zoom
@@ -67,7 +65,7 @@ const MapPage = () => {
 			{/* {isError && (
 				<Alert variant='danger'>An error has occurred: {error}</Alert>
 			)} */}
-			{isLoading && <p>Loading...</p>}
+			{isLoading && <LoadingSpinner />}
 			<Wrapper apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
 				<div className='vh-75'>
 					<Map center={center} zoom={zoom}>
@@ -90,8 +88,6 @@ const MapPage = () => {
 					</Map>
 				</div>
 			</Wrapper>
-
-			{/* <SearchForm onSubmit={handleSubmit} /> */}
 		</Container>
 	)
 }

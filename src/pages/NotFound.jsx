@@ -1,9 +1,12 @@
 import Container from 'react-bootstrap/Container'
+import Alert from 'react-bootstrap/Alert'
 
 const NotFound = () => {
 	return (
-		<Container className="py-3">
-			<h1>Sorry, that page could not be found 😔</h1>
+		<Container className='py-3'>
+			<Alert variant='danger'>
+				Sorry, that page could not be found 😔
+			</Alert>
 		</Container>
 	)
 }

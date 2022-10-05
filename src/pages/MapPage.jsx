@@ -10,19 +10,30 @@ import InfoModal from '../components/InfoModal'
 import SearchForm from '../components/SearchForm'
 import FilterOffcanvas from '../components/FilterOffcanvas'
 import useGetQueryFoodplaces from '../hooks/useGetQueryFoodplaces'
+import { useSearchParams } from 'react-router-dom'
 
 const MapPage = () => {
 	const [zoom, setZoom] = useState(17) // initial zoom
 	const { getLatLng } = useGeoCoding()
-	const [center, setCenter] = useState({
-		lat: 55.58354,
-		lng: 13.01373,
-	})
 	const [errorMsg, setErrorMsg] = useState(null)
 	// const { foodplaces, isLoading } = useFoodplaces()
 	const { foodplaces, filterFoodplaces, isLoading } = useGetQueryFoodplaces()
 	const [showModal, setShowModal] = useState(false)
 	const [place, setPlace] = useState(null)
+	const [searchParams, setSearchParams] = useSearchParams(undefined)
+	const [center, setCenter] = useState(() => {
+		if (searchParams.get("lat")) {
+			return {
+				lat: Number(searchParams.get("lat")),
+				lng: Number(searchParams.get("lng")),
+			}
+		}
+		return {
+			lat: 55.58354,
+			lng: 13.01373,
+		}
+
+	})
 
 	const handleSubmit = async city => {
 		if (city) {
@@ -33,7 +44,7 @@ const MapPage = () => {
 					lng: latLng.results[0].geometry.location.lng(),
 				}
 				setCenter(position)
-				console.log('position', position)
+				setSearchParams(position)
 			} catch (err) {
 				setErrorMsg(err.message)
 				console.log(errorMsg)
@@ -45,12 +56,6 @@ const MapPage = () => {
 		setPlace(foodplace)
 		setShowModal(!showModal)
 	}
-
-	// useEffect(() => {
-	// 	if (position.lat && position.lng) {
-	// 		setCenter({ lat: position.lat, lng: position.lng })
-	// 	}
-	// }, [position])
 
 	return (
 		<Container fluid className='m-0 p-0'>
@@ -70,15 +75,6 @@ const MapPage = () => {
 					<Map
 						center={center}
 						zoom={zoom}
-						options={{
-							styles: [
-								{
-									featureType: 'all',
-									elementType: 'all',
-									stylers: [{ visibility: 'off' }],
-								},
-							],
-						}}
 					>
 						{foodplaces &&
 							foodplaces.map(foodplace => (

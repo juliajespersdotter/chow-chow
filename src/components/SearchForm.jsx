@@ -1,86 +1,73 @@
-import { flexbox } from '@mui/system'
 import { useRef } from 'react'
 import Form from 'react-bootstrap/Form'
-import { ReactSearchAutocomplete } from 'react-search-autocomplete'
-import useFoodplaces from '../hooks/useFoodplaces'
+import { useState } from "react";
+import useGetCollection from "../hooks/useGetCollection";
 
-const SearchForm = ({ onSubmit }) => {
+const SearchForm = ({ onSubmit, className }) => {
 	const cityRef = useRef()
-	const items = [
-		{
-			id: 0,
-			name: 'China Box',
-			city: 'Malmö'			
-		},
-		{
-			id: 1,
-			name: 'Värnhems Falafel',
-			city: 'Malmö'			
-		},
-		{
-			id: 2,
-			name: 'Quê',
-			city: 'Malmö'			
-		},
-		{
-			id: 3,
-			name: 'D&J sallad',
-			city: 'Malmö'			
-		},
-	]
 
-	const handleOnSearch = (string, results) => {
-		// onSearch will have as the first callback parameter
-		// the string searched and for the second the results.
-	  }
-	
-	  const handleOnHover = (result) => {
-		// the item hovered
-		console.log(result)
-	  }
-	
-	  const handleOnSelect = (item) => {
-		// the item selected
-		console.log(item)
-	  }
-	
-	  const handleOnFocus = () => {
-		console.log('Focused')
-	  }
-	
-	  const formatResult = (item) => {
-		return (
-		  <>
-			{/* <span style={{ display: 'block', textAlign: 'left' }}>id: {item.id}</span> */}
-			<span style={{ display: 'block', textAlign: 'left' }}>{item.name}</span>
-			<span style={{ display: 'block', textAlign: 'left' }}>{item.city}</span>
-		  </>
-		)
-	  }
+	const [searchInput, setSearchInput] = useState("");
 
-	// const { data: foodplaces } = useFoodplaces("foodplace");
+    const { data: foodplaces } = useGetCollection("foodplaces");
 
-	// const filteredFoodplaces =
-	// 	searchInput === ""
-	// 		? foodplaces
-	// 		: foodplaces.filter((foodplace) => {
-	// 				return (
-	// 					foodplace.city.toLowerCase() || foodplace.name.toLowerCase()
-	// 				);
-	// 		  });
+    const filteredFoodplaces =
+        searchInput === ""
+            ? foodplaces
+            : foodplaces.filter((foodplace) => {
+                    return (
+                        foodplace.city.toLowerCase().includes(searchInput.toLowerCase()) ||
+                        foodplace.name.toLowerCase().includes(searchInput.toLowerCase())
+                    );
+              });
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
+	const handleSearch = (e) => {
+		e.preventDefault()
 
 		if (cityRef.current.value) {
 			onSubmit(cityRef.current.value)
 		}
-		
-	};
+		if (!searchInput.length) {
+            return;
+        }
+
+        handleSearch(searchInput);
+        setSearchInput("");
+	}
 
 	return (
 		<>
-			<div style={{ 
+			<form
+            onSubmit={handleSearch}
+            className={`flex justify-center items-center gap-2`}
+        	>
+
+				<div className="input-group">
+					<input
+						type="text"
+						placeholder={"Search restaurant"}
+						onChange={(e) => setSearchInput(e.target.value)}
+						value={searchInput}
+						ref={cityRef}
+					/>
+				</div>
+
+				{searchInput.length > 0 && filteredFoodplaces.length > 0 && (
+					<ul className="list-search">
+						{filteredFoodplaces?.map((foodplace) => (
+							<li
+								key={foodplace.id}
+								className="list-search-item"
+								onClick={() =>
+									setSearchInput(`${foodplace.streetaddress}, ${foodplace.city}`)
+								}
+							>
+								{foodplace.name}, {foodplace.city}
+							</li>
+						))}
+					</ul>
+				)}
+        	</form>
+			{/* <div style={{ 
 				width: 400, 
 				marginTop: 20,
 				marginBottom: 20,
@@ -99,25 +86,86 @@ const SearchForm = ({ onSubmit }) => {
 					styling={{ zIndex: 4 }}
 					autoFocus
 				/>
-			</div>
+			</div> */}
 
-			{/* <Form className='p-1' onSubmit={handleSubmit}>
+			{/* <Form className='p-1' onSubmit={handleSearch}>
 				<Form.Group controlId='city' className='mb-3'>
-					<Form.Control 
-					items={items}
-					onSearch={handleOnSearch}
-					onHover={handleOnHover}
-					onSelect={handleOnSelect}
-					onFocus={handleOnFocus}
-					autoFocus
-					formatResult={formatResult}
-					ref={cityRef} 
-					type='text' 
-					placeholder="Search by city"/>
-				</Form.Group>	
-			</Form> */}
+					<Form.Control ref={cityRef} type='text' placeholder="Search by city"/>
+				</Form.Group>
+			</Form>	 */}
 		</>
 	)
 }
 
 export default SearchForm
+
+// import { useEffect, useState } from "react";
+// import useGetCollection from "../hooks/useGetCollection";
+
+
+// const SearchForm = ({ className }) => {
+
+//     const [searchInput, setSearchInput] = useState("");
+
+//     const { data: foodplaces } = useGetCollection("foodplaces");
+
+//     const filteredFoodplaces =
+//         searchInput === ""
+//             ? foodplaces
+//             : foodplaces.filter((foodplace) => {
+//                     return (
+//                         foodplace.city.toLowerCase().includes(searchInput.toLowerCase()) ||
+//                         foodplace.name.toLowerCase().includes(searchInput.toLowerCase())
+//                     );
+//               });
+
+//     const handleSubmit = (e) => {
+//         e.preventDefault();
+
+//         if (!searchInput.length) {
+//             return;
+//         }
+
+//         handleSearch(searchInput);
+//         setSearchInput("");
+//     };
+
+//     return (
+//         <form
+//             onSubmit={handleSubmit}
+//             className={`flex justify-center items-center gap-2 ${className}`}
+//         >
+//             <div className="input-group">
+//                 <input
+//                     type="text"
+//                     placeholder={"Sök..."}
+//                     onChange={(e) => setSearchInput(e.target.value)}
+//                     value={searchInput}
+//                     className="input input-sm input-bordered w-full"
+//                 />
+
+//                 <button className="btn btn-sm btn-square">
+//                     <p>search</p>
+//                 </button>
+//             </div>
+
+//             {searchInput.length > 0 && filteredFoodplaces.length > 0 && (
+//                 <ul className="list-search">
+//                     {filteredFoodplaces?.map((foodplace) => (
+//                         <li
+//                             key={foodplace.id}
+//                             className="cursor-pointer hover:bg-base-300 p-2"
+//                             onClick={() =>
+//                                 setSearchInput(`${foodplace.streetaddress}, ${foodplace.city}`)
+//                             }
+//                         >
+//                             {foodplace.name}, {foodplace.city}
+//                         </li>
+//                     ))}
+//                 </ul>
+//             )}
+//         </form>
+//     );
+// };
+
+// export default SearchForm;

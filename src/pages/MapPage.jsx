@@ -9,6 +9,7 @@ import FilterOffcanvas from '../components/FilterOffcanvas'
 import useGetQueryFoodplaces from '../hooks/useGetQueryFoodplaces'
 import { useSearchParams } from 'react-router-dom'
 import LoadingSpinner from '../components/LoadingSpinner'
+import SearchForm from '../components/SearchForm'
 
 const MapPage = () => {
 	const [zoom, setZoom] = useState(17) // initial zoom
@@ -61,7 +62,7 @@ const MapPage = () => {
 					onSubmit={handleSubmit}
 					filterMarkers={filterFoodplaces}
 				/>
-				<SearchForm onSubmit={handleSubmit} />
+				<SearchForm />
 			</div>
 			{/* {isError && (
 				<Alert variant='danger'>An error has occurred: {error}</Alert>

@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import Offcanvas from 'react-bootstrap/Offcanvas'
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
@@ -6,7 +7,6 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Form from 'react-bootstrap/Form'
 import useGetQueryFoodplaces from '../hooks/useGetQueryFoodplaces'
 import { useForm } from 'react-hook-form'
-import { useEffect } from 'react'
 import LoadingSpinner from './LoadingSpinner'
 
 const FilterOffcanvas = ({ filterMarkers }) => {
@@ -103,45 +103,54 @@ const FilterOffcanvas = ({ filterMarkers }) => {
 								>
 									Filter
 								</Button>
+								<Button
+									as={Link}
+									to={'/foodplaces'}
+									className='btn-color my-3 ms-2'
+								>
+									See all foodplaces
+								</Button>
 							</Form>
 
 							<ListGroup className='foodplace-listgroup'>
 								{!foodplaces.length && (
-									<Alert variant='warning'>
+									<Alert variant='danger'>
 										No foodplaces found
 									</Alert>
 								)}
-								{foodplaces.map((foodplace, index) => (
-									<ListGroup.Item
-										action
-										key={index}
-										onClick={() => {
-											foodplace
-										}}
-									>
-										<h3>{foodplace.name}</h3>
-										<span>
-											{foodplace.streetadress +
-												' ' +
-												foodplace.city}
-										</span>
-										<br />
-										<span className='text-muted meals-types'>
-											{foodplace.meals.map(meal => (
-												<span
-													key={meal}
-													className='pe-1'
-												>
-													{meal}
-												</span>
-											))}
-											|{' '}
-											<span className='p-1'>
-												{foodplace.type}
+								{foodplaces
+									.slice(0, 5)
+									.map((foodplace, index) => (
+										<ListGroup.Item
+											action
+											key={index}
+											onClick={() => {
+												foodplace
+											}}
+										>
+											<h3>{foodplace.name}</h3>
+											<span>
+												{foodplace.streetadress +
+													' ' +
+													foodplace.city}
 											</span>
-										</span>
-									</ListGroup.Item>
-								))}
+											<br />
+											<span className='text-muted meals-types'>
+												{foodplace.meals.map(meal => (
+													<span
+														key={meal}
+														className='pe-1'
+													>
+														{meal}
+													</span>
+												))}
+												|{' '}
+												<span className='p-1'>
+													{foodplace.type}
+												</span>
+											</span>
+										</ListGroup.Item>
+									))}
 							</ListGroup>
 						</>
 					)}

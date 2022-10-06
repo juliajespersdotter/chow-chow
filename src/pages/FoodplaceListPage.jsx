@@ -42,8 +42,14 @@ const FoodplaceListPage = () => {
 					},
 					{
 						Header: 'Meals',
-						accessor: 'meals',
-						Filter: DropdownFilter,
+						accessor: data =>
+							data.meals.map((item, i) => (
+								<div key={i}>
+									<span key={i} className='ms-2'>
+										{item}
+									</span>
+								</div>
+							)),
 					},
 				],
 			},

@@ -6,7 +6,7 @@ import { Image } from 'react-bootstrap'
 
 const Navigation = () => {
 	return (
-		<Navbar bg='dark' variant='dark' expand='md'>
+		<Navbar expand='md'>
 			<Container>
 				<Navbar.Brand as={Link} to='/'>
 					<Image fluid className='' src='images/logo-nav.png' />

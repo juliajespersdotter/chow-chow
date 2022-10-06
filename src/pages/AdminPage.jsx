@@ -10,7 +10,6 @@ const AdminPage = () => {
 	const { foodplaces, isLoading } = useFoodplaces({
 		fetchUnApproved: true,
 	})
-	console.log(foodplaces)
 
 	const columns = useMemo(
 		() => [
@@ -47,8 +46,14 @@ const AdminPage = () => {
 					},
 					{
 						Header: 'Meals',
-						accessor: 'meals',
-						Filter: DropdownFilter,
+						accessor: data =>
+							data.meals.map((item, i) => (
+								<div key={i}>
+									<span key={i} className='ms-2'>
+										{item}
+									</span>
+								</div>
+							)),
 					},
 				],
 			},

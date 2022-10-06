@@ -33,6 +33,21 @@ body {
 .navbar-brand {
 	width: 90px;
 }
+.navbar {
+	background-color: var(--purple);
+}
+
+.nav-link {
+	color: white;
+}
+
+.nav-link.active {
+	color: var(--orange) !important;
+}
+
+.nav-link:hover {
+	color: var(--orange);
+}
 
 .home {
 	height: 100vh;
@@ -65,10 +80,12 @@ table {
 
 .filter-search {
 	align-items: center;
-	background-color: rgb(33, 37, 41);
+	// background-color: rgb(33, 37, 41);
+	background-color: var(--purple);
 	padding-bottom: 10px;
 	justify-content: space-evenly;
 	display: flex;
+	padding-top: 1rem;
 }
 
 .filter-btn {
@@ -77,6 +94,9 @@ table {
 
 .search-input {
 	width: 300px;
+	border-radius: 10px;
+	padding: 0.2rem;
+	border: none;
 }
 .list-search {
 	background: white;
@@ -91,27 +111,34 @@ table {
 	color: white;
 }
 
-// .btn-primary {
-// 	background-color: $warning;
-// }
-
-// .outline-primary {
-// 	border-color: $warning;
-// }
-
-// .btn {
-// 	background-color: #888;
-// 	border-color: #888;
-// }
-
-.offcanvas.offcanvas-start {
-	width: 600px;
+.btn {
+	background-color: var(--orange);
+	border-color: var(--orange);
 }
 
-Offcanvas {
-	button {
-		background-color: lightgray;
-	}
+.btn:hover {
+	background-color: var(--red);
+	border-color: var(--red);
+}
+
+.btn:active {
+	border-color: rgb(33, 37, 41);
+}
+
+.btn-color:after,
+.btn-primary:visited,
+.btn-primary:focus {
+	box-shadow: var(--red);
+	background-color: var(--red) !important;
+	border-color: var(--red) !important;
+}
+
+.offcanvas.offcanvas-start {
+	// width: 600px;
+}
+
+.offcanvas {
+	background-color: var(--purple);
 }
 
 .meals-types {

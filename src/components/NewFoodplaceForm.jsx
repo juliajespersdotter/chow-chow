@@ -1,14 +1,15 @@
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import Alert from 'react-bootstrap/Alert'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { collection, addDoc } from 'firebase/firestore'
 import useGeoCoding from '../hooks/useGeoCoding'
 import { db } from '../firebase'
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
 
 const NewFoodplaceForm = () => {
 	const { getLatLng, error, isError } = useGeoCoding()
+	const [setErrorMsg, errorMsg] = useState('')
 	const {
 		register,
 		handleSubmit,
@@ -23,15 +24,6 @@ const NewFoodplaceForm = () => {
 	const onCreateFoodPlace = async data => {
 		// post to the database
 		if (data.address) {
-			// const cuisine = data.cuisine.split(',')
-
-			// const newArray = cuisine.map(item => {
-			// 	const newItem = item.trim()
-			// 	return newItem.charAt(0).toUpperCase() + newItem.slice(1)
-			// })
-
-			// console.log(data)
-
 			try {
 				const latLng = await getLatLng(data.address)
 				const position = {
@@ -58,11 +50,9 @@ const NewFoodplaceForm = () => {
 				} else {
 					throw new Error('No position found')
 				}
-				// console.log(position)
 			} catch (err) {
-				console.log(err.message)
+				setErrorMsg(err)
 			}
-			console.log(data)
 			reset()
 		}
 	}
@@ -214,6 +204,7 @@ const NewFoodplaceForm = () => {
 					<Form.Control {...register('instagram')} type='instagram' />
 				</div>
 			</Form.Group>
+			{isError && <Alert className='danger'>{error}</Alert>}
 			<Button type='submit'>Submit</Button>
 		</Form>
 	)

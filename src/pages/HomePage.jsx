@@ -6,9 +6,9 @@ const HomePage = () => {
 	return (
 		<Container
 			fluid
-			className='home h-75 m-0 p-0 d-flex align-items-center justify-content-center'
+			className='home'
 		>
-			<Image fluid className='logo' src='images/logo.png' />
+			<Image fluid className='logo' src='images/homepage-logo.png' />
 		</Container>
 )
 }

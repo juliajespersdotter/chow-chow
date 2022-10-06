@@ -50,8 +50,10 @@ body {
 }
 
 .home {
-	height: 100vh;
+	display: flex;
+	justify-content: center;
 }
+
 table {
 	padding: 2rem;
 	border-spacing: 0;
@@ -133,10 +135,6 @@ table {
 	border-color: var(--red) !important;
 }
 
-.offcanvas.offcanvas-start {
-	// width: 600px;
-}
-
 .offcanvas {
 	background-color: var(--purple);
 }
@@ -166,6 +164,10 @@ table {
 
 	.button-theme {
 		border-radius: 50%;
+	}
+
+	.home {
+		margin-top: 50%;
 	}
 }
 @media screen and (max-width: 600px) {

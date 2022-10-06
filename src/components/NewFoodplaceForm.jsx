@@ -23,14 +23,14 @@ const NewFoodplaceForm = () => {
 	const onCreateFoodPlace = async data => {
 		// post to the database
 		if (data.address) {
-			const cuisine = data.cuisine.split(',')
+			// const cuisine = data.cuisine.split(',')
 
-			const newArray = cuisine.map(item => {
-				const newItem = item.trim()
-				return newItem.charAt(0).toUpperCase() + newItem.slice(1)
-			})
+			// const newArray = cuisine.map(item => {
+			// 	const newItem = item.trim()
+			// 	return newItem.charAt(0).toUpperCase() + newItem.slice(1)
+			// })
 
-			console.log(newArray)
+			// console.log(data)
 
 			try {
 				const latLng = await getLatLng(data.address)
@@ -46,7 +46,7 @@ const NewFoodplaceForm = () => {
 						description: data.description,
 						streetadress: data.address,
 						type: data.type,
-						cuisine: cuisine,
+						cuisine: data.cuisine,
 						meals: data.meals,
 						email: data.email,
 						phone: data.phone,
@@ -168,6 +168,7 @@ const NewFoodplaceForm = () => {
 						<option value='mexican'>Mexican</option>
 						<option value='thai'>Thai</option>
 						<option value='american'>American</option>
+						<option value='other'>Other</option>
 					</Form.Select>
 					<Form.Select
 						className='type-select m-3 d-flex w-75'

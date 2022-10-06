@@ -39,11 +39,7 @@ const useGetQueryFoodplaces = () => {
 					query(
 						collectionRef,
 						where('approved', '==', true),
-						where(
-							'cuisine',
-							'array-contains',
-							`${queryLimits.cuisine}`
-						),
+						where('cuisine', '==', `${queryLimits.cuisine}`),
 						where('type', '==', `${queryLimits.type}`),
 						where('city', '==', `${city}`)
 					)
@@ -53,11 +49,7 @@ const useGetQueryFoodplaces = () => {
 					query(
 						collectionRef,
 						where('approved', '==', true),
-						where(
-							'cuisine',
-							'array-contains',
-							`${queryLimits.cuisine}`
-						),
+						where('cuisine', '==', `${queryLimits.cuisine}`),
 						where('type', '==', `${queryLimits.type}`)
 					)
 				)
@@ -69,11 +61,7 @@ const useGetQueryFoodplaces = () => {
 					query(
 						collectionRef,
 						where('approved', '==', true),
-						where(
-							'cuisine',
-							'array-contains',
-							`${queryLimits.cuisine}`
-						),
+						where('cuisine', '==', `${queryLimits.cuisine}`),
 						where('city', '==', `${city}`)
 					)
 				)
@@ -82,11 +70,7 @@ const useGetQueryFoodplaces = () => {
 					query(
 						collectionRef,
 						where('approved', '==', true),
-						where(
-							'cuisine',
-							'array-contains',
-							`${queryLimits.cuisine}`
-						)
+						where('cuisine', '==', `${queryLimits.cuisine}`)
 					)
 				)
 			}

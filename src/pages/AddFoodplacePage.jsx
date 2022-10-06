@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container'
 
 const AddFoodplacePage = () => {
 	return (
-		<Container className='p-5'>
+		<Container className='addFoodplace p-5'>
 			<NewFoodplaceForm />
 		</Container>
 	)

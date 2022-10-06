@@ -58,7 +58,7 @@ const FoodplaceListPage = () => {
 	)
 
 	return (
-		<Container>
+		<Container className="foodplace-list">
 			<div className='p-3'>
 				{isLoading && <LoadingSpinner />}
 				{foodplaces && (

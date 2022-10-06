@@ -3,8 +3,6 @@ import { collection, query, orderBy, where } from 'firebase/firestore'
 import { db } from '../firebase'
 
 const useFoodplaces = (options = { fetchUnApproved: false }) => {
-	// const { currentUser } = useAuthContext()
-
 	// create ref to collection 'foodplaces'
 	const collectionRef = collection(db, 'foodplaces')
 

@@ -8,7 +8,7 @@ const HomePage = () => {
 			fluid
 			className='home'
 		>
-			<Image fluid className='logo' src='images/homepage.jpg' />
+			<Image fluid className='logo' src='images/homepage-logo.png' />
 		</Container>
 )
 }

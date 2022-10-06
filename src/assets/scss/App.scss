@@ -34,6 +34,11 @@ body {
 	width: 90px;
 }
 
+.home {
+	display: flex;
+	justify-content: center;
+}
+
 table {
 	padding: 2rem;
 	border-spacing: 0;
@@ -136,6 +141,10 @@ Offcanvas {
 
 	.button-theme {
 		border-radius: 50%;
+	}
+
+	.home {
+		margin-top: 50%;
 	}
 }
 @media screen and (max-width: 600px) {

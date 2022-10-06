@@ -139,6 +139,10 @@ table {
 	background-color: var(--purple);
 }
 
+.btn-close {
+	background-color: white;
+}
+
 .meals-types {
 	font-size: 0.8rem;
 }
@@ -162,8 +166,14 @@ table {
 		margin: 10px 0px;
 	}
 
+	.input-group {
+		margin: 10px 0px;
+	}
+
 	.button-theme {
 		border-radius: 50%;
+		width: fit-content;
+		margin: 0 auto;
 	}
 
 	.home {

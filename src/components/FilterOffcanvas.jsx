@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import Offcanvas from 'react-bootstrap/Offcanvas'
 import Button from 'react-bootstrap/Button'
+import Alert from 'react-bootstrap/Alert'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Form from 'react-bootstrap/Form'
 import useGetQueryFoodplaces from '../hooks/useGetQueryFoodplaces'
@@ -108,6 +109,11 @@ const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 							</Form>
 
 							<ListGroup className='foodplace-listgroup'>
+								{!foodplaces.length && (
+									<Alert variant='warning'>
+										No foodplaces found
+									</Alert>
+								)}
 								{foodplaces.map((foodplace, index) => (
 									<ListGroup.Item
 										action

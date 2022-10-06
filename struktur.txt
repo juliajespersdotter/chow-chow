@@ -7,7 +7,6 @@ Docs: https://developers.google.com/maps/documentation/javascript/tutorials
 https://developers.google.com/maps/documentation/javascript/react-map
 
 TODO
-#7 Autocomplete i search bar
 Styla Formulär
 Kolla om Cusisine kan göras bättre
 Styla moduler

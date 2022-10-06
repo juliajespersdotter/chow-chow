@@ -97,3 +97,71 @@ Offcanvas {
 .meals-types {
 	font-size: 0.8rem;
 }
+
+.page-width-container {
+	width: 100%;
+}
+
+.page-width {
+	width: 54%;
+}
+
+@media screen and (max-width: 600px) {
+	.food-form {
+		display: block;
+	}
+
+	// .food-form input {
+	// 	width: 100%;
+	// }
+
+	.meals-wrapper {
+		flex-direction: column;
+	}
+
+	// .meals-wrapper > div > .form-select {
+	// 	// flex-direction: column;
+	// 	width: 100%;
+	// 	margin: 0;
+	// }
+
+	.meals-wrapper > .form-select {
+		width: 100%;
+		flex-direction: column;
+		margin: 0;
+	}
+
+	.meal-checkbox {
+		flex-direction: column;
+		width: 100%;
+		margin: 0;
+	}
+
+	.meal-checkbox div {
+		margin: 0;
+	}
+
+	.cuisine-wrapper {
+		flex-direction: column;
+		width: 100%;
+		margin: 0 !important;
+	}
+
+	.type-select {
+		display: block;
+		margin: 0 !important;
+	}
+
+	.optional-info {
+		margin: 0;
+	}
+
+	.form-control {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	.page-width {
+		width: 100%;
+	}
+}

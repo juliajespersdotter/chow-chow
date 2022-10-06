@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form'
 import { collection, addDoc } from 'firebase/firestore'
 import useGeoCoding from '../hooks/useGeoCoding'
 import { db } from '../firebase'
-import { useState } from 'react'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 
 const NewFoodplaceForm = () => {
 	const { getLatLng, error, isError } = useGeoCoding()
@@ -67,7 +68,10 @@ const NewFoodplaceForm = () => {
 	}
 
 	return (
-		<Form className='p-1' onSubmit={handleSubmit(onCreateFoodPlace)}>
+		<Form
+			className='food-form p-1'
+			onSubmit={handleSubmit(onCreateFoodPlace)}
+		>
 			<Form.Group controlId='name' className='mb-3'>
 				<Form.Label>Restaurant Name</Form.Label>
 				<Form.Control
@@ -126,51 +130,88 @@ const NewFoodplaceForm = () => {
 				/>
 			</Form.Group>
 			<Form.Label>Meals</Form.Label>
-			<Form.Group>
-				<Form.Check {...register('meals')} value='Breakfast' />
-				<Form.Check.Label>Breakfast</Form.Check.Label>
-				<Form.Check {...register('meals')} value='Lunch' />
-				<Form.Check.Label>Lunch</Form.Check.Label>
-				<Form.Check {...register('meals')} value='Dinner' />
-				<Form.Check.Label>Dinner</Form.Check.Label>
-			</Form.Group>
-			<Form.Group controlId='cuisine' className='mb-3'>
-				<Form.Label>Cuisine</Form.Label>
-				<Form.Control
-					{...register('cuisine', {
-						required: 'Restaurant needs cuisine',
-					})}
-					type='cuisine'
-				/>
-				<Form.Text>Separate with commas</Form.Text>
-			</Form.Group>
-			<Form.Select {...register('type')} aria-label='Type'>
-				<option>Choose type of restaurant</option>
-				<option value='kiosk/grill'>Kiosk/Grill</option>
-				<option value='cafe'>Café</option>
-				<option value='restaurant'>Restaurant</option>
-				<option value='fast-food'>Fast-food</option>
-				<option value='foodtruck'>Foodtruck</option>
-			</Form.Select>
-			<Form.Group controlId='email' className='mb-3'>
-				<Form.Label>Email</Form.Label>
-				<Form.Control {...register('email')} type='email' />
-			</Form.Group>
-			<Form.Group controlId='phone' className='mb-3'>
-				<Form.Label>Telephone</Form.Label>
-				<Form.Control {...register('phone')} type='number' />
-			</Form.Group>
-			<Form.Group controlId='url' className='mb-3'>
-				<Form.Label>Page</Form.Label>
-				<Form.Control {...register('url')} type='url' />
-			</Form.Group>
-			<Form.Group controlId='facebook' className='mb-3'>
-				<Form.Label>Facebook</Form.Label>
-				<Form.Control {...register('facebook')} type='facebook' />
-			</Form.Group>
-			<Form.Group controlId='instagram' className='mb-3'>
-				<Form.Label>Instagram</Form.Label>
-				<Form.Control {...register('instagram')} type='instagram' />
+			<div className='d-flex align-items-center meals-wrapper'>
+				<Form.Group className='d-flex justify-content-between w-25 meal-checkbox'>
+					<div className='d-flex'>
+						<Form.Check {...register('meals')} value='Breakfast' />
+						<Form.Check.Label className='ms-1 me-3'>
+							Breakfast
+						</Form.Check.Label>
+					</div>
+					<div className='d-flex'>
+						<Form.Check {...register('meals')} value='Lunch' />
+						<Form.Check.Label className='ms-1 me-3'>
+							Lunch
+						</Form.Check.Label>
+					</div>
+					<div className='d-flex'>
+						<Form.Check {...register('meals')} value='Dinner' />
+						<Form.Check.Label className='ms-1 me-3'>
+							Dinner
+						</Form.Check.Label>
+					</div>
+				</Form.Group>
+
+				<div className='d-flex ms-5 cuisine-wrapper'>
+					<Form.Select
+						className='mb-3 mt-3 d-flex w-50'
+						{...register('cuisine')}
+						aria-label='Cuisine'
+					>
+						<option>Choose Cuisine</option>
+						<option value='italian'>Italian</option>
+						<option value='indian'>Indian</option>
+						<option value='chinese'>Chinese</option>
+						<option value='japanese'>Japanese</option>
+						<option value='scandinavian'>Scandinavian</option>
+						<option value='french'>French</option>
+						<option value='mexican'>Mexican</option>
+						<option value='thai'>Thai</option>
+						<option value='american'>American</option>
+					</Form.Select>
+					<Form.Select
+						className='type-select m-3 d-flex w-75'
+						{...register('type')}
+						aria-label='Type'
+					>
+						<option>Choose Type of Foodplace</option>
+						<option value='kiosk/grill'>Kiosk/Grill</option>
+						<option value='café'>Café</option>
+						<option value='restaurant'>Restaurant</option>
+						<option value='fast-food'>Fast-Food</option>
+						<option value='foodtruck'>Foodtruck</option>
+					</Form.Select>
+				</div>
+			</div>
+
+			<Form.Group
+				className='d-flex mb-3 mt-3 flex-wrap optional-info-wrapper'
+				controlId='optional-info'
+			>
+				<div className='w-25 optional-info'>
+					<Form.Label>Email</Form.Label>
+					<Form.Control {...register('email')} type='email' />
+				</div>
+				<div className='w-25 ms-4 optional-info'>
+					<Form.Label>Telephone</Form.Label>
+					<Form.Control {...register('phone')} type='number' />
+				</div>
+				<div className='page-width-container mt-2 me-5 optional-info'>
+					<Form.Label>Page</Form.Label>
+					<Form.Control
+						className='page-width'
+						{...register('url')}
+						type='url'
+					/>
+				</div>
+				<div className='w-25 mt-2 optional-info'>
+					<Form.Label>Facebook</Form.Label>
+					<Form.Control {...register('facebook')} type='facebook' />
+				</div>
+				<div className='w-25 ms-4 mt-2 optional-info'>
+					<Form.Label>Instagram</Form.Label>
+					<Form.Control {...register('instagram')} type='instagram' />
+				</div>
 			</Form.Group>
 			<Button type='submit'>Submit</Button>
 		</Form>

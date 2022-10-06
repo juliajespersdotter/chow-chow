@@ -7,11 +7,4 @@ Docs: https://developers.google.com/maps/documentation/javascript/tutorials
 https://developers.google.com/maps/documentation/javascript/react-map
 
 TODO
-Styla Formulär - KLART
-Kolla om Cusisine kan göras bättre - KLART
-Styla moduler - KLART
-No restaurant found - KLART
-ÄNDRA FÄRGER, STYLA HOMEPAGE
-UPPSATSEN
-fixa meals i filtrering
 

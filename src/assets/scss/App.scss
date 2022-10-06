@@ -14,8 +14,12 @@ body {
 	padding: 0;
 	overflow-x: hidden;
 	font-family: 'Montserrat', sans-serif;
-	background: rgb(255,141,117);
-	background: linear-gradient(0deg, rgba(255,141,117,1) 0%, rgba(58,7,81,1) 74%);
+	background: rgb(255, 141, 117);
+	background: linear-gradient(
+		0deg,
+		rgba(255, 141, 117, 1) 0%,
+		rgba(58, 7, 81, 1) 74%
+	);
 }
 
 #map {
@@ -115,6 +119,15 @@ table {
 	width: 300px;
 }
 
+.list-search-item {
+	cursor: pointer;
+}
+
+.list-search-item:hover {
+	background-color: var(--orange);
+	color: white;
+}
+
 .offcanvas {
 	background-color: rgb(33, 37, 41);
 	color: white;
@@ -192,19 +205,9 @@ table {
 		display: block;
 	}
 
-	// .food-form input {
-	// 	width: 100%;
-	// }
-
 	.meals-wrapper {
 		flex-direction: column;
 	}
-
-	// .meals-wrapper > div > .form-select {
-	// 	// flex-direction: column;
-	// 	width: 100%;
-	// 	margin: 0;
-	// }
 
 	.meals-wrapper > .form-select {
 		width: 100%;

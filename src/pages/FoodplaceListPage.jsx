@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import useFoodplaces from '../hooks/useFoodplaces'
 import Container from 'react-bootstrap/Container'
 import FoodplacesTable from '../components/FoodplacesTable'
-import { DropdownFilter } from '../utilities/filters'
+import { DropdownFilter, TextSearchFilter } from '../utilities/filters'
 import LoadingSpinner from '../components/LoadingSpinner'
 
 const FoodplaceListPage = () => {
@@ -16,6 +16,7 @@ const FoodplaceListPage = () => {
 					{
 						Header: 'Name',
 						accessor: 'name',
+						Filter: TextSearchFilter,
 					},
 					{
 						Header: 'Address',
@@ -58,7 +59,7 @@ const FoodplaceListPage = () => {
 	)
 
 	return (
-		<Container className="foodplace-list">
+		<Container className='foodplace-list'>
 			<div className='p-3'>
 				{isLoading && <LoadingSpinner />}
 				{foodplaces && (

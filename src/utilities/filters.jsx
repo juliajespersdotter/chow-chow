@@ -1,12 +1,12 @@
 import { useMemo } from 'react'
 
 // text search input
-/*
 export function TextSearchFilter({
 	column: { filterValue, preFilteredRows, setFilter },
 }) {
 	return (
 		<input
+			className='d-block'
 			value={filterValue || ''}
 			onChange={e => {
 				setFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
@@ -14,7 +14,7 @@ export function TextSearchFilter({
 			placeholder={`Search...`}
 		/>
 	)
-}*/
+}
 
 export const DropdownFilter = ({
 	column: { filterValue, setFilter, preFilteredRows, id },
@@ -29,6 +29,7 @@ export const DropdownFilter = ({
 
 	return (
 		<select
+			className='d-block'
 			value={filterValue}
 			onChange={e => {
 				setFilter(e.target.value || undefined)

@@ -54,7 +54,10 @@ const MapPage = () => {
 	}
 
 	const onClick = foodplace => {
-		setPlace(foodplace)
+		if (foodplace) {
+			setPlace(foodplace)
+			setCenter(foodplace.geopoint)
+		}
 		setShowModal(!showModal)
 	}
 
@@ -73,7 +76,11 @@ const MapPage = () => {
 					showModal={showModal}
 					clickFoodplace={onClick}
 				/>
-				<SearchForm onSubmit={handleSubmit} />
+				<SearchForm
+					onSubmit={handleSubmit}
+					foodplaces={foodplaces}
+					showFoodplace={onClick}
+				/>
 				<Button
 					onClick={() => setTheme(theme == 'dark' ? 'light' : 'dark')}
 					className='button-theme filter-button'

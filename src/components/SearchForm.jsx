@@ -1,13 +1,10 @@
 import { useRef } from 'react'
 import { useState } from 'react'
-import useGetCollection from '../hooks/useGetCollection'
 
-const SearchForm = ({ onSubmit }) => {
+const SearchForm = ({ onSubmit, foodplaces, showFoodplace }) => {
 	const cityRef = useRef()
 
 	const [searchInput, setSearchInput] = useState('')
-
-	const { data: foodplaces } = useGetCollection('foodplaces')
 
 	const filteredFoodplaces =
 		searchInput === ''
@@ -56,9 +53,7 @@ const SearchForm = ({ onSubmit }) => {
 							<li
 								key={foodplace.id}
 								className='list-search-item mb-2'
-								// onClick={() =>
-								// 	setSearchInput(`${foodplace.name}, ${foodplace.city}`)
-								// }
+								onClick={() => showFoodplace(foodplace)}
 							>
 								{foodplace.name}, {foodplace.city}
 							</li>

@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import Container from 'react-bootstrap/Container'
 import useFoodplaces from '../hooks/useFoodplaces'
-import { DropdownFilter } from '../utilities/filters'
+import { DropdownFilter, TextSearchFilter } from '../utilities/filters'
 import AdminTable from '../components/AdminTable'
 import Alert from 'react-bootstrap/Alert'
 import LoadingSpinner from '../components/LoadingSpinner'
@@ -20,6 +20,7 @@ const AdminPage = () => {
 						id: 'id',
 						Header: 'Name',
 						accessor: 'name',
+						Filter: TextSearchFilter,
 					},
 					{
 						Header: 'Address',
@@ -62,7 +63,7 @@ const AdminPage = () => {
 	)
 
 	return (
-		<Container>
+		<Container className='foodplace-list'>
 			{isLoading && <LoadingSpinner />}
 
 			{foodplaces && foodplaces.length === 0 && (

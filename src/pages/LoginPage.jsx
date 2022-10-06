@@ -15,11 +15,10 @@ const LoginPage = () => {
 		e.preventDefault()
 		setError(null)
 
-		// try to log in the user with the specified credentials
 		try {
 			setLoading(true)
 			await login(emailRef.current.value, passwordRef.current.value)
-			navigate('/')
+			navigate('/admin')
 		} catch (err) {
 			setError(err.message)
 			setLoading(false)
@@ -40,7 +39,9 @@ const LoginPage = () => {
 				<Col md={{ span: 6, offset: 3 }}>
 					<Card>
 						<Card.Body>
-							<Card.Title className='mb-3'>Log In</Card.Title>
+							<Card.Title className='mb-3'>
+								Admin Login
+							</Card.Title>
 
 							{error && <Alert variant='danger'>{error}</Alert>}
 
@@ -75,10 +76,6 @@ const LoginPage = () => {
 							</div>
 						</Card.Body>
 					</Card>
-
-					<div className='text-center mt-3'>
-						Need an account? <Link to='/signup'>Sign Up</Link>
-					</div>
 				</Col>
 			</Row>
 		</Container>

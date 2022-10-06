@@ -87,6 +87,7 @@ const FilterOffcanvas = ({ filterMarkers }) => {
 									<option value='mexican'>Mexican</option>
 									<option value='thai'>Thai</option>
 									<option value='american'>American</option>
+									<option value='vegan'>Vegan</option>
 									<option value='other'>Other</option>
 								</Form.Select>
 								<Form.Group controlId='city' className='mb-3'>

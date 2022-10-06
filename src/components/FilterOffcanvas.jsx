@@ -1,16 +1,15 @@
 import { useState, useMemo } from 'react'
 import Offcanvas from 'react-bootstrap/Offcanvas'
 import Button from 'react-bootstrap/Button'
+import Alert from 'react-bootstrap/Alert'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Form from 'react-bootstrap/Form'
 import useGetQueryFoodplaces from '../hooks/useGetQueryFoodplaces'
 import { useForm } from 'react-hook-form'
-import SearchForm from '../components/SearchForm'
-import useGeoCoding from '../hooks/useGeoCoding'
-import useFoodplaces from '../hooks/useFoodplaces'
 import { useEffect } from 'react'
+import LoadingSpinner from './LoadingSpinner'
 
-const FilterOffcanvas = ({ filterMarkers }) => {
+const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 	const {
 		register,
 		handleSubmit,
@@ -19,7 +18,6 @@ const FilterOffcanvas = ({ filterMarkers }) => {
 	} = useForm()
 
 	const [show, setShow] = useState(false)
-	const [errorMsg, setErrorMsg] = useState(null)
 
 	useEffect(() => {
 		filterMarkers({ fetchAll: true })
@@ -28,10 +26,12 @@ const FilterOffcanvas = ({ filterMarkers }) => {
 
 	const { foodplaces, isLoading, filterFoodplaces } = useGetQueryFoodplaces()
 
+	console.log(foodplaces)
 	const handleShow = () => setShow(true)
 	const handleClose = () => setShow(false)
 
 	const FilterFoodplaces = async data => {
+		console.log(data)
 		filterFoodplaces(data)
 		filterMarkers(data)
 	}
@@ -50,40 +50,68 @@ const FilterOffcanvas = ({ filterMarkers }) => {
 				</Offcanvas.Header>
 
 				<Offcanvas.Body>
-					{isLoading && <p>Loading ....</p>}
+					{isLoading && <LoadingSpinner />}
 					{foodplaces && (
 						<>
 							<Form onSubmit={handleSubmit(FilterFoodplaces)}>
 								<p>By type</p>
 								<Form.Select
+									placeholder='Select cuisine'
 									{...register('type')}
 									className='form-select mb-3'
 								>
 									<option value='All'>All Types</option>
-
-									{foodplaces.map((foodplace, i) => (
-										<option key={i} value={foodplace.type}>
-											{foodplace.type}
-										</option>
-									))}
+									<option value='kiosk/grill'>
+										Kiosk/Grill
+									</option>
+									<option value='café'>Café</option>
+									<option value='restaurant'>
+										Restaurant
+									</option>
+									<option value='fast-food'>Fast-Food</option>
+									<option value='foodtruck'>Foodtruck</option>
 								</Form.Select>
 
 								<p>By Cuisine</p>
 								<Form.Select
+									placeholder='Select cuisine'
 									{...register('cuisine')}
 									className='form-select mb-3'
 								>
 									<option value='All'>All Cuisine</option>
+									<option value='italian'>Italian</option>
+									<option value='indian'>Indian</option>
+									<option value='chinese'>Chinese</option>
+									<option value='japanese'>Japanese</option>
+									<option value='scandinavian'>
+										Scandinavian
+									</option>
+									<option value='french'>French</option>
+									<option value='mexican'>Mexican</option>
+									<option value='thai'>Thai</option>
+									<option value='american'>American</option>
+									<option value='other'>Other</option>
 
-									{foodplaces.map((foodplace, i) => (
-										<option
-											key={i}
-											value={foodplace.cuisine}
-										>
-											{foodplace.cuisine}
-										</option>
-									))}
+									{/* {foodplaces.map(foodplace =>
+										foodplace.cuisine.map(
+											(cuisineItem, i) => (
+												<option
+													key={i}
+													value={cuisineItem}
+												>
+													{cuisineItem}
+												</option>
+											)
+										)
+									)} */}
 								</Form.Select>
+								<Form.Group controlId='city' className='mb-3'>
+									<Form.Control
+										{...register('city')}
+										type='text'
+										placeholder='Search by city'
+									/>
+								</Form.Group>
 
 								<Button
 									type='submit'
@@ -94,6 +122,11 @@ const FilterOffcanvas = ({ filterMarkers }) => {
 							</Form>
 
 							<ListGroup className='foodplace-listgroup'>
+								{!foodplaces.length && (
+									<Alert variant='warning'>
+										No foodplaces found
+									</Alert>
+								)}
 								{foodplaces.map((foodplace, index) => (
 									<ListGroup.Item
 										action
@@ -109,16 +142,25 @@ const FilterOffcanvas = ({ filterMarkers }) => {
 												foodplace.city}
 										</span>
 										<br />
-										<span>
-											{foodplace.meals} | {foodplace.type}
+										<span className='text-muted meals-types'>
+											{foodplace.meals.map(meal => (
+												<span
+													key={meal}
+													className='pe-1'
+												>
+													{meal}
+												</span>
+											))}
+											|{' '}
+											<span className='p-1'>
+												{foodplace.type}
+											</span>
 										</span>
 									</ListGroup.Item>
 								))}
 							</ListGroup>
 						</>
 					)}
-
-					{/* <SearchForm /> */}
 				</Offcanvas.Body>
 			</Offcanvas>
 		</>

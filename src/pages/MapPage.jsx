@@ -1,16 +1,14 @@
 import Container from 'react-bootstrap/Container'
-import Alert from 'react-bootstrap/Alert'
 import Map from '../components/Map'
 import { Wrapper, Status } from '@googlemaps/react-wrapper'
 import { useState, useEffect } from 'react'
 import useGeoCoding from '../hooks/useGeoCoding'
 import Marker from '../components/Marker'
-import useFoodplaces from '../hooks/useFoodplaces'
 import InfoModal from '../components/InfoModal'
-import SearchForm from '../components/SearchForm'
 import FilterOffcanvas from '../components/FilterOffcanvas'
 import useGetQueryFoodplaces from '../hooks/useGetQueryFoodplaces'
 import { useSearchParams } from 'react-router-dom'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 const MapPage = () => {
 	const [zoom, setZoom] = useState(17) // initial zoom
@@ -22,17 +20,16 @@ const MapPage = () => {
 	const [place, setPlace] = useState(null)
 	const [searchParams, setSearchParams] = useSearchParams(undefined)
 	const [center, setCenter] = useState(() => {
-		if (searchParams.get("lat")) {
+		if (searchParams.get('lat')) {
 			return {
-				lat: Number(searchParams.get("lat")),
-				lng: Number(searchParams.get("lng")),
+				lat: Number(searchParams.get('lat')),
+				lng: Number(searchParams.get('lng')),
 			}
 		}
 		return {
 			lat: 55.58354,
 			lng: 13.01373,
 		}
-
 	})
 
 	const handleSubmit = async city => {
@@ -61,7 +58,7 @@ const MapPage = () => {
 		<Container fluid className='m-0 p-0'>
 			<div className='filter-search'>
 				<FilterOffcanvas
-					onCityFormSubmit={handleSubmit}
+					onSubmit={handleSubmit}
 					filterMarkers={filterFoodplaces}
 				/>
 				<SearchForm onSubmit={handleSubmit} />
@@ -69,13 +66,10 @@ const MapPage = () => {
 			{/* {isError && (
 				<Alert variant='danger'>An error has occurred: {error}</Alert>
 			)} */}
-			{isLoading && <p>Loading...</p>}
+			{isLoading && <LoadingSpinner />}
 			<Wrapper apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
 				<div className='vh-75'>
-					<Map
-						center={center}
-						zoom={zoom}
-					>
+					<Map center={center} zoom={zoom}>
 						{foodplaces &&
 							foodplaces.map(foodplace => (
 								<Marker
@@ -95,7 +89,6 @@ const MapPage = () => {
 					</Map>
 				</div>
 			</Wrapper>
-
 			
 		</Container>
 	)

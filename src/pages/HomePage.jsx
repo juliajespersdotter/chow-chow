@@ -6,7 +6,7 @@ const HomePage = () => {
 	return (
 		<Container
 			fluid
-			className='home h-75 m-0 p-0'
+			className='home h-75 m-0 p-0 d-flex align-items-center justify-content-center'
 		>
 			<Image fluid className='logo' src='images/logo.png' />
 		</Container>

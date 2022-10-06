@@ -23,10 +23,10 @@ const Map = ({ center, zoom, children }) => {
 		lng: Number(searchParams.get('lng')),
 	}
 	// const [userMarker, setUserMarker] = useState()
-	let mapId = theme == 'dark' ? 'a364ebbb8399f681' : ''
+	let mapId = theme == 'dark' ? 'a364ebbb8399f681' : 'ab4f81466110cc51'
 
 	useEffect(() => {
-		mapId = theme == 'dark' ? 'a364ebbb8399f681' : ''
+		mapId = theme == 'dark' ? 'a364ebbb8399f681' : 'ab4f81466110cc51'
 		if (map) {
 			setMap(
 				new window.google.maps.Map(ref.current, {

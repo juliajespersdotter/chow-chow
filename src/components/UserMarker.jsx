@@ -11,7 +11,6 @@ const UserMarker = options => {
 					optimized: false,
 				})
 			)
-			// setMarker(new google.maps.Marker({}))
 		}
 
 		// remove marker from map on unmount

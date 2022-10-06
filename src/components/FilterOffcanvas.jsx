@@ -9,7 +9,7 @@ import useGetQueryFoodplaces from '../hooks/useGetQueryFoodplaces'
 import { useForm } from 'react-hook-form'
 import LoadingSpinner from './LoadingSpinner'
 
-const FilterOffcanvas = ({ filterMarkers }) => {
+const FilterOffcanvas = ({ filterMarkers, clickFoodplace }) => {
 	const {
 		register,
 		handleSubmit,
@@ -125,7 +125,7 @@ const FilterOffcanvas = ({ filterMarkers }) => {
 											action
 											key={index}
 											onClick={() => {
-												foodplace
+												clickFoodplace(foodplace)
 											}}
 										>
 											<h3>{foodplace.name}</h3>

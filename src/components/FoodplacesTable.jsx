@@ -48,11 +48,9 @@ const FoodplacesTable = ({ columns, data }) => {
 										)}
 									>
 										{column.render('Header')}
-										{/* <div> */}
 										{column.canFilter
 											? column.render('Filter')
 											: null}
-										{/* </div> */}
 									</TableCell>
 								))}
 							</TableRow>

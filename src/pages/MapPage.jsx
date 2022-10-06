@@ -11,7 +11,6 @@ import FilterOffcanvas from '../components/FilterOffcanvas'
 import ThemeContext from '../contexts/ThemeContext'
 import useGetQueryFoodplaces from '../hooks/useGetQueryFoodplaces'
 import { useSearchParams } from 'react-router-dom'
-import LoadingSpinner from '../components/LoadingSpinner'
 import SearchForm from '../components/SearchForm'
 
 const MapPage = () => {
@@ -71,6 +70,8 @@ const MapPage = () => {
 				<FilterOffcanvas
 					onSubmit={handleSubmit}
 					filterMarkers={filterFoodplaces}
+					showModal={showModal}
+					clickFoodplace={onClick}
 				/>
 				<SearchForm 
 					onSubmit={handleSubmit}/>
@@ -84,7 +85,6 @@ const MapPage = () => {
 			</div>
 			<Wrapper apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
 				<div className='vh-75'>
-					{isLoading && <LoadingSpinner />}
 					<Map center={center} zoom={zoom}>
 						{foodplaces &&
 							foodplaces.map(foodplace => (

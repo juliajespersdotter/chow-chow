@@ -9,7 +9,6 @@ import { db } from '../firebase'
 
 const NewFoodplaceForm = () => {
 	const { getLatLng, error, isError } = useGeoCoding()
-	const [setErrorMsg, errorMsg] = useState('')
 	const {
 		register,
 		handleSubmit,

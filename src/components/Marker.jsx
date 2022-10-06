@@ -5,7 +5,6 @@ const Marker = options => {
 
 	useEffect(() => {
 		if (!marker) {
-			// console.log('position', position)
 			setMarker(
 				new google.maps.Marker({
 					optimized: false,

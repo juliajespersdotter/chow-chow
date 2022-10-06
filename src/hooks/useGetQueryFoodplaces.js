@@ -28,7 +28,6 @@ const useGetQueryFoodplaces = () => {
 			city =
 				queryLimits.city.charAt(0).toUpperCase() +
 				queryLimits.city.slice(1)
-			console.log(city)
 		}
 
 		// variable for keeping track of the diffrent constraints

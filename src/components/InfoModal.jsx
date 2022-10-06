@@ -7,17 +7,17 @@ const InfoModal = ({ data, show, onClick }) => {
 	return (
 		<Offcanvas show={show} onHide={onClick} className='text-light'>
 			<Offcanvas.Header closeButton>
-				<Offcanvas.Title className='d-flex flex-column align-items-start'>
+				<Offcanvas.Title className=''>
 					<h2>{data.name}</h2>
-					<div className='w-50 p-3'>
-						<img
-							src='/images/foodplace.png'
-							className='img-fluid'
-							alt='image for restaurant'
-						/>
-					</div>
 				</Offcanvas.Title>
 			</Offcanvas.Header>
+			<div className='w-50 p-3'>
+				<img
+					src='/images/foodplace.png'
+					className='img-fluid'
+					alt='image for restaurant'
+				/>
+			</div>
 			<Offcanvas.Body className='d-flex flex-column'>
 				<span className='text-muted fst-italic text-center'>
 					{data.type}, {data.cuisine}

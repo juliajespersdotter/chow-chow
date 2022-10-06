@@ -68,13 +68,12 @@ const MapPage = () => {
 					</Alert>
 				)}
 				<FilterOffcanvas
-					onSubmit={handleSubmit}
+					onCitySearch={handleSubmit}
 					filterMarkers={filterFoodplaces}
 					showModal={showModal}
 					clickFoodplace={onClick}
 				/>
-				<SearchForm
-					onSubmit={handleSubmit}/>
+				<SearchForm onSubmit={handleSubmit} />
 				<Button
 					onClick={() => setTheme(theme == 'dark' ? 'light' : 'dark')}
 					className='button-theme filter-button'

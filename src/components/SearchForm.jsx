@@ -33,7 +33,6 @@ const SearchForm = ({ onSubmit, filterFoodplaces }) => {
 			return
 		}
 
-		handleSubmit(searchInput)
 		setSearchInput('')
 	}
 
@@ -57,11 +56,9 @@ const SearchForm = ({ onSubmit, filterFoodplaces }) => {
 							<li
 								key={foodplace.id}
 								className='list-search-item mb-2'
-								onClick={() =>
-									setSearchInput(
-										`${foodplace.name}, ${foodplace.city}`
-									)
-								}
+								// onClick={() =>
+								// 	setSearchInput(`${foodplace.name}, ${foodplace.city}`)
+								// }
 							>
 								{foodplace.name}, {foodplace.city}
 							</li>

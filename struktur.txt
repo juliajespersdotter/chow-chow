@@ -7,8 +7,10 @@ Docs: https://developers.google.com/maps/documentation/javascript/tutorials
 https://developers.google.com/maps/documentation/javascript/react-map
 
 TODO
-#1 Fixa Geocoding Bugg - KLART?
-#4 Lat Lng i URL för att vid omladdning finnas kvar - KLART?
-#5 Filtrera Markörer och lista på utbud & kategori - KLART?
 #7 Autocomplete i search bar
+Styla Formulär
+Kolla om Cusisine kan göras bättre
+Styla moduler
+No restaurant found
+
 

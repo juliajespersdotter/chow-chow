@@ -109,15 +109,16 @@ const useGetQueryFoodplaces = () => {
 			}
 		}
 	}
-	const { data: foodplaces, isLoading } = useFirestoreQueryData(
-		queryKey,
-		queryRef,
-		{
-			idField: 'id',
-		}
-	)
+	const {
+		data: foodplaces,
+		isLoading,
+		isError,
+		error,
+	} = useFirestoreQueryData(queryKey, queryRef, {
+		idField: 'id',
+	})
 
-	return { filterFoodplaces, foodplaces, isLoading }
+	return { filterFoodplaces, foodplaces, isLoading, isError, error }
 }
 
 export default useGetQueryFoodplaces

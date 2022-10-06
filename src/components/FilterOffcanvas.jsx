@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import Offcanvas from 'react-bootstrap/Offcanvas'
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
@@ -9,12 +9,11 @@ import { useForm } from 'react-hook-form'
 import { useEffect } from 'react'
 import LoadingSpinner from './LoadingSpinner'
 
-const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
+const FilterOffcanvas = ({ filterMarkers }) => {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-		reset,
 	} = useForm()
 
 	const [show, setShow] = useState(false)
@@ -26,12 +25,10 @@ const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 
 	const { foodplaces, isLoading, filterFoodplaces } = useGetQueryFoodplaces()
 
-	console.log(foodplaces)
 	const handleShow = () => setShow(true)
 	const handleClose = () => setShow(false)
 
 	const FilterFoodplaces = async data => {
-		console.log(data)
 		filterFoodplaces(data)
 		filterMarkers(data)
 	}
@@ -91,19 +88,6 @@ const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 									<option value='thai'>Thai</option>
 									<option value='american'>American</option>
 									<option value='other'>Other</option>
-
-									{/* {foodplaces.map(foodplace =>
-										foodplace.cuisine.map(
-											(cuisineItem, i) => (
-												<option
-													key={i}
-													value={cuisineItem}
-												>
-													{cuisineItem}
-												</option>
-											)
-										)
-									)} */}
 								</Form.Select>
 								<Form.Group controlId='city' className='mb-3'>
 									<Form.Control

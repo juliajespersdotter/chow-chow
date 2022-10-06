@@ -16,7 +16,7 @@ import SearchForm from '../components/SearchForm'
 
 const MapPage = () => {
 	const { theme, setTheme } = useContext(ThemeContext)
-	const [zoom, setZoom] = useState(17) // initial zoom
+	const [zoom, setZoom] = useState(14) // initial zoom
 	const { getLatLng } = useGeoCoding()
 	const [errorMsg, setErrorMsg] = useState(null)
 	const { foodplaces, filterFoodplaces, isLoading, isError, error } =
@@ -32,8 +32,8 @@ const MapPage = () => {
 			}
 		}
 		return {
-			lat: 55.58354,
-			lng: 13.01373,
+			lat: 55.60587,
+			lng: 13.00073,
 		}
 	})
 
@@ -72,7 +72,7 @@ const MapPage = () => {
 					onSubmit={handleSubmit}
 					filterMarkers={filterFoodplaces}
 				/>
-				<SearchForm 
+				<SearchForm
 					onSubmit={handleSubmit}/>
 				<Button
 					onClick={() => setTheme(theme == 'dark' ? 'light' : 'dark')}

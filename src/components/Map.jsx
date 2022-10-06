@@ -68,6 +68,7 @@ const Map = ({ center, zoom, children }) => {
 					lng: position.coords.longitude,
 				}
 				map.setCenter(pos)
+				map.setZoom(16)
 				setUserMarker(pos)
 				setSearchParams(pos)
 			})

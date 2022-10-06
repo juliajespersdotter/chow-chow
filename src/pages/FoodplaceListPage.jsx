@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useMemo } from 'react'
 import useFoodplaces from '../hooks/useFoodplaces'
 import Container from 'react-bootstrap/Container'
 import FoodplacesTable from '../components/FoodplacesTable'

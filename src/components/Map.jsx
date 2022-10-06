@@ -41,7 +41,6 @@ const Map = ({ center, zoom, children }) => {
 
 	useEffect(() => {
 		if (map) {
-			// console.log("THIS IS CENTER IN USEEFFECT", center)
 			map.panTo(center)
 			map.setZoom(14)
 		}
@@ -53,7 +52,6 @@ const Map = ({ center, zoom, children }) => {
 				new window.google.maps.Map(ref.current, {
 					mapId: mapId,
 					center: center,
-					// style: style,
 					zoom: zoom,
 				})
 			)

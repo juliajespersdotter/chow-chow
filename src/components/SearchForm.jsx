@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { useState } from 'react'
 import useGetCollection from '../hooks/useGetCollection'
 
-const SearchForm = ({ onSubmit, filterFoodplaces }) => {
+const SearchForm = ({ onSubmit }) => {
 	const cityRef = useRef()
 
 	const [searchInput, setSearchInput] = useState('')

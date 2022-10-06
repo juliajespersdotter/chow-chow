@@ -5,10 +5,8 @@ import {
 	onAuthStateChanged,
 	updateEmail,
 	updatePassword,
-	updateProfile,
 } from 'firebase/auth'
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage'
-import { auth, storage } from '../firebase'
+import { auth } from '../firebase'
 import LoadingSpinner from '../components/LoadingSpinner'
 
 const AuthContext = createContext()
@@ -49,34 +47,6 @@ const AuthContextProvider = ({ children }) => {
 		return updatePassword(currentUser, newPassword)
 	}
 
-	const setDisplayNameAndPhoto = async (displayName, photo) => {
-		let photoURL = auth.currentUser.photoURL
-
-		if (photo) {
-			// create a reference to upload the file to
-			const fileRef = ref(
-				storage,
-				`photos/${auth.currentUser.email}/${photo.name}`
-			)
-
-			// upload photo to fileRef
-			const uploadResult = await uploadBytes(fileRef, photo)
-
-			// get download url to uploaded file
-			photoURL = await getDownloadURL(uploadResult.ref)
-
-			console.log(
-				'Photo uploaded successfully, download url is:',
-				photoURL
-			)
-		}
-
-		return updateProfile(auth.currentUser, {
-			displayName,
-			photoURL,
-		})
-	}
-
 	useEffect(() => {
 		// listen for auth-state changes
 		const unsubscribe = onAuthStateChanged(auth, user => {
@@ -96,7 +66,6 @@ const AuthContextProvider = ({ children }) => {
 		login,
 		reloadUser,
 		resetPassword,
-		setDisplayNameAndPhoto,
 		setEmail,
 		setPassword,
 		userName,

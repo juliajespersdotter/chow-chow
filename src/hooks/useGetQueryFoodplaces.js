@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { db } from '../firebase'
 
 const useGetQueryFoodplaces = () => {
-	//collection ref from firestore
 	const [queryKey, setQueryKey] = useState('')
 	const [queryRef, setQueryRef] = useState('')
 

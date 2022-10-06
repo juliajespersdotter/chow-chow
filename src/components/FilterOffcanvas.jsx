@@ -123,7 +123,7 @@ const FilterOffcanvas = ({ onCitySearch, filterMarkers, clickFoodplace }) => {
 									</Alert>
 								)}
 								{foodplaces
-									.slice(0, 5)
+									.slice(0, 20)
 									.map((foodplace, index) => (
 										<ListGroup.Item
 											action

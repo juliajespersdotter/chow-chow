@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form'
 import useGetQueryFoodplaces from '../hooks/useGetQueryFoodplaces'
 import { useForm } from 'react-hook-form'
 import { useEffect } from 'react'
+import LoadingSpinner from './LoadingSpinner'
 
 const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 	const {
@@ -49,7 +50,7 @@ const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 				</Offcanvas.Header>
 
 				<Offcanvas.Body>
-					{isLoading && <p>Loading ....</p>}
+					{isLoading && <LoadingSpinner />}
 					{foodplaces && (
 						<>
 							<Form onSubmit={handleSubmit(FilterFoodplaces)}>
@@ -78,8 +79,20 @@ const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 									className='form-select mb-3'
 								>
 									<option value='All'>All Cuisine</option>
+									<option value='italian'>Italian</option>
+									<option value='indian'>Indian</option>
+									<option value='chinese'>Chinese</option>
+									<option value='japanese'>Japanese</option>
+									<option value='scandinavian'>
+										Scandinavian
+									</option>
+									<option value='french'>French</option>
+									<option value='mexican'>Mexican</option>
+									<option value='thai'>Thai</option>
+									<option value='american'>American</option>
+									<option value='other'>Other</option>
 
-									{foodplaces.map(foodplace =>
+									{/* {foodplaces.map(foodplace =>
 										foodplace.cuisine.map(
 											(cuisineItem, i) => (
 												<option
@@ -90,7 +103,7 @@ const FilterOffcanvas = ({ filterMarkers, onSubmit }) => {
 												</option>
 											)
 										)
-									)}
+									)} */}
 								</Form.Select>
 								<Form.Group controlId='city' className='mb-3'>
 									<Form.Control

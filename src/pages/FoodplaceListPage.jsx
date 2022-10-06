@@ -7,7 +7,6 @@ import LoadingSpinner from '../components/LoadingSpinner'
 
 const FoodplaceListPage = () => {
 	const { foodplaces, isLoading } = useFoodplaces()
-	console.log(foodplaces)
 
 	const columns = useMemo(
 		() => [

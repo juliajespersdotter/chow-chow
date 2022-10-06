@@ -19,8 +19,8 @@ const Map = ({ center, zoom, children }) => {
 	const [userMarker, setUserMarker] = useState()
 	const [searchParams, setSearchParams] = useSearchParams(undefined)
 	const position = {
-		lat: Number(searchParams.get("lat")),
-		lng: Number(searchParams.get("lng")),
+		lat: Number(searchParams.get('lat')),
+		lng: Number(searchParams.get('lng')),
 	}
 	// const [userMarker, setUserMarker] = useState()
 	let mapId = theme == 'dark' ? 'a364ebbb8399f681' : ''
@@ -79,9 +79,13 @@ const Map = ({ center, zoom, children }) => {
 
 	return (
 		<>
-			<Button onClick={getCurrentLocation} className='text-center w-100 rounded-0'>
+			<Button
+				onClick={getCurrentLocation}
+				className='text-center w-100 rounded-0'
+			>
 				Pan to current Location
 			</Button>
+
 			<div id='map' ref={ref} center={center} zoom={zoom}>
 				{Children.map(children, child => {
 					if (isValidElement(child)) {

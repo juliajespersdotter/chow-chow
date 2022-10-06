@@ -9,7 +9,7 @@ import useGetQueryFoodplaces from '../hooks/useGetQueryFoodplaces'
 import { useForm } from 'react-hook-form'
 import LoadingSpinner from './LoadingSpinner'
 
-const FilterOffcanvas = ({ filterMarkers, clickFoodplace }) => {
+const FilterOffcanvas = ({ onCitySearch, filterMarkers, clickFoodplace }) => {
 	const {
 		register,
 		handleSubmit,
@@ -29,6 +29,9 @@ const FilterOffcanvas = ({ filterMarkers, clickFoodplace }) => {
 	const handleClose = () => setShow(false)
 
 	const FilterFoodplaces = async data => {
+		if (data.city) {
+			onCitySearch(data.city)
+		}
 		filterFoodplaces(data)
 		filterMarkers(data)
 	}

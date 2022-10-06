@@ -19,7 +19,10 @@ const Navigation = () => {
 				<Button
 					onClick={() => setTheme(theme == 'dark' ? 'light' : 'dark')}
 					className='button-theme'
-				></Button>
+					variant='light'
+				>
+					{theme === 'dark' ? '🌚' : '🌞'}
+				</Button>
 
 				<Navbar.Toggle aria-controls='basic-navbar-nav' />
 				<Navbar.Collapse id='basic-navbar-nav'>

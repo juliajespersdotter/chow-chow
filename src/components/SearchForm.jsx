@@ -23,7 +23,7 @@ const SearchForm = ({ onSubmit, filterFoodplaces }) => {
 					)
 			  })
 
-	const handleSearch = e => {
+	const handleSubmit = e => {
 		e.preventDefault()
 
 		if (cityRef.current.value) {
@@ -33,18 +33,18 @@ const SearchForm = ({ onSubmit, filterFoodplaces }) => {
 			return
 		}
 
-		handleSearch(searchInput)
+		handleSubmit(searchInput)
 		setSearchInput('')
 	}
 
 	return (
 		<>
-			<form onSubmit={handleSearch} className='search-box'>
+			<form onSubmit={handleSubmit} className='search-box'>
 				<div className='input-group'>
 					<input
 						className='search-input'
 						type='text'
-						placeholder={'  Search foodplaces'}
+						placeholder={'   Search restaurant'}
 						onChange={e => setSearchInput(e.target.value)}
 						value={searchInput}
 						ref={cityRef}

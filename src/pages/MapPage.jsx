@@ -72,7 +72,8 @@ const MapPage = () => {
 					onSubmit={handleSubmit}
 					filterMarkers={filterFoodplaces}
 				/>
-				<SearchForm />
+				<SearchForm 
+					onSubmit={handleSubmit}/>
 				<Button
 					onClick={() => setTheme(theme == 'dark' ? 'light' : 'dark')}
 					className='button-theme filter-button'

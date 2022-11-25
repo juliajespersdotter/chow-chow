@@ -1,15 +1,19 @@
 import { useMemo } from 'react'
 import Container from 'react-bootstrap/Container'
+import ListGroup from 'react-bootstrap/ListGroup'
 import useFoodplaces from '../hooks/useFoodplaces'
 import { DropdownFilter, TextSearchFilter } from '../utilities/filters'
 import AdminTable from '../components/AdminTable'
 import Alert from 'react-bootstrap/Alert'
 import LoadingSpinner from '../components/LoadingSpinner'
+import useGetUsers from '../hooks/useGetUsers'
 
 const AdminPage = () => {
 	const { foodplaces, isLoading } = useFoodplaces({
 		fetchUnApproved: true,
 	})
+	const { users, loading } = useGetUsers()
+	console.log("Users are:", users)
 
 	const columns = useMemo(
 		() => [
@@ -63,25 +67,44 @@ const AdminPage = () => {
 	)
 
 	return (
-		<Container className='foodplace-list'>
-			{isLoading && <LoadingSpinner />}
+		<>
+			<Container className='foodplace-list'>
+				{isLoading && <LoadingSpinner />}
 
-			{foodplaces && foodplaces.length === 0 && (
-				<Alert variant='warning' className='mt-5'>
-					No foodplaces to approve...
-				</Alert>
-			)}
+				{foodplaces && foodplaces.length === 0 && (
+					<Alert variant='warning' className='mt-5'>
+						No foodplaces to approve...
+					</Alert>
+				)}
 
-			{foodplaces && foodplaces.length !== 0 && (
-				<div className='p-3'>
-					{foodplaces && (
-						<>
-							<AdminTable columns={columns} data={foodplaces} />
-						</>
-					)}
-				</div>
-			)}
-		</Container>
+				{foodplaces && foodplaces.length !== 0 && (
+					<div className='p-3'>
+						{foodplaces && (
+							<>
+								<AdminTable columns={columns} data={foodplaces} />
+							</>
+						)}
+					</div>
+				)}
+			</Container>
+
+			<Container className="py-2">
+				{loading && (
+					<p>Loading admins...</p>
+				)}
+
+				{users && (
+					<>
+						<h3>Admins are: </h3>
+						<ListGroup>
+							{users.map(user => (
+								<ListGroup.Item key={user.email}>{user.name}</ListGroup.Item>
+							))}
+						</ListGroup>
+					</>
+				)}
+			</Container>
+		</>
 	)
 }
 

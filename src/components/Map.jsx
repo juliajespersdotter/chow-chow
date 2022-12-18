@@ -18,10 +18,6 @@ const Map = ({ center, zoom, children }) => {
 	const [map, setMap] = useState()
 	const [userMarker, setUserMarker] = useState()
 	const [searchParams, setSearchParams] = useSearchParams(undefined)
-	const position = {
-		lat: Number(searchParams.get('lat')),
-		lng: Number(searchParams.get('lng')),
-	}
 	// const [userMarker, setUserMarker] = useState()
 	let mapId = theme == 'dark' ? 'a364ebbb8399f681' : 'ab4f81466110cc51'
 
@@ -32,7 +28,6 @@ const Map = ({ center, zoom, children }) => {
 				new window.google.maps.Map(ref.current, {
 					mapId: mapId,
 					center: center,
-					// style: style,
 					zoom: zoom,
 				})
 			)
@@ -48,13 +43,34 @@ const Map = ({ center, zoom, children }) => {
 
 	useEffect(() => {
 		if (ref.current && !map) {
-			setMap(
-				new window.google.maps.Map(ref.current, {
-					mapId: mapId,
-					center: center,
-					zoom: zoom,
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(position => {
+					const pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude,
+					}
+					setUserMarker(pos)
+					setSearchParams(pos)
+
+					setMap(
+						new window.google.maps.Map(ref.current, {
+							mapId: mapId,
+							center: pos,
+							zoom: zoom,
+						})
+					)
 				})
-			)
+			} else {
+				setMap(
+					new window.google.maps.Map(ref.current, {
+						mapId: mapId,
+						center: center,
+						zoom: zoom,
+					})
+				)
+				// Browser doesn't support Geolocation
+				handleLocationError(false, infoWindow, map.getCenter())
+			}
 		}
 	}, [ref, map])
 

@@ -36,6 +36,13 @@ const FilterOffcanvas = ({ onCitySearch, filterMarkers, clickFoodplace }) => {
 		filterMarkers(data)
 	}
 
+	let sortedFoodplaces = [];
+		if (foodplaces) {
+			sortedFoodplaces = foodplaces.sort((a, b) =>
+			a.name.localeCompare(b.name)
+		);
+		}
+
 	return (
 		<>
 			<Button onClick={handleShow} className='filter-btn'>
@@ -122,7 +129,7 @@ const FilterOffcanvas = ({ onCitySearch, filterMarkers, clickFoodplace }) => {
 										No foodplaces found
 									</Alert>
 								)}
-								{foodplaces
+								{sortedFoodplaces
 									.slice(0, 20)
 									.map((foodplace, index) => (
 										<ListGroup.Item

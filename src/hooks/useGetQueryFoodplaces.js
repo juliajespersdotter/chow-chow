@@ -8,7 +8,6 @@ const useGetQueryFoodplaces = () => {
 	const [queryRef, setQueryRef] = useState('')
 
 	const filterFoodplaces = (queryLimits = {}) => {
-		console.log(queryLimits)
 		let collectionRef = collection(db, 'foodplaces')
 		if (
 			queryLimits.fetchAll ||

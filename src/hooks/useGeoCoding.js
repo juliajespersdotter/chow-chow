@@ -8,7 +8,17 @@ const useGeoCoding = () => {
 		return res
 	}
 
-	return { getLatLng }
+	const getCity = async latLng => {
+		const geocoder = new google.maps.Geocoder()
+
+		const res = await geocoder.geocode({
+			location: latLng,
+		})
+
+		return res
+	}
+
+	return { getLatLng, getCity }
 }
 
 export default useGeoCoding

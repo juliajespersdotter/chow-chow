@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/Container'
 import Map from '../components/Map'
 import { Wrapper, Status } from '@googlemaps/react-wrapper'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import useGeoCoding from '../hooks/useGeoCoding'
 import Marker from '../components/Marker'
 import Button from 'react-bootstrap/Button'
@@ -16,7 +16,7 @@ import SearchForm from '../components/SearchForm'
 const MapPage = () => {
 	const { theme, setTheme } = useContext(ThemeContext)
 	const [zoom, setZoom] = useState(14) // initial zoom
-	const { getLatLng } = useGeoCoding()
+	const { getLatLng, getCity } = useGeoCoding()
 	const [errorMsg, setErrorMsg] = useState(null)
 	const { foodplaces, filterFoodplaces, isLoading, isError, error } =
 		useGetQueryFoodplaces()
@@ -35,6 +35,19 @@ const MapPage = () => {
 			lng: 13.00073,
 		}
 	})
+
+	useEffect(() => {
+		const filterInitial = async () => {
+			const latLng = await getCity({
+				lat: Number(searchParams.get('lat')),
+				lng: Number(searchParams.get('lng')),
+			})
+			const city = latLng.results[0].address_components[3].long_name
+			filterFoodplaces({ city: city, cuisine: 'All', type: 'All' })
+		}
+
+		filterInitial()
+	}, [center, searchParams])
 
 	const handleSubmit = async city => {
 		if (city) {

@@ -18,7 +18,6 @@ const Map = ({ center, zoom, children }) => {
 	const [map, setMap] = useState()
 	const [userMarker, setUserMarker] = useState()
 	const [searchParams, setSearchParams] = useSearchParams(undefined)
-	// const [userMarker, setUserMarker] = useState()
 	let mapId = theme == 'dark' ? 'a364ebbb8399f681' : 'ab4f81466110cc51'
 
 	useEffect(() => {

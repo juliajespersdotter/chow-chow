@@ -38,16 +38,22 @@ const MapPage = () => {
 
 	useEffect(() => {
 		const filterInitial = async () => {
-			const latLng = await getCity({
-				lat: Number(searchParams.get('lat')),
-				lng: Number(searchParams.get('lng')),
-			})
-			const city = latLng.results[0].address_components[3].long_name
-			filterFoodplaces({ city: city, cuisine: 'All', type: 'All' })
+			if (searchParams.get('lat')) {
+				const latLng = await getCity({
+					lat: Number(searchParams.get('lat')),
+					lng: Number(searchParams.get('lng')),
+				})
+				const city = latLng.results[0].address_components[3].long_name
+				filterFoodplaces({ city: city, cuisine: 'All', type: 'All' })
+			} else {
+				const latLng = await getCity(center)
+				const city = latLng.results[0].address_components[3].long_name
+				filterFoodplaces({ city: city, cuisine: 'All', type: 'All' })
+			}
 		}
 
 		filterInitial()
-	}, [center, searchParams])
+	}, [searchParams])
 
 	const handleSubmit = async city => {
 		if (city) {
@@ -59,6 +65,11 @@ const MapPage = () => {
 				}
 				setCenter(position)
 				setSearchParams(position)
+				filterFoodplaces({
+					city: city,
+					cuisine: 'All',
+					type: 'All',
+				})
 			} catch (err) {
 				setErrorMsg(err.message)
 				console.log(errorMsg)

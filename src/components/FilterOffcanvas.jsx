@@ -17,6 +17,7 @@ const FilterOffcanvas = ({ onCitySearch, filterMarkers, clickFoodplace }) => {
 	} = useForm()
 
 	const [show, setShow] = useState(false)
+	const [sortedFoodplaces, setSortedFoodplaces] = useState([]);
 
 	useEffect(() => {
 		filterMarkers({ fetchAll: true })
@@ -34,6 +35,14 @@ const FilterOffcanvas = ({ onCitySearch, filterMarkers, clickFoodplace }) => {
 		}
 		filterFoodplaces(data)
 		filterMarkers(data)
+
+		if (foodplaces) {
+			if (data.sortOrder === 'asc') {
+				setSortedFoodplaces(foodplaces.sort((a, b) => a.name.localeCompare(b.name)));
+			} else {
+				setSortedFoodplaces(foodplaces.sort((a, b) => b.name.localeCompare(a.name)));
+			}
+		}
 	}
 
 	return (
@@ -93,6 +102,7 @@ const FilterOffcanvas = ({ onCitySearch, filterMarkers, clickFoodplace }) => {
 									<option value='vegan'>Vegan</option>
 									<option value='other'>Other</option>
 								</Form.Select>
+
 								<Form.Group controlId='city' className='mb-3'>
 									<Form.Control
 										{...register('city')}
@@ -100,6 +110,15 @@ const FilterOffcanvas = ({ onCitySearch, filterMarkers, clickFoodplace }) => {
 										placeholder='Search by city'
 									/>
 								</Form.Group>
+
+								<Form.Select
+									placeholder='Sort order'
+									{...register('sortOrder')}
+									className='form-select mb-3'
+								>
+									<option value='asc'>Ascending</option>
+									<option value='desc'>Descending</option>
+								</Form.Select>
 
 								<Button
 									type='submit'
@@ -122,7 +141,7 @@ const FilterOffcanvas = ({ onCitySearch, filterMarkers, clickFoodplace }) => {
 										No foodplaces found
 									</Alert>
 								)}
-								{foodplaces
+								{sortedFoodplaces
 									.slice(0, 20)
 									.map((foodplace, index) => (
 										<ListGroup.Item

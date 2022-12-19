@@ -43,11 +43,15 @@ const MapPage = () => {
 					lat: Number(searchParams.get('lat')),
 					lng: Number(searchParams.get('lng')),
 				})
-				const city = latLng.results[0].address_components[3].long_name
+				const city = latLng.results[1].address_components.filter(
+					ac => ~ac.types.indexOf('postal_town')
+				)[0].long_name
 				filterFoodplaces({ city: city, cuisine: 'All', type: 'All' })
 			} else {
 				const latLng = await getCity(center)
-				const city = latLng.results[0].address_components[3].long_name
+				const city = latLng.results[1].address_components.filter(
+					ac => ~ac.types.indexOf('postal_town')
+				)[0].long_name
 				filterFoodplaces({ city: city, cuisine: 'All', type: 'All' })
 			}
 		}

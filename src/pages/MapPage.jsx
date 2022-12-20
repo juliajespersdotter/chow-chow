@@ -46,13 +46,26 @@ const MapPage = () => {
 				const city = latLng.results[1].address_components.filter(
 					ac => ~ac.types.indexOf('postal_town')
 				)[0].long_name
-				filterFoodplaces({ city: city, cuisine: 'All', type: 'All' })
+				if (city) {
+					filterFoodplaces({
+						city: city,
+						cuisine: 'All',
+						type: 'All',
+					})
+				}
 			} else {
 				const latLng = await getCity(center)
 				const city = latLng.results[1].address_components.filter(
 					ac => ~ac.types.indexOf('postal_town')
 				)[0].long_name
-				filterFoodplaces({ city: city, cuisine: 'All', type: 'All' })
+
+				if (city) {
+					filterFoodplaces({
+						city: city,
+						cuisine: 'All',
+						type: 'All',
+					})
+				}
 			}
 		}
 

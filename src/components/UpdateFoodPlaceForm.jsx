@@ -7,7 +7,7 @@ import useGeoCoding from '../hooks/useGeoCoding'
 import { doc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 
-const UpdateFoodplaceForm = ({ prefilledData }) => {
+const UpdateFoodPlaceForm = ({ prefilledData }) => {
 	const { getLatLng, error, isError } = useGeoCoding()
 	const [errorMsg, setErrorMsg] = useState(null)
 
@@ -248,4 +248,4 @@ const UpdateFoodplaceForm = ({ prefilledData }) => {
 	)
 }
 
-export default UpdateFoodplaceForm
+export default UpdateFoodPlaceForm

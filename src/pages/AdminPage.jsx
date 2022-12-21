@@ -15,7 +15,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth'
 import useGeoCoding from '../hooks/useGeoCoding'
 import { collection, addDoc } from 'firebase/firestore'
 import { auth, db } from '../firebase'
-import UpdateFoodplaceForm from '../components/UpdateFoodplaceForm'
+import UpdateFoodPlaceForm from '../components/UpdateFoodPlaceForm'
 
 const AdminPage = () => {
 	const { getLatLng, error, isError } = useGeoCoding()
@@ -148,7 +148,7 @@ const AdminPage = () => {
 
 			{showForm && (
 				<Container className='py-2 mb-2 mt-5 bg-light'>
-					<UpdateFoodplaceForm prefilledData={foodplaceData} />
+					<UpdateFoodPlaceForm prefilledData={foodplaceData} />
 				</Container>
 			)}
 

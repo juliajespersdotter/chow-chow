@@ -2,28 +2,28 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
 import { useForm } from 'react-hook-form'
+import { useEffect, useState } from 'react'
 import useGeoCoding from '../hooks/useGeoCoding'
-import { collection, addDoc } from 'firebase/firestore'
+import { doc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
-import { useState } from 'react'
 
-const NewFoodplaceForm = () => {
+const UpdateFoodplaceForm = ({ prefilledData }) => {
 	const { getLatLng, error, isError } = useGeoCoding()
-	const [errorMsg, setErrorMsg] = useState()
+	const [errorMsg, setErrorMsg] = useState(null)
 
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 		reset,
+		setValue,
 	} = useForm({
 		defaultValues: {
 			meals: [],
 		},
 	})
 
-	const onCreateFoodPlace = async data => {
-		// post to the database
+	const onUpdateFoodplace = async data => {
 		if (data.address) {
 			try {
 				const latLng = await getLatLng(data.address)
@@ -33,20 +33,21 @@ const NewFoodplaceForm = () => {
 				}
 
 				if (position.lat && position.lng) {
-					await addDoc(collection(db, 'foodplaces'), {
-						city: data.city,
-						name: data.name,
-						description: data.description,
-						streetadress: data.address,
-						type: data.type,
-						cuisine: data.cuisine,
-						meals: data.meals,
-						email: data.email,
-						phone: data.phone,
-						url: data.url,
+					const foodRef = doc(db, 'foodplaces', `${prefilledData.id}`)
+					await updateDoc(foodRef, {
+						city: data?.city,
+						name: data?.name,
+						description: data?.description,
+						streetadress: data?.address,
+						type: data?.type,
+						cuisine: data?.cuisine,
+						meals: data?.meals,
+						email: data?.email,
+						phone: data?.phone,
+						url: data?.url,
 						geopoint: position,
-						facebook: data.facebook,
-						approved: false,
+						facebook: data?.facebook,
+						approved: true,
 					})
 				} else {
 					throw new Error('No position found')
@@ -58,10 +59,42 @@ const NewFoodplaceForm = () => {
 		}
 	}
 
+	useEffect(() => {
+		setValue('name', prefilledData.data.id ? prefilledData.data.id : '')
+		setValue('city', prefilledData.data.city ? prefilledData.data.city : '')
+		setValue(
+			'description',
+			prefilledData.data.description ? prefilledData.data.description : ''
+		)
+		setValue(
+			'address',
+			prefilledData.data.streetadress
+				? prefilledData.data.streetadress
+				: ''
+		)
+		setValue(
+			'email',
+			prefilledData.data.email ? prefilledData.data.email : ''
+		)
+		setValue('url', prefilledData.data.url ? prefilledData.data.url : '')
+		setValue(
+			'phone',
+			prefilledData.data.phone ? prefilledData.data.phone : ''
+		)
+		setValue(
+			'facebook',
+			prefilledData.data.facebook ? prefilledData.data.facebook : ''
+		)
+		setValue(
+			'instagram',
+			prefilledData.data.instagram ? prefilledData.data.instagram : ''
+		)
+	}, [prefilledData])
+
 	return (
 		<Form
 			className='food-form p-1'
-			onSubmit={handleSubmit(onCreateFoodPlace)}
+			onSubmit={handleSubmit(onUpdateFoodplace)}
 		>
 			<Form.Group controlId='name' className='mb-3'>
 				<Form.Label>Restaurant Name</Form.Label>
@@ -151,7 +184,7 @@ const NewFoodplaceForm = () => {
 						})}
 						aria-label='Cuisine'
 					>
-						<option>Choose Cuisine</option>
+						<option value=''>Choose Cuisine</option>
 						<option value='italian'>Italian</option>
 						<option value='indian'>Indian</option>
 						<option value='chinese'>Chinese</option>
@@ -208,11 +241,11 @@ const NewFoodplaceForm = () => {
 					<Form.Control {...register('instagram')} type='instagram' />
 				</div>
 			</Form.Group>
-			{isError && <Alert className='danger'>{error}</Alert>}
 			{errorMsg && <Alert className='danger'>{errorMsg}</Alert>}
+			{isError && <Alert className='danger'>{error}</Alert>}
 			<Button type='submit'>Submit</Button>
 		</Form>
 	)
 }
 
-export default NewFoodplaceForm
+export default UpdateFoodplaceForm

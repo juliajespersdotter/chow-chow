@@ -46,6 +46,7 @@ const MapPage = () => {
 				const city = latLng.results[1].address_components.filter(
 					ac => ~ac.types.indexOf('postal_town')
 				)[0].long_name
+
 				if (city) {
 					filterFoodplaces({
 						city: city,
@@ -89,7 +90,6 @@ const MapPage = () => {
 				})
 			} catch (err) {
 				setErrorMsg(err.message)
-				console.log(errorMsg)
 			}
 		}
 	}

@@ -11,7 +11,7 @@ import TableRow from '@mui/material/TableRow'
 import Checkbox from './Checkbox'
 import Button from 'react-bootstrap/Button'
 
-const AdminTable = ({ columns, data }) => {
+const AdminTable = ({ columns, data, onEdit }) => {
 	const defaultColumn = useMemo(
 		() => ({
 			Filter: '',
@@ -53,7 +53,19 @@ const AdminTable = ({ columns, data }) => {
 							<Checkbox {...getToggleAllRowsSelectedProps()} />
 						),
 						Cell: ({ row }) => (
-							<Checkbox {...row.getToggleRowSelectedProps()} />
+							<div>
+								<Checkbox
+									{...row.getToggleRowSelectedProps()}
+								/>
+								<Button
+									className='mt-3 ms-3 mb-3'
+									onClick={e =>
+										onEdit(row.values, row.original.id)
+									}
+								>
+									Edit
+								</Button>
+							</div>
 						),
 					},
 					...columns,
@@ -63,12 +75,10 @@ const AdminTable = ({ columns, data }) => {
 	)
 
 	const approveFoodplace = async foodplace => {
-		console.log(selectedFlatRows)
 		if (selectedFlatRows.length) {
 			const foodIds = selectedFlatRows.map(selectedRow => {
 				return selectedRow.original.id
 			})
-			console.log(foodIds)
 			const batch = writeBatch(db)
 
 			foodIds.forEach(id => {
